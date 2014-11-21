@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/Actions-edit-find-icon.png</file>
+    <file>icons/Actions-application-exit-icon.png</file>
+    <file>icons/Actions-dialog-close-icon.png</file>
+    <file>icons/Actions-dialog-ok-apply-icon.png</file>
+    <file>icons/Actions-document-edit-icon.png</file>
+    <file>icons/Actions-document-save-icon.png</file>
+    <file>icons/Actions-list-add-icon.png</file>
+    <file>icons/Actions-list-remove-icon.png</file>
+  </qresource>
+</RCC>
