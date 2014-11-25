@@ -168,4 +168,11 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         if self.lw_edit_works.currentIndex() != None:
             self.lw_edit_works.takeItem(self.lw_edit_works.currentIndex().row())
 
+    def closeEvent(self, ce):
+        """
+        Close database
+        """
+        ce.accept()
+        self.dbjobs.close()
+
 # End of Mainformsub.py
