@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>222</width>
+    <width>300</width>
     <height>154</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -43,7 +49,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="edit_composer"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
@@ -53,7 +59,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="edit_work"/>
       </item>
      </layout>
     </widget>
@@ -87,7 +93,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="edit_dirigent"/>
       </item>
      </layout>
     </widget>
@@ -121,7 +127,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit_4"/>
+       <widget class="QLineEdit" name="edit_soloist"/>
       </item>
      </layout>
     </widget>
@@ -170,5 +176,38 @@
  <resources>
   <include location="resource.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_edit_confirm</sender>
+   <signal>clicked()</signal>
+   <receiver>DialogEdit</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>23</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_edit_cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>DialogEdit</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

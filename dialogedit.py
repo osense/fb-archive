@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogedit.ui'
 #
-# Created: Fri Nov 21 11:09:47 2014
+# Created: Tue Nov 25 11:00:48 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DialogEdit(object):
     def setupUi(self, DialogEdit):
         DialogEdit.setObjectName("DialogEdit")
-        DialogEdit.resize(222, 154)
+        DialogEdit.resize(300, 154)
+        DialogEdit.setMinimumSize(QtCore.QSize(300, 0))
         self.gridLayout_4 = QtWidgets.QGridLayout(DialogEdit)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.frame_works = QtWidgets.QFrame(DialogEdit)
@@ -25,15 +26,15 @@ class Ui_DialogEdit(object):
         self.label = QtWidgets.QLabel(self.frame_works)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-        self.lineEdit = QtWidgets.QLineEdit(self.frame_works)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 0, 1, 1, 1)
+        self.edit_composer = QtWidgets.QLineEdit(self.frame_works)
+        self.edit_composer.setObjectName("edit_composer")
+        self.gridLayout.addWidget(self.edit_composer, 0, 1, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.frame_works)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.frame_works)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.gridLayout.addWidget(self.lineEdit_2, 1, 1, 1, 1)
+        self.edit_work = QtWidgets.QLineEdit(self.frame_works)
+        self.edit_work.setObjectName("edit_work")
+        self.gridLayout.addWidget(self.edit_work, 1, 1, 1, 1)
         self.gridLayout_4.addWidget(self.frame_works, 0, 0, 1, 1)
         self.frame_dirigent = QtWidgets.QFrame(DialogEdit)
         self.frame_dirigent.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -45,9 +46,9 @@ class Ui_DialogEdit(object):
         self.label_3 = QtWidgets.QLabel(self.frame_dirigent)
         self.label_3.setObjectName("label_3")
         self.gridLayout_3.addWidget(self.label_3, 0, 0, 1, 1)
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.frame_dirigent)
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.gridLayout_3.addWidget(self.lineEdit_3, 0, 1, 1, 1)
+        self.edit_dirigent = QtWidgets.QLineEdit(self.frame_dirigent)
+        self.edit_dirigent.setObjectName("edit_dirigent")
+        self.gridLayout_3.addWidget(self.edit_dirigent, 0, 1, 1, 1)
         self.gridLayout_4.addWidget(self.frame_dirigent, 1, 0, 1, 1)
         self.frame_soloists = QtWidgets.QFrame(DialogEdit)
         self.frame_soloists.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -59,9 +60,9 @@ class Ui_DialogEdit(object):
         self.label_4 = QtWidgets.QLabel(self.frame_soloists)
         self.label_4.setObjectName("label_4")
         self.gridLayout_2.addWidget(self.label_4, 0, 0, 1, 1)
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.frame_soloists)
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.gridLayout_2.addWidget(self.lineEdit_4, 0, 1, 1, 1)
+        self.edit_soloist = QtWidgets.QLineEdit(self.frame_soloists)
+        self.edit_soloist.setObjectName("edit_soloist")
+        self.gridLayout_2.addWidget(self.edit_soloist, 0, 1, 1, 1)
         self.gridLayout_4.addWidget(self.frame_soloists, 2, 0, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -82,6 +83,8 @@ class Ui_DialogEdit(object):
         self.gridLayout_4.addLayout(self.horizontalLayout, 3, 0, 1, 1)
 
         self.retranslateUi(DialogEdit)
+        self.btn_edit_confirm.clicked.connect(DialogEdit.accept)
+        self.btn_edit_cancel.clicked.connect(DialogEdit.reject)
         QtCore.QMetaObject.connectSlotsByName(DialogEdit)
 
     def retranslateUi(self, DialogEdit):
