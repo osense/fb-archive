@@ -40,12 +40,12 @@ class Database:
         self.conn.commit()
         print("Database successfuly created")
 
-    def add_work(concert_id, composer, work):
+    def add_work(self, concert_id, composer, work):
         id = self.get_next_id("works")
-        self.cursor.execute("INSERT INTO works VALUES (?, ?, ?)", (id, concert_id, composer, work))
+        self.cursor.execute("INSERT INTO works VALUES (?, ?, ?, ?)", (id, concert_id, composer, work))
         self.conn.commit()
 
-    def add_soloist(concert_id, name):
+    def add_soloist(self, concert_id, name):
         id = self.get_next_id("soloists")
         self.cursor.execute("INSERT INTO soloists VALUES (?, ?, ?)", (id, concert_id, name))
         self.conn.commit()
@@ -65,6 +65,7 @@ class Database:
 
         self.cursor.execute("INSERT INTO concerts VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (id, festival_id, date, state, city, hall, type, note))
         self.conn.commit()
+        return id
 
     def get_next_id(self, table):
         self.cursor.execute("SELECT MAX(id) FROM {0}".format(table))
@@ -74,6 +75,42 @@ class Database:
         else:
             id = id[0] + 1
         return id
+
+    ### AUTO COMPLETION #############################################################################################################################
+
+    def get_completion_for_state(self, text):
+        self.cursor.execute("SELECT DISTINCT state FROM concerts WHERE state LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    def get_completion_for_city(self, text):
+        self.cursor.execute("SELECT DISTINCT city FROM concerts WHERE city LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    def get_completion_for_hall(self, text):
+        self.cursor.execute("SELECT DISTINCT hall FROM concerts WHERE hall LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    def get_completion_for_type(self, text):
+        self.cursor.execute("SELECT DISTINCT type FROM concerts WHERE type LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    def get_completion_for_composer(self, text):
+        self.cursor.execute("SELECT DISTINCT composer FROM works WHERE composer LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    def get_completion_for_work(self, text):
+        self.cursor.execute("SELECT DISTINCT work FROM works WHERE work LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    def get_completion_for_dirigent(self, text):
+        self.cursor.execute("SELECT DISTINCT name FROM dirigents WHERE name LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    def get_completion_for_soloist(self, text):
+        self.cursor.execute("SELECT DISTINCT name FROM soloists WHERE name LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
+    ### OTHER #######################################################################################################################################
 
     def debug_print(self):
         self.cursor.execute("SELECT * FROM works")

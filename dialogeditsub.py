@@ -10,8 +10,9 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
     """
     Dialog to add new group
     """
-    def __init__(self, dirigents=False, works=False, soloists=False, caption=''):
+    def __init__(self, parent, dirigents=False, works=False, soloists=False, caption=''):
         super(QDialog, self).__init__()
+        self.parent = parent
         self.setupUi(self)
         self.setWindowTitle(caption)
         # Variables
@@ -33,6 +34,41 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
         self.edit_composer.clear()
         self.edit_work.clear()
         self.adjustSize()
+        # Create auto completer
+        self.completer = QCompleter()
+        self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+        self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.completer_model = QStringListModel()
+        self.completer.setModel(self.completer_model)
+        # Completion database functions connected with particular widgets
+        self.completion_dict = {self.edit_composer: {'db_func': self.parent.dbjobs.get_completion_for_composer}, 
+                                self.edit_work: {'db_func': self.parent.dbjobs.get_completion_for_work}, 
+                                self.edit_dirigent: {'db_func': self.parent.dbjobs.get_completion_for_dirigent}, 
+                                self.edit_soloist: {'db_func': self.parent.dbjobs.get_completion_for_soloist}, }
+        # Set auto completer for widgets
+        self.edit_composer.setCompleter(self.completer)
+        self.edit_work.setCompleter(self.completer)
+        self.edit_dirigent.setCompleter(self.completer)
+        self.edit_soloist.setCompleter(self.completer)
+        # Connect widgets to completer function
+        self.edit_composer.textEdited.connect(self.getCompleterData)
+        self.edit_work.textEdited.connect(self.getCompleterData)
+        self.edit_dirigent.textEdited.connect(self.getCompleterData)
+        self.edit_soloist.textEdited.connect(self.getCompleterData)
+
+    def getCompleterData(self, text):
+        """
+        Shows expressions for completion due to edit type
+        """
+        lineedit = self.sender()
+        data = self.completion_dict[lineedit]['db_func'](text)
+        stringlist = []
+        if data != None:
+            for item in data:
+                stringlist += item
+            if len(stringlist) == 7:
+                stringlist[6] = '...'
+            self.completer_model.setStringList(stringlist)
 
     def accept(self):
         # Handle input data
