@@ -3,6 +3,7 @@
 import sqlite3
 import os
 
+
 class Database:
     def __init__(self, dbpath):
         database_exists = os.path.exists(dbpath)

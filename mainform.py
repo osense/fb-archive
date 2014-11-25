@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainform.ui'
 #
-# Created: Tue Nov 25 11:00:48 2014
+# Created: Tue Nov 25 16:50:15 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -28,6 +28,11 @@ class Ui_MainWindow(object):
         self.gridLayout_9.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_9.setObjectName("gridLayout_9")
         self.frame_search = QtWidgets.QFrame(self.frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_search.sizePolicy().hasHeightForWidth())
+        self.frame_search.setSizePolicy(sizePolicy)
         self.frame_search.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_search.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_search.setObjectName("frame_search")
@@ -272,6 +277,11 @@ class Ui_MainWindow(object):
         self.gridLayout_11.addLayout(self.horizontalLayout, 2, 0, 1, 1)
         self.gridLayout_9.addWidget(self.frame_edit, 1, 0, 1, 1)
         self.tableView = QtWidgets.QTableView(self.splitter)
+        self.tableView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableView.setAlternatingRowColors(True)
+        self.tableView.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.tableView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.tableView.setSortingEnabled(True)
         self.tableView.setObjectName("tableView")
         self.gridLayout_12.addWidget(self.splitter, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)

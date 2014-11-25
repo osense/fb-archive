@@ -7,6 +7,7 @@ import dbjobs
 import os
 import sys
 from dialogeditsub import DialogEditSub
+from concertstablemodel import ConcertsTableModel
 import datetime
 
 # Constants
@@ -14,6 +15,7 @@ TIMEOUT_INFO = 3000
 TIMEOUT_ERROR = 6000
 WORK_STR_SEPARATOR = ' - '
 APPDIR = os.path.abspath(os.path.dirname(sys.argv[0]))
+
 
 class Mainformsub(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -23,6 +25,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.dbjobs = dbjobs.Database(APPDIR + '/database.db')
         # Prepare GUI, show/hide widgets
         self.prepare_gui()
+
+    ### MAIN FUNCTIONS ##############################################################################################################################
 
     def prepare_gui(self):
         # Hide not needed widgets
@@ -49,6 +53,10 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.edit_hall.textEdited.connect(self.getCompleterData)
         self.edit_city.textEdited.connect(self.getCompleterData)
         self.edit_type.textEdited.connect(self.getCompleterData)
+        # Main table with concerts
+        headerdata = [self.tr('Datum'), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), self.tr('Festival'), self.tr('Poznámka'), ]
+        self.concerts_model = ConcertsTableModel(self, headerdata)
+        self.tableView.setModel(self.concerts_model)
 
     def getCompleterData(self, text):
         """
@@ -64,9 +72,20 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 stringlist[6] = '...'
             self.completer_model.setStringList(stringlist)
 
+    def closeEvent(self, ce):
+        """
+        Close database
+        """
+        ce.accept()
+        self.dbjobs.close()
+
+    ### SEARCH FUNCTIONS ############################################################################################################################
+
     @pyqtSlot()
     def on_btn_search_clicked(self):
         print("search pressed")
+
+    ### ADD and EDIT FUNCTIONS ######################################################################################################################
 
     @pyqtSlot()
     def on_btn_edit_cancel_clicked(self):
@@ -167,12 +186,5 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def on_btn_works_remove_clicked(self):
         if self.lw_edit_works.currentIndex() != None:
             self.lw_edit_works.takeItem(self.lw_edit_works.currentIndex().row())
-
-    def closeEvent(self, ce):
-        """
-        Close database
-        """
-        ce.accept()
-        self.dbjobs.close()
 
 # End of Mainformsub.py
