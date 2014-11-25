@@ -40,29 +40,56 @@ class Database:
         self.conn.commit()
         print("Database successfuly created")
 
-    def add_concert(self, festival_id, date, state, city, hall, type, note):
-        id = self.get_next_id("concerts")
-        self.conn.execute("INSERT INTO concerts VALUES ({0}, {1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')".format(
-                          id, festival_id, date, state, city, hall, type, note))
+    def add_work(concert_id, composer, work):
+        id = self.get_next_id("works")
+        self.cursor.execute("INSERT INTO works VALUES ({0}, {1}, {2}, {3})".format(id, concert_id, composer, work))
+        self.conn.commit()
+
+    def add_soloist(concert_id, name):
+        id = self.get_next_id("soloists")
+        self.cursor.execute("INSERT INTO soloists VALUES ({0}, {1}, {2})".format(id, concert_id, name))
         self.conn.commit()
 
     def add_festival(self, name):
         id = self.get_next_id("festivals")
-        self.conn.execute("INSERT INTO festivals VALUES ({0}, {1})".format(id, name))
+        self.cursor.execute("INSERT INTO festivals VALUES ({0}, {1})".format(id, name))
+        self.conn.commit()
+
+    def add_dirigent(self, concert_id, name):
+        id = self.get_next_id("dirigents")
+        self.cursor.execute("INSERT INTO dirigents VALUES ({0}, {1}, {2})".format(id, concert_id, name))
+        self.conn.commit()
+
+    def add_concert(self, festival_id, date, state, city, hall, type, note):
+        id = self.get_next_id("concerts")
+        if (festival_id is None):
+            festival_id = "NULL"
+
+        if (type is None and note is None):
+            self.cursor.execute("INSERT INTO concerts VALUES ({0}, {1}, '{2}', '{3}', '{4}', '{5}', {6}, {7})".format(
+                id, festival_id, date, state, city, hall, "NULL", "NULL"))
+        elif (type is None):
+            self.cursor.execute("INSERT INTO concerts VALUES ({0}, {1}, '{2}', '{3}', '{4}', '{5}', {6}, '{7}')".format(
+                id, festival_id, date, state, city, hall, "NULL", note))
+        elif (note is None):
+            self.cursor.execute("INSERT INTO concerts VALUES ({0}, {1}, '{2}', '{3}', '{4}', '{5}', '{6}', {7})".format(
+                id, festival_id, date, state, city, hall, note, "NULL"))
+        else:
+            self.cursor.execute("INSERT INTO concerts VALUES ({0}, {1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')".format(
+                id, festival_id, date, state, city, hall, type, note))
+        self.conn.commit()
 
     def get_next_id(self, table):
-        self.conn.execute("SELECT MAX(id) FROM {0}".format(table))
+        self.cursor.execute("SELECT MAX(id) FROM {0}".format(table))
         id = self.cursor.fetchone()
-        if (id == None):
+        if (id[0] is None):
             id = 0
         else:
-            id = id + 1
-        print("got id " + str(id))
-
+            id = id[0] + 1
         return id
 
     def debug_print(self):
-        self.conn.execute("SELECT * FROM concerts")
+        self.cursor.execute("SELECT * FROM concerts")
         print(self.cursor.fetchall())
 
     def close(self):
