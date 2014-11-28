@@ -41,6 +41,9 @@ class Database:
         self.conn.commit()
         print("Database successfuly created")
 
+
+    ### ADDING DATA #############################################################################################################################
+
     def add_work(self, concert_id, composer, work):
         id = self.get_next_id("works")
         self.cursor.execute("INSERT INTO works VALUES (?, ?, ?, ?)", (id, concert_id, composer, work))
@@ -76,6 +79,26 @@ class Database:
         else:
             id = id[0] + 1
         return id
+
+
+    ### FETCHING DATA #############################################################################################################################
+
+    def get_all_concerts():
+        self.cursor.execute("SELECT festival_id,date,state,city,hall,type,note FROM concerts")
+        return self.cursor.fetchall()
+
+    def get_works(concert_id):
+        self.cursor.execute("SELECT composer,work FROM dirigents WHERE concert_id=?", (concert_id))
+        return self.fetchall()
+
+    def get_soloists(concert_id):
+        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id))
+        return self.fetchall()
+
+    def get_dirigents(concert_id):
+        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id))
+        return self.fetchall()
+
 
     ### AUTO COMPLETION #############################################################################################################################
 
