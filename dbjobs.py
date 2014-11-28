@@ -88,32 +88,45 @@ class Database:
         return self.cursor.fetchall()
 
     def get_works(self, concert_id):
-        self.cursor.execute("SELECT composer, work FROM dirigents WHERE concert_id=?", (concert_id))
+        self.cursor.execute("SELECT composer, work FROM works WHERE concert_id=?", (concert_id,))
         return self.cursor.fetchall()
 
     def get_soloists(self, concert_id):
-        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id))
+        self.cursor.execute("SELECT name FROM soloists WHERE concert_id=?", (concert_id,))
         return self.cursor.fetchall()
 
     def get_dirigents(self, concert_id):
-        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id))
+        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id,))
         return self.cursor.fetchall()
 
-    def find_concerts(params):
+    def find_concerts(self, params):
         query = "SELECT festival_id, date, state, city, hall, type, note FROM concerts WHERE "
         i = 1
-        for k, v in params.iteritems():
+        for k in params:
+            if (k == "date_from" or k == "date_to"):
+                continue
+            #query += "({}={})".format(k, params[k])
+            #if (i < len(params)):
+                #query += " AND "
+                #i = i + 1
+
             if (k == "festival_id") :
-                query += "festival_id={}".format(v)
+                query += "(festival_id={})".format(params[k])
             elif (k == "state"):
-                query += "state={}".format(v)
+                query += "(state='{}')".format(params[k])
             elif (k == "city"):
-                query += "city={}".format(v)
-            }
+                query += "(city='{}')".format(params[k])
+            elif (k == "hall"):
+                query += "(hall='{}')".format(params[k])
+            elif (k == "type"):
+                query += "(type='{}')".format(params[k])
 
             if (i < len(params)):
-                query += ", "
-                i++
+                query += " AND "
+                i = i + 1
+
+        if (("date_from" in params) and ("date_to" in params)):
+            query += "(date BETWEEN {} AND {})".format(params["date_from"], params["date_to"])
 
         print(query)
 
