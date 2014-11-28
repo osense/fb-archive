@@ -25,6 +25,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.dbjobs = dbjobs.Database(APPDIR + '/database.db')
         # Prepare GUI, show/hide widgets
         self.prepare_gui()
+        self.show_all_concerts()
 
     ### MAIN FUNCTIONS ##############################################################################################################################
 
@@ -54,7 +55,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.edit_city.textEdited.connect(self.getCompleterData)
         self.edit_type.textEdited.connect(self.getCompleterData)
         # Main table with concerts
-        headerdata = [self.tr('Datum'), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), self.tr('Festival'), self.tr('Poznámka'), ]
+        headerdata = [self.tr('Datum'), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), \
+                      self.tr('Festival'), self.tr('Skladatel, skladba'), self.tr('Dirigenti'), self.tr('Solisti'), self.tr('Poznámka'), ]
         self.concerts_model = ConcertsTableModel(self, headerdata)
         self.tableView.setModel(self.concerts_model)
 
@@ -84,6 +86,33 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def on_btn_search_clicked(self):
         print("search pressed")
+
+    def show_all_concerts(self):
+        """
+        Shows all concerts from the database in tableview
+        """
+        self.concerts_model.beginResetModel()
+        data = self.dbjobs.get_all_concerts()
+        for row in data:
+            concert_id = row[0]
+            date = row[1]
+            state = row[2]
+            city = row[3]
+            hall = row[4]
+            type = row[5]
+            note = row[6]
+            festival_id = row[7]
+            festival = "festival"
+            works = self.dbjobs.get_works(concert_id)
+            joined_works = []
+            for work in works:
+                joined_works.append(WORK_STR_SEPARATOR.join(work))
+            works = ', '.join(joined_works)
+            dirigents = ', '.join([i for sub in self.dbjobs.get_dirigents(concert_id) for i in sub])
+            soloists = ', '.join([i for sub in self.dbjobs.get_soloists(concert_id) for i in sub])
+            new_row = [date, state, city, hall, type, festival, works, dirigents, soloists, note]
+            self.concerts_model.addRow(new_row)
+        self.concerts_model.endResetModel()
 
     ### ADD and EDIT FUNCTIONS ######################################################################################################################
 
@@ -151,6 +180,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
 
             self.statusbar.showMessage(self.tr('Záznam byl úspěšne přidán.'), TIMEOUT_INFO)
             self.on_btn_edit_cancel_clicked()
+            self.show_all_concerts()
         except:
             self.statusbar.showMessage(self.tr('Záznam se nepodařilo přidat!'), TIMEOUT_ERROR)
 
@@ -186,5 +216,9 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def on_btn_works_remove_clicked(self):
         if self.lw_edit_works.currentIndex() != None:
             self.lw_edit_works.takeItem(self.lw_edit_works.currentIndex().row())
+
+    @pyqtSlot()
+    def on_actionSpr_va_festival_triggered(self):
+        print("test")
 
 # End of Mainformsub.py

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainform.ui'
 #
-# Created: Tue Nov 25 16:50:15 2014
+# Created: Fri Nov 28 11:12:39 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -283,6 +283,8 @@ class Ui_MainWindow(object):
         self.tableView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.tableView.setSortingEnabled(True)
         self.tableView.setObjectName("tableView")
+        self.tableView.horizontalHeader().setHighlightSections(False)
+        self.tableView.verticalHeader().setVisible(False)
         self.gridLayout_12.addWidget(self.splitter, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -328,6 +330,13 @@ class Ui_MainWindow(object):
         self.actionOdstranit.setObjectName("actionOdstranit")
         self.actionO_programe = QtWidgets.QAction(MainWindow)
         self.actionO_programe.setObjectName("actionO_programe")
+        self.actionSpr_va_festival = QtWidgets.QAction(MainWindow)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons/icons/Places-folder-sound-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionSpr_va_festival.setIcon(icon7)
+        self.actionSpr_va_festival.setObjectName("actionSpr_va_festival")
+        self.menuArchiv.addAction(self.actionSpr_va_festival)
+        self.menuArchiv.addSeparator()
         self.menuArchiv.addAction(self.actionUkoncit)
         self.menuZaznam.addAction(self.actionPridat)
         self.menuZaznam.addAction(self.actionUpravit)
@@ -336,6 +345,8 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuArchiv.menuAction())
         self.menubar.addAction(self.menuZaznam.menuAction())
         self.menubar.addAction(self.menuPomocnik.menuAction())
+        self.toolBar.addAction(self.actionSpr_va_festival)
+        self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionUkoncit)
         self.toolBar_2.addAction(self.actionPridat)
         self.toolBar_2.addAction(self.actionUpravit)
@@ -389,5 +400,6 @@ class Ui_MainWindow(object):
         self.actionUpravit.setText(_translate("MainWindow", "Upravit"))
         self.actionOdstranit.setText(_translate("MainWindow", "Odstranit"))
         self.actionO_programe.setText(_translate("MainWindow", "O programe"))
+        self.actionSpr_va_festival.setText(_translate("MainWindow", "Správa festivalů"))
 
 import resource_rc

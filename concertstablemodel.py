@@ -17,7 +17,7 @@ class ConcertsTableModel(QAbstractTableModel):
     def data(self, index, role):
         if not index.isValid():
             return QVariant()
-        if role == Qt.DisplayRole or role == Qt.EditRole:
+        if role == Qt.DisplayRole:
             return QVariant(self.data[index.row()][index.column()])
         return QVariant()
 
@@ -33,5 +33,8 @@ class ConcertsTableModel(QAbstractTableModel):
 
     def columnCount(self, parent=QModelIndex()):
         return len(self.headerdata)
+
+    def addRow(self, row):
+        self.data.append(row)
 
 # End of concertstablemodel.py

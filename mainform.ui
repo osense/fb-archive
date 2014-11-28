@@ -547,6 +547,12 @@
        <property name="sortingEnabled">
         <bool>true</bool>
        </property>
+       <attribute name="horizontalHeaderHighlightSections">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
       </widget>
      </widget>
     </item>
@@ -565,6 +571,8 @@
     <property name="title">
      <string>Archiv</string>
     </property>
+    <addaction name="actionSpr_va_festival"/>
+    <addaction name="separator"/>
     <addaction name="actionUkoncit"/>
    </widget>
    <widget class="QMenu" name="menuZaznam">
@@ -596,6 +604,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionSpr_va_festival"/>
+   <addaction name="separator"/>
    <addaction name="actionUkoncit"/>
   </widget>
   <widget class="QToolBar" name="toolBar_2">
@@ -666,6 +676,15 @@
   <action name="actionO_programe">
    <property name="text">
     <string>O programe</string>
+   </property>
+  </action>
+  <action name="actionSpr_va_festival">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/Places-folder-sound-icon.png</normaloff>:/icons/icons/Places-folder-sound-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Správa festivalů</string>
    </property>
   </action>
  </widget>
