@@ -103,7 +103,7 @@ class Database:
         query = "SELECT festival_id, date, state, city, hall, type, note FROM concerts WHERE "
         i = 1
         for k in params:
-            if (k == "date_from" or k == "date_to"):
+            if (k in ["date_from", "date_to"]):
                 continue
             #query += "({}={})".format(k, params[k])
             #if (i < len(params)):
@@ -120,6 +120,8 @@ class Database:
                 query += "(hall='{}')".format(params[k])
             elif (k == "type"):
                 query += "(type='{}')".format(params[k])
+            elif (k == "note"):
+                query += "(note='{}')".format(params[k])
 
             if (i < len(params)):
                 query += " AND "
@@ -130,6 +132,15 @@ class Database:
 
         print(query)
 
+
+    ### FESTIVALS ###################################################################################################################################
+
+        def get_all_festivals(self):
+            self.cursor.execute("SELECT * FROM festivals")
+            return self.cursor.fetchall()
+
+        def add_festival(name):
+            self.cursor.execute("INSERT INTO festivals VALUES (?, ?)", (self.get_next_id("festivals"), name))
 
     ### AUTO COMPLETION #############################################################################################################################
 
