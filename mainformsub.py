@@ -27,6 +27,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         # Prepare GUI, show/hide widgets
         self.prepare_gui()
         self.show_all_concerts()
+        self.frame_search.adjustSize()
 
     ### MAIN FUNCTIONS ##############################################################################################################################
 

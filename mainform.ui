@@ -16,547 +16,529 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_12">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-      <widget class="QFrame" name="frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <property name="leftMargin">
+        <number>0</number>
        </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
+       <property name="topMargin">
+        <number>0</number>
        </property>
-       <layout class="QGridLayout" name="gridLayout_9">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QFrame" name="frame_search">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_search">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
           </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
+          <property name="topMargin">
+           <number>0</number>
           </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
+          <property name="rightMargin">
+           <number>0</number>
           </property>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBox">
-             <property name="text">
-              <string>Datum:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QDateTimeEdit" name="dateTimeEdit_2">
-             <property name="calendarPopup">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QCheckBox" name="checkBox_4">
-             <property name="text">
-              <string>Festival:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLineEdit" name="lineEdit_14"/>
-           </item>
-           <item row="0" column="4">
-            <widget class="QCheckBox" name="checkBox_7">
-             <property name="text">
-              <string>Solisti:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5">
-            <widget class="QLineEdit" name="lineEdit_15"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="checkBox_2">
-             <property name="text">
-              <string>Místo konání:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_9"/>
-           </item>
-           <item row="1" column="2">
-            <widget class="QCheckBox" name="checkBox_5">
-             <property name="text">
-              <string>Skladatel:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QLineEdit" name="lineEdit_12"/>
-           </item>
-           <item row="1" column="4">
-            <widget class="QCheckBox" name="checkBox_8">
-             <property name="text">
-              <string>Dirigent:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="5">
-            <widget class="QLineEdit" name="lineEdit_10"/>
-           </item>
-           <item row="2" column="0">
-            <widget class="QCheckBox" name="checkBox_3">
-             <property name="text">
-              <string>Typ koncertu:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_13"/>
-           </item>
-           <item row="2" column="2">
-            <widget class="QCheckBox" name="checkBox_6">
-             <property name="text">
-              <string>Skladba:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QLineEdit" name="lineEdit_16"/>
-           </item>
-           <item row="2" column="4">
-            <widget class="QCheckBox" name="checkBox_9">
-             <property name="text">
-              <string>Poznámka:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="5">
-            <widget class="QLineEdit" name="lineEdit_11"/>
-           </item>
-           <item row="3" column="0" colspan="6">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="checkBox">
+            <property name="text">
+             <string>Datum:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QCheckBox" name="checkBox_4">
+            <property name="text">
+             <string>Festival:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLineEdit" name="lineEdit_14"/>
+          </item>
+          <item row="0" column="4">
+           <widget class="QCheckBox" name="checkBox_7">
+            <property name="text">
+             <string>Solisti:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QLineEdit" name="lineEdit_15"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="checkBox_2">
+            <property name="text">
+             <string>Místo konání:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_9"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="checkBox_5">
+            <property name="text">
+             <string>Skladatel:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLineEdit" name="lineEdit_12"/>
+          </item>
+          <item row="1" column="4">
+           <widget class="QCheckBox" name="checkBox_8">
+            <property name="text">
+             <string>Dirigent:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <widget class="QLineEdit" name="lineEdit_10"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="checkBox_3">
+            <property name="text">
+             <string>Typ koncertu:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEdit_13"/>
+          </item>
+          <item row="2" column="2">
+           <widget class="QCheckBox" name="checkBox_6">
+            <property name="text">
+             <string>Skladba:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLineEdit" name="lineEdit_16"/>
+          </item>
+          <item row="2" column="4">
+           <widget class="QCheckBox" name="checkBox_9">
+            <property name="text">
+             <string>Poznámka:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QLineEdit" name="lineEdit_11"/>
+          </item>
+          <item row="3" column="0" colspan="6">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_search">
+              <property name="text">
+               <string>Hledat</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resource.qrc">
+                <normaloff>:/icons/icons/Actions-edit-find-icon.png</normaloff>:/icons/icons/Actions-edit-find-icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QFrame" name="frame_edit">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="groupBox">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Datum:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QDateTimeEdit" name="edit_date"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Stát konání:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="edit_state"/>
+               </item>
+              </layout>
              </item>
-             <item>
-              <widget class="QPushButton" name="btn_search">
-               <property name="text">
-                <string>Hledat</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/icons/icons/Actions-edit-find-icon.png</normaloff>:/icons/icons/Actions-edit-find-icon.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
+             <item row="0" column="1">
+              <layout class="QGridLayout" name="gridLayout_5">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Město konání:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="edit_city"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Sál:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="edit_hall"/>
+               </item>
+              </layout>
              </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QFrame" name="frame_edit">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_11">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item row="0" column="0">
-            <widget class="QGroupBox" name="groupBox">
-             <property name="title">
-              <string/>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_8">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>Datum:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QDateTimeEdit" name="edit_date"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_2">
-                  <property name="text">
-                   <string>Stát konání:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="edit_state"/>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="gridLayout_5">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Město konání:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="edit_city"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>Sál:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="edit_hall"/>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="2">
-               <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Typ koncertu:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="edit_type"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_9">
-                  <property name="text">
-                   <string>Festival:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QComboBox" name="cb_festival"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-             <zorder></zorder>
-             <zorder></zorder>
-             <zorder></zorder>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="title">
-              <string/>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_10">
-              <item row="0" column="0" rowspan="2">
-               <layout class="QGridLayout" name="gridLayout_3">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_6">
-                  <property name="text">
-                   <string>Skladatel, skladba</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QToolButton" name="btn_works_add">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/icons/icons/Actions-list-add-icon.png</normaloff>:/icons/icons/Actions-list-add-icon.png</iconset>
-                  </property>
-                  <property name="autoRaise">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QToolButton" name="btn_works_remove">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/icons/icons/Actions-list-remove-icon.png</normaloff>:/icons/icons/Actions-list-remove-icon.png</iconset>
-                  </property>
-                  <property name="autoRaise">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0" colspan="3">
-                 <widget class="QListWidget" name="lw_edit_works"/>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="gridLayout_4">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>Dirigenti</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QToolButton" name="btn_dirigents_add">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/icons/icons/Actions-list-add-icon.png</normaloff>:/icons/icons/Actions-list-add-icon.png</iconset>
-                  </property>
-                  <property name="autoRaise">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QToolButton" name="btn_dirigents_remove">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/icons/icons/Actions-list-remove-icon.png</normaloff>:/icons/icons/Actions-list-remove-icon.png</iconset>
-                  </property>
-                  <property name="autoRaise">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0" colspan="3">
-                 <widget class="QListWidget" name="lw_edit_dirigents">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="2">
-               <layout class="QGridLayout" name="gridLayout_6">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_10">
-                  <property name="text">
-                   <string>Solisti</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QToolButton" name="btn_soloists_add">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/icons/icons/Actions-list-add-icon.png</normaloff>:/icons/icons/Actions-list-add-icon.png</iconset>
-                  </property>
-                  <property name="autoRaise">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QToolButton" name="btn_soloists_remove">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/icons/icons/Actions-list-remove-icon.png</normaloff>:/icons/icons/Actions-list-remove-icon.png</iconset>
-                  </property>
-                  <property name="autoRaise">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0" colspan="3">
-                 <widget class="QListWidget" name="lw_edit_soloists">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="1" colspan="2">
-               <layout class="QVBoxLayout" name="verticalLayout_3">
-                <item>
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>Poznámka</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QTextEdit" name="edit_note">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btn_edit_confirm">
-               <property name="text">
-                <string>Přidat</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/icons/icons/Actions-dialog-ok-apply-icon.png</normaloff>:/icons/icons/Actions-dialog-ok-apply-icon.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btn_edit_cancel">
-               <property name="text">
-                <string>Zrušit</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/icons/icons/Actions-dialog-close-icon.png</normaloff>:/icons/icons/Actions-dialog-close-icon.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
+             <item row="0" column="2">
+              <layout class="QGridLayout" name="gridLayout_7">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Typ koncertu:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="edit_type"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>Festival:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QComboBox" name="cb_festival"/>
+               </item>
+              </layout>
              </item>
             </layout>
-           </item>
-          </layout>
-          <zorder>groupBox_2</zorder>
-          <zorder>groupBox</zorder>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QTableView" name="tableView">
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="alternatingRowColors">
-        <bool>true</bool>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::SingleSelection</enum>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
-       <property name="cornerButtonEnabled">
-        <bool>false</bool>
-       </property>
-       <attribute name="horizontalHeaderHighlightSections">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
-       </attribute>
-      </widget>
+            <zorder></zorder>
+            <zorder></zorder>
+            <zorder></zorder>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_10">
+             <item row="0" column="0" rowspan="2">
+              <layout class="QGridLayout" name="gridLayout_3">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string>Skladatel, skladba</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QToolButton" name="btn_works_add">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icons/icons/Actions-list-add-icon.png</normaloff>:/icons/icons/Actions-list-add-icon.png</iconset>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QToolButton" name="btn_works_remove">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icons/icons/Actions-list-remove-icon.png</normaloff>:/icons/icons/Actions-list-remove-icon.png</iconset>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="3">
+                <widget class="QListWidget" name="lw_edit_works"/>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="1">
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Dirigenti</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QToolButton" name="btn_dirigents_add">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icons/icons/Actions-list-add-icon.png</normaloff>:/icons/icons/Actions-list-add-icon.png</iconset>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QToolButton" name="btn_dirigents_remove">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icons/icons/Actions-list-remove-icon.png</normaloff>:/icons/icons/Actions-list-remove-icon.png</iconset>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="3">
+                <widget class="QListWidget" name="lw_edit_dirigents"/>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="2">
+              <layout class="QGridLayout" name="gridLayout_6">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Solisti</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QToolButton" name="btn_soloists_add">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icons/icons/Actions-list-add-icon.png</normaloff>:/icons/icons/Actions-list-add-icon.png</iconset>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QToolButton" name="btn_soloists_remove">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icons/icons/Actions-list-remove-icon.png</normaloff>:/icons/icons/Actions-list-remove-icon.png</iconset>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="3">
+                <widget class="QListWidget" name="lw_edit_soloists"/>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="1" colspan="2">
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>Poznámka</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTextEdit" name="edit_note"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_edit_confirm">
+              <property name="text">
+               <string>Přidat</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resource.qrc">
+                <normaloff>:/icons/icons/Actions-dialog-ok-apply-icon.png</normaloff>:/icons/icons/Actions-dialog-ok-apply-icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_edit_cancel">
+              <property name="text">
+               <string>Zrušit</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resource.qrc">
+                <normaloff>:/icons/icons/Actions-dialog-close-icon.png</normaloff>:/icons/icons/Actions-dialog-close-icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+         <zorder>groupBox_2</zorder>
+         <zorder>groupBox</zorder>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QTableView" name="tableView">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="cornerButtonEnabled">
+       <bool>false</bool>
+      </property>
+      <attribute name="horizontalHeaderHighlightSections">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
      </widget>
     </item>
    </layout>
