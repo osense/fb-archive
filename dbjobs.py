@@ -84,11 +84,11 @@ class Database:
     ### FETCHING DATA #############################################################################################################################
 
     def get_all_concerts(self):
-        self.cursor.execute("SELECT festival_id,date,state,city,hall,type,note FROM concerts")
+        self.cursor.execute("SELECT id, date, state, city, hall, type, note, festival_id FROM concerts")
         return self.cursor.fetchall()
 
     def get_works(self, concert_id):
-        self.cursor.execute("SELECT composer,work FROM dirigents WHERE concert_id=?", (concert_id))
+        self.cursor.execute("SELECT composer, work FROM dirigents WHERE concert_id=?", (concert_id))
         return self.cursor.fetchall()
 
     def get_soloists(self, concert_id):
@@ -98,6 +98,24 @@ class Database:
     def get_dirigents(self, concert_id):
         self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id))
         return self.cursor.fetchall()
+
+    def find_concerts(params):
+        query = "SELECT festival_id, date, state, city, hall, type, note FROM concerts WHERE "
+        i = 1
+        for k, v in params.iteritems():
+            if (k == "festival_id") :
+                query += "festival_id={}".format(v)
+            elif (k == "state"):
+                query += "state={}".format(v)
+            elif (k == "city"):
+                query += "city={}".format(v)
+            }
+
+            if (i < len(params)):
+                query += ", "
+                i++
+
+        print(query)
 
 
     ### AUTO COMPLETION #############################################################################################################################
