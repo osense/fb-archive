@@ -7,6 +7,7 @@ import dbjobs
 import os
 import sys
 from dialogeditsub import DialogEditSub
+from dialogfestivalssub import DialogFestivalsSub
 from concertstablemodel import ConcertsTableModel
 import datetime
 
@@ -58,7 +59,23 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         headerdata = [self.tr('Datum'), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), \
                       self.tr('Festival'), self.tr('Skladatel, skladba'), self.tr('Dirigenti'), self.tr('Solisti'), self.tr('Poznámka'), ]
         self.concerts_model = ConcertsTableModel(self, headerdata)
-        self.tableView.setModel(self.concerts_model)
+        # Proxy model is set here for sorting
+        self.sort_proxy_model = QSortFilterProxyModel()
+        self.sort_proxy_model.setSortCaseSensitivity(Qt.CaseInsensitive)
+        self.sort_proxy_model.setSourceModel(self.concerts_model)
+        self.tableView.setModel(self.sort_proxy_model)
+        # Set column size for main table
+        self.tableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(6, QHeaderView.Stretch)
+        self.tableView.horizontalHeader().setSectionResizeMode(7, QHeaderView.Stretch)
+        self.tableView.horizontalHeader().setSectionResizeMode(8, QHeaderView.Stretch)
+        self.tableView.horizontalHeader().setSectionResizeMode(9, QHeaderView.ResizeToContents)
+
 
     def getCompleterData(self, text):
         """
@@ -86,11 +103,15 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def on_btn_search_clicked(self):
         print("search pressed")
+        self.dbjobs.add_dirigent(1, "asdfasdfasdfasdfasdfs")
+        self.dbjobs.add_(1, "asdfasdfasdfasdfasdfs")
+        self.dbjobs.add_dirigent(1, "asdfasdfasdfasdfasdfs")
 
     def show_all_concerts(self):
         """
         Shows all concerts from the database in tableview
         """
+        self.concerts_model.clear()
         self.concerts_model.beginResetModel()
         data = self.dbjobs.get_all_concerts()
         for row in data:
@@ -101,8 +122,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             hall = row[4]
             type = row[5]
             note = row[6]
-            festival_id = row[7]
-            festival = "festival"
+            festival = row[7]
             works = self.dbjobs.get_works(concert_id)
             joined_works = []
             for work in works:
@@ -138,6 +158,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.frame_edit.show()
         # Set current datetime
         self.edit_date.setDateTime(datetime.datetime.today())
+        # Add festivals to combobox
+        self.refresh_festivals()
 
     @pyqtSlot()
     def on_actionUpravit_triggered(self):
@@ -152,7 +174,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         city = self.edit_city.text().strip()
         hall = self.edit_hall.text().strip()
         type = self.edit_type.text().strip()
-        festival_id = None if self.cb_festival.currentIndex() == -1 else self.cb_festival.currentIndex()
+        festival_id = self.cb_festival.itemData(self.cb_festival.currentIndex(), Qt.UserRole)
         note = self.edit_note.toPlainText().strip() or None
         # Check input data
         if len(state) == 0:
@@ -182,6 +204,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.on_btn_edit_cancel_clicked()
             self.show_all_concerts()
         except:
+            print(sys.exc_info())
             self.statusbar.showMessage(self.tr('Záznam se nepodařilo přidat!'), TIMEOUT_ERROR)
 
     @pyqtSlot()
@@ -204,21 +227,30 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_btn_dirigents_remove_clicked(self):
-        if self.lw_edit_dirigents.currentIndex() != None:
+        if len(self.lw_edit_dirigents.selectedItems()) > 0:
             self.lw_edit_dirigents.takeItem(self.lw_edit_dirigents.currentIndex().row())
 
     @pyqtSlot()
     def on_btn_soloists_remove_clicked(self):
-        if self.lw_edit_soloists.currentIndex() != None:
+        if len(self.lw_edit_soloists.selectedItems()) > 0:
             self.lw_edit_soloists.takeItem(self.lw_edit_soloists.currentIndex().row())
 
     @pyqtSlot()
     def on_btn_works_remove_clicked(self):
-        if self.lw_edit_works.currentIndex() != None:
+        if len(self.lw_edit_works.selectedItems()) > 0:
             self.lw_edit_works.takeItem(self.lw_edit_works.currentIndex().row())
 
     @pyqtSlot()
-    def on_actionSpr_va_festival_triggered(self):
-        print("test")
+    def on_actionSprava_festivalov_triggered(self):
+        d = DialogFestivalsSub(self)
+        d.exec_()
+        self.refresh_festivals()
+
+    def refresh_festivals(self):
+        # Add festivals to combobox
+        self.cb_festival.clear()
+        festivals = self.dbjobs.get_all_festivals()
+        for festival in festivals:
+            self.cb_festival.addItem(festival[1], festival[0])
 
 # End of Mainformsub.py

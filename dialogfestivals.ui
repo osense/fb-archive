@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>DialogFestivals</class>
+ <widget class="QDialog" name="DialogFestivals">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
+    <width>387</width>
     <height>386</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QToolButton" name="btn_dirigents_add">
+      <widget class="QToolButton" name="btn_festivals_add">
        <property name="text">
         <string>...</string>
        </property>
@@ -38,7 +38,7 @@
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QToolButton" name="btn_dirigents_remove">
+      <widget class="QToolButton" name="btn_festivals_remove">
        <property name="text">
         <string>...</string>
        </property>
@@ -96,5 +96,22 @@
  <resources>
   <include location="resource.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_close</sender>
+   <signal>clicked()</signal>
+   <receiver>DialogFestivals</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>337</x>
+     <y>361</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>254</x>
+     <y>362</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

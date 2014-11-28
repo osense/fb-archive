@@ -18,7 +18,23 @@ class ConcertsTableModel(QAbstractTableModel):
         if not index.isValid():
             return QVariant()
         if role == Qt.DisplayRole:
-            return QVariant(self.data[index.row()][index.column()])
+            # Show multiline note as one line with 3 dots
+            if index.column() == 9:
+                text = self.data[index.row()][index.column()]
+                if (text != None) and (text.count('\n') > 0):
+                    text = text[:text.find('\n')] + '...'
+                return QVariant(text)
+            else:
+                return QVariant(self.data[index.row()][index.column()])
+        if role == Qt.ToolTipRole:
+            if index.column() in [6, 7, 8]:
+                text = self.data[index.row()][index.column()]
+                if text != None:
+                    QToolTip.showText(self.parent.cursor().pos(), text.replace(', ', '\n'))
+            elif index.column() == 9:
+                text = self.data[index.row()][index.column()]
+                if (text != None) and (text.count('\n') > 0):
+                    QToolTip.showText(self.parent.cursor().pos(), text)
         return QVariant()
 
     def headerData(self, col, orientation, role):
@@ -36,5 +52,10 @@ class ConcertsTableModel(QAbstractTableModel):
 
     def addRow(self, row):
         self.data.append(row)
+
+    def clear(self):
+        self.beginResetModel()
+        self.data = []
+        self.endResetModel()
 
 # End of concertstablemodel.py

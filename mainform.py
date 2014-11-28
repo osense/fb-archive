@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainform.ui'
 #
-# Created: Fri Nov 28 11:12:39 2014
+# Created: Fri Nov 28 14:03:30 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -330,12 +330,12 @@ class Ui_MainWindow(object):
         self.actionOdstranit.setObjectName("actionOdstranit")
         self.actionO_programe = QtWidgets.QAction(MainWindow)
         self.actionO_programe.setObjectName("actionO_programe")
-        self.actionSpr_va_festival = QtWidgets.QAction(MainWindow)
+        self.actionSprava_festivalov = QtWidgets.QAction(MainWindow)
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(":/icons/icons/Places-folder-sound-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionSpr_va_festival.setIcon(icon7)
-        self.actionSpr_va_festival.setObjectName("actionSpr_va_festival")
-        self.menuArchiv.addAction(self.actionSpr_va_festival)
+        self.actionSprava_festivalov.setIcon(icon7)
+        self.actionSprava_festivalov.setObjectName("actionSprava_festivalov")
+        self.menuArchiv.addAction(self.actionSprava_festivalov)
         self.menuArchiv.addSeparator()
         self.menuArchiv.addAction(self.actionUkoncit)
         self.menuZaznam.addAction(self.actionPridat)
@@ -345,7 +345,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuArchiv.menuAction())
         self.menubar.addAction(self.menuZaznam.menuAction())
         self.menubar.addAction(self.menuPomocnik.menuAction())
-        self.toolBar.addAction(self.actionSpr_va_festival)
+        self.toolBar.addAction(self.actionSprava_festivalov)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionUkoncit)
         self.toolBar_2.addAction(self.actionPridat)
@@ -400,6 +400,6 @@ class Ui_MainWindow(object):
         self.actionUpravit.setText(_translate("MainWindow", "Upravit"))
         self.actionOdstranit.setText(_translate("MainWindow", "Odstranit"))
         self.actionO_programe.setText(_translate("MainWindow", "O programe"))
-        self.actionSpr_va_festival.setText(_translate("MainWindow", "Správa festivalů"))
+        self.actionSprava_festivalov.setText(_translate("MainWindow", "Správa festivalů"))
 
 import resource_rc

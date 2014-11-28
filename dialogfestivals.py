@@ -2,39 +2,39 @@
 
 # Form implementation generated from reading ui file 'dialogfestivals.ui'
 #
-# Created: Fri Nov 28 11:12:39 2014
+# Created: Fri Nov 28 14:03:30 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(388, 386)
-        self.gridLayout_2 = QtWidgets.QGridLayout(Dialog)
+class Ui_DialogFestivals(object):
+    def setupUi(self, DialogFestivals):
+        DialogFestivals.setObjectName("DialogFestivals")
+        DialogFestivals.resize(387, 386)
+        self.gridLayout_2 = QtWidgets.QGridLayout(DialogFestivals)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
-        self.label_7 = QtWidgets.QLabel(Dialog)
+        self.label_7 = QtWidgets.QLabel(DialogFestivals)
         self.label_7.setObjectName("label_7")
         self.gridLayout.addWidget(self.label_7, 0, 0, 1, 1)
-        self.btn_dirigents_add = QtWidgets.QToolButton(Dialog)
+        self.btn_festivals_add = QtWidgets.QToolButton(DialogFestivals)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/Actions-list-add-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_dirigents_add.setIcon(icon)
-        self.btn_dirigents_add.setAutoRaise(True)
-        self.btn_dirigents_add.setObjectName("btn_dirigents_add")
-        self.gridLayout.addWidget(self.btn_dirigents_add, 0, 1, 1, 1)
-        self.btn_dirigents_remove = QtWidgets.QToolButton(Dialog)
+        self.btn_festivals_add.setIcon(icon)
+        self.btn_festivals_add.setAutoRaise(True)
+        self.btn_festivals_add.setObjectName("btn_festivals_add")
+        self.gridLayout.addWidget(self.btn_festivals_add, 0, 1, 1, 1)
+        self.btn_festivals_remove = QtWidgets.QToolButton(DialogFestivals)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/icons/Actions-list-remove-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_dirigents_remove.setIcon(icon1)
-        self.btn_dirigents_remove.setAutoRaise(True)
-        self.btn_dirigents_remove.setObjectName("btn_dirigents_remove")
-        self.gridLayout.addWidget(self.btn_dirigents_remove, 0, 2, 1, 1)
-        self.lw_festivals = QtWidgets.QListWidget(Dialog)
+        self.btn_festivals_remove.setIcon(icon1)
+        self.btn_festivals_remove.setAutoRaise(True)
+        self.btn_festivals_remove.setObjectName("btn_festivals_remove")
+        self.gridLayout.addWidget(self.btn_festivals_remove, 0, 2, 1, 1)
+        self.lw_festivals = QtWidgets.QListWidget(DialogFestivals)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -47,7 +47,7 @@ class Ui_Dialog(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.btn_close = QtWidgets.QPushButton(Dialog)
+        self.btn_close = QtWidgets.QPushButton(DialogFestivals)
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/icons/icons/Actions-dialog-close-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_close.setIcon(icon2)
@@ -55,15 +55,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.addWidget(self.btn_close)
         self.gridLayout_2.addLayout(self.horizontalLayout, 1, 0, 1, 1)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(DialogFestivals)
+        self.btn_close.clicked.connect(DialogFestivals.reject)
+        QtCore.QMetaObject.connectSlotsByName(DialogFestivals)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, DialogFestivals):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Správa festivalů"))
-        self.label_7.setText(_translate("Dialog", "Festivaly"))
-        self.btn_dirigents_add.setText(_translate("Dialog", "..."))
-        self.btn_dirigents_remove.setText(_translate("Dialog", "..."))
-        self.btn_close.setText(_translate("Dialog", "Zavřít"))
+        DialogFestivals.setWindowTitle(_translate("DialogFestivals", "Správa festivalů"))
+        self.label_7.setText(_translate("DialogFestivals", "Festivaly"))
+        self.btn_festivals_add.setText(_translate("DialogFestivals", "..."))
+        self.btn_festivals_remove.setText(_translate("DialogFestivals", "..."))
+        self.btn_close.setText(_translate("DialogFestivals", "Zavřít"))
 
 import resource_rc

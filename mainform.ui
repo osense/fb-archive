@@ -547,6 +547,9 @@
        <property name="sortingEnabled">
         <bool>true</bool>
        </property>
+       <property name="cornerButtonEnabled">
+        <bool>false</bool>
+       </property>
        <attribute name="horizontalHeaderHighlightSections">
         <bool>false</bool>
        </attribute>
@@ -571,7 +574,7 @@
     <property name="title">
      <string>Archiv</string>
     </property>
-    <addaction name="actionSpr_va_festival"/>
+    <addaction name="actionSprava_festivalov"/>
     <addaction name="separator"/>
     <addaction name="actionUkoncit"/>
    </widget>
@@ -604,7 +607,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSpr_va_festival"/>
+   <addaction name="actionSprava_festivalov"/>
    <addaction name="separator"/>
    <addaction name="actionUkoncit"/>
   </widget>
@@ -678,7 +681,7 @@
     <string>O programe</string>
    </property>
   </action>
-  <action name="actionSpr_va_festival">
+  <action name="actionSprava_festivalov">
    <property name="icon">
     <iconset resource="resource.qrc">
      <normaloff>:/icons/icons/Places-folder-sound-icon.png</normaloff>:/icons/icons/Places-folder-sound-icon.png</iconset>

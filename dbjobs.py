@@ -13,24 +13,28 @@ class Database:
             print("Creating database")
             self.create_db()
 
+    def last_id(self):
+        self.cursor.execute("SELECT last_insert_rowid()")
+        return self.cursor.fetchone()[0]
+
     def create_db(self):
-        self.conn.execute("CREATE TABLE works (id INTEGER NOT NULL, \
+        self.conn.execute("CREATE TABLE works (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
                                                concert_id INTEGER NOT NULL, \
                                                composer TEXT NOT NULL, \
                                                work TEXT NOT NULL)")
 
-        self.conn.execute("CREATE TABLE soloists (id INTEGER NOT NULL, \
+        self.conn.execute("CREATE TABLE soloists (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
                                                   concert_id TEXT NOT NULL, \
                                                   name TEXT NOT NULL)")
 
-        self.conn.execute("CREATE TABLE festivals (id INTEGER NOT NULL, \
+        self.conn.execute("CREATE TABLE festivals (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
                                                    name TEXT NOT NULL)")
 
-        self.conn.execute("CREATE TABLE dirigents (id INTEGER NOT NULL, \
+        self.conn.execute("CREATE TABLE dirigents (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
                                                    concert_id INTEGER NOT NULL, \
                                                    name TEXT NOT NULL)")
 
-        self.conn.execute("CREATE TABLE concerts (id INTEGER NOT NULL, \
+        self.conn.execute("CREATE TABLE concerts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
                                                   festival_id INTEGER, \
                                                   date TEXT NOT NULL, \
                                                   state TEXT NOT NULL, \
@@ -45,46 +49,33 @@ class Database:
     ### ADDING DATA #############################################################################################################################
 
     def add_work(self, concert_id, composer, work):
-        id = self.get_next_id("works")
-        self.cursor.execute("INSERT INTO works VALUES (?, ?, ?, ?)", (id, concert_id, composer, work))
+        self.cursor.execute("INSERT INTO works(concert_id, composer, work) VALUES (?, ?, ?)", (concert_id, composer, work))
         self.conn.commit()
 
     def add_soloist(self, concert_id, name):
-        id = self.get_next_id("soloists")
-        self.cursor.execute("INSERT INTO soloists VALUES (?, ?, ?)", (id, concert_id, name))
+        self.cursor.execute("INSERT INTO soloists(concert_id, name) VALUES (?, ?)", (concert_id, name))
         self.conn.commit()
 
     def add_festival(self, name):
-        id = self.get_next_id("festivals")
-        self.cursor.execute("INSERT INTO festivals VALUES (?, ?)", (id, name))
+        self.cursor.execute("INSERT INTO festivals(name) VALUES (?)", (name,))
         self.conn.commit()
 
     def add_dirigent(self, concert_id, name):
-        id = self.get_next_id("dirigents")
-        self.cursor.execute("INSERT INTO dirigents VALUES (?, ?, ?)", (id, concert_id, name))
+        self.cursor.execute("INSERT INTO dirigents(concert_id, name) VALUES (?, ?)", (concert_id, name))
         self.conn.commit()
 
     def add_concert(self, festival_id, date, state, city, hall, type, note):
-        id = self.get_next_id("concerts")
-
-        self.cursor.execute("INSERT INTO concerts VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (id, festival_id, date, state, city, hall, type, note))
+        self.cursor.execute("INSERT INTO concerts(festival_id, date, state, city, hall, type, note) VALUES (?, ?, ?, ?, ?, ?, ?)", (festival_id, date, state, city, hall, type, note))
         self.conn.commit()
-        return id
-
-    def get_next_id(self, table):
-        self.cursor.execute("SELECT MAX(id) FROM {0}".format(table))
-        id = self.cursor.fetchone()
-        if (id[0] is None):
-            id = 0
-        else:
-            id = id[0] + 1
-        return id
-
+        return self.last_id()
 
     ### FETCHING DATA #############################################################################################################################
 
     def get_all_concerts(self):
-        self.cursor.execute("SELECT id, date, state, city, hall, type, note, festival_id FROM concerts")
+        self.cursor.execute("SELECT c.id, c.date, c.state, c.city, c.hall, c.type, c.note, f.name as festival "
+                            "FROM concerts c "
+                            "LEFT JOIN festivals f ON f.id = c.festival_id "
+                            "ORDER BY c.date DESC")
         return self.cursor.fetchall()
 
     def get_works(self, concert_id):
@@ -135,12 +126,18 @@ class Database:
 
     ### FESTIVALS ###################################################################################################################################
 
-        def get_all_festivals(self):
-            self.cursor.execute("SELECT * FROM festivals")
-            return self.cursor.fetchall()
+    def get_all_festivals(self):
+        self.cursor.execute("SELECT id, name FROM festivals ORDER BY name")
+        return self.cursor.fetchall()
 
-        def add_festival(name):
-            self.cursor.execute("INSERT INTO festivals VALUES (?, ?)", (self.get_next_id("festivals"), name))
+    def add_festival(self, name):
+        self.cursor.execute("INSERT INTO festivals(name) VALUES (?)", (name,))
+        self.conn.commit()
+        return self.last_id()
+
+    def remove_festival(self, id):
+        self.cursor.execute("DELETE FROM festivals WHERE id = ?", (id,))
+        self.conn.commit()
 
     ### AUTO COMPLETION #############################################################################################################################
 
@@ -176,6 +173,10 @@ class Database:
         self.cursor.execute("SELECT DISTINCT name FROM soloists WHERE name LIKE '{}%' LIMIT 7".format(text))
         return self.cursor.fetchall()
 
+    def get_completion_for_festival(self, text):
+        self.cursor.execute("SELECT DISTINCT name FROM festivals WHERE name LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
     ### OTHER #######################################################################################################################################
 
     def debug_print(self):
@@ -192,3 +193,5 @@ class Database:
 
     def close(self):
         self.conn.close()
+
+# End of dbjobs.py
