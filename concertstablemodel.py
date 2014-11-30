@@ -58,4 +58,15 @@ class ConcertsTableModel(QAbstractTableModel):
         self.data = []
         self.endResetModel()
 
+    def get_item_data(self, index, column):
+        return self.data[index.row()][column]
+
+    def removeRow(self, row, parent=QModelIndex()):
+        """
+        Remove just one row
+        """
+        self.beginRemoveRows(parent, row, row)
+        self.data.pop(row)
+        self.endRemoveRows()
+
 # End of concertstablemodel.py

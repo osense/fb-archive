@@ -45,6 +45,23 @@ class Database:
         self.conn.commit()
         print("Database successfuly created")
 
+    ### REMOVING DATA ###########################################################################################################################
+
+    def remove_concert(self, id):
+        self.cursor.execute("DELETE FROM concerts WHERE id = ?", (id,))
+        self.conn.commit()
+
+    def remove_soloists_for_concert(self, id):
+        self.cursor.execute("DELETE FROM soloists WHERE concert_id = ?", (id,))
+        self.conn.commit()
+
+    def remove_dirigents_for_concert(self, id):
+        self.cursor.execute("DELETE FROM dirigents WHERE concert_id = ?", (id,))
+        self.conn.commit()
+
+    def remove_works_for_concert(self, id):
+        self.cursor.execute("DELETE FROM works WHERE concert_id = ?", (id,))
+        self.conn.commit()
 
     ### ADDING DATA #############################################################################################################################
 
@@ -72,7 +89,7 @@ class Database:
     ### FETCHING DATA #############################################################################################################################
 
     def get_all_concerts(self):
-        self.cursor.execute("SELECT c.id, c.date, c.state, c.city, c.hall, c.type, c.note, f.name as festival "
+        self.cursor.execute("SELECT c.id, c.date, c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
                             "FROM concerts c "
                             "LEFT JOIN festivals f ON f.id = c.festival_id "
                             "ORDER BY c.date DESC")

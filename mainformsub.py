@@ -16,7 +16,8 @@ TIMEOUT_INFO = 3000
 TIMEOUT_ERROR = 6000
 WORK_STR_SEPARATOR = ' - '
 APPDIR = os.path.abspath(os.path.dirname(sys.argv[0]))
-
+COLUMN_CONCERT_ID = 10
+COLUMN_FESTIVAL_ID = 11
 
 class Mainformsub(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -124,6 +125,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             type = row[5]
             note = row[6]
             festival = row[7]
+            festival_id = row[8]
             works = self.dbjobs.get_works(concert_id)
             joined_works = []
             for work in works:
@@ -131,7 +133,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             works = ', '.join(joined_works)
             dirigents = ', '.join([i for sub in self.dbjobs.get_dirigents(concert_id) for i in sub])
             soloists = ', '.join([i for sub in self.dbjobs.get_soloists(concert_id) for i in sub])
-            new_row = [date, state, city, hall, type, festival, works, dirigents, soloists, note]
+            new_row = [date, state, city, hall, type, festival, works, dirigents, soloists, note, concert_id, festival_id]
             self.concerts_model.addRow(new_row)
         self.concerts_model.endResetModel()
 
@@ -253,5 +255,26 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         festivals = self.dbjobs.get_all_festivals()
         for festival in festivals:
             self.cb_festival.addItem(festival[1], festival[0])
+
+    @pyqtSlot()
+    def on_actionOdstranit_triggered(self):
+        """
+        Removes the concert from database
+        """
+        selected_indexes = self.tableView.selectedIndexes()
+        if len(selected_indexes) > 0:
+            mb = QMessageBox.question(self, self.tr('Upozornení'), self.tr('Opravdu chcete vybraný koncert smazat?'))
+            if mb == QMessageBox.Yes:
+                concert_id = self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CONCERT_ID)
+                # Remove concert from database
+                self.dbjobs.remove_concert(concert_id)
+                # Remove dirigents assigned to this concert
+                self.dbjobs.remove_dirigents_for_concert(concert_id)
+                # Remove works assigned to this concert
+                self.dbjobs.remove_works_for_concert(concert_id)
+                # Remove soloists assigned to this concert
+                self.dbjobs.remove_soloists_for_concert(concert_id)
+                self.concerts_model.removeRow(selected_indexes[0].row())
+                self.statusbar.showMessage(self.tr('Záznam byl úspěšne odstráněn.'), TIMEOUT_INFO)
 
 # End of Mainformsub.py
