@@ -76,7 +76,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.tableView.horizontalHeader().setSectionResizeMode(6, QHeaderView.Stretch)
         self.tableView.horizontalHeader().setSectionResizeMode(7, QHeaderView.Stretch)
         self.tableView.horizontalHeader().setSectionResizeMode(8, QHeaderView.Stretch)
-        self.tableView.horizontalHeader().setSectionResizeMode(9, QHeaderView.ResizeToContents)
+        #self.tableView.horizontalHeader().setSectionResizeMode(9, QHeaderView.ResizeToContents)
 
 
     def getCompleterData(self, text):
@@ -143,7 +143,12 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def on_btn_edit_cancel_clicked(self):
         self.frame_edit.hide()
         self.frame_search.show()
-        # Clear widgets
+        self.clear_widgets()
+
+    def clear_widgets(self):
+        """
+        Clears widgets
+        """
         self.edit_city.clear()
         self.edit_date.clear()
         self.edit_hall.clear()
@@ -157,17 +162,50 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_actionPridat_triggered(self):
+        self.clear_widgets()
         self.frame_search.hide()
         self.frame_edit.show()
-        # Set current datetime
-        self.edit_date.setDateTime(datetime.datetime.today())
         # Add festivals to combobox
         self.refresh_festivals()
+        # Show / Hide unused buttons
+        self.btn_edit_confirm.show()
+        self.btn_edit_save.hide()
+        # Set current datetime
+        self.edit_date.setDateTime(datetime.datetime.today())
+
+    @pyqtSlot("QModelIndex")
+    def on_tableView_doubleClicked(self, index):
+        self.on_actionUpravit_triggered()
 
     @pyqtSlot()
     def on_actionUpravit_triggered(self):
-        self.frame_search.hide()
-        self.frame_edit.show()
+        selected_indexes = self.tableView.selectedIndexes()
+        if len(selected_indexes) > 0:
+            self.clear_widgets()
+            self.frame_search.hide()
+            self.frame_edit.show()
+            # Add festivals to combobox
+            self.refresh_festivals()
+            # Show / Hide unused buttons
+            self.btn_edit_confirm.hide()
+            self.btn_edit_save.show()
+            # Load data to widgets
+            self.now_edited_concert_id = self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CONCERT_ID)
+            self.edit_date.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], 0))
+            self.edit_state.setText(self.concerts_model.get_item_data(selected_indexes[0], 1))
+            self.edit_city.setText(self.concerts_model.get_item_data(selected_indexes[0], 2))
+            self.edit_hall.setText(self.concerts_model.get_item_data(selected_indexes[0], 3))
+            self.edit_type.setText(self.concerts_model.get_item_data(selected_indexes[0], 4))
+            self.cb_festival.setCurrentIndex(self.cb_festival.findData(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_FESTIVAL_ID)))
+            self.edit_note.setText(self.concerts_model.get_item_data(selected_indexes[0], 9))
+            # dirigents
+            self.lw_edit_dirigents.addItems(self.concerts_model.get_item_data(selected_indexes[0], 7).split(', '))
+            # soloists
+            self.lw_edit_soloists.addItems(self.concerts_model.get_item_data(selected_indexes[0], 8).split(', '))
+            # works
+            self.lw_edit_works.addItems(self.concerts_model.get_item_data(selected_indexes[0], 6).split(', '))
+        else:
+            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
 
     @pyqtSlot()
     def on_btn_edit_confirm_clicked(self):
@@ -276,5 +314,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 self.dbjobs.remove_soloists_for_concert(concert_id)
                 self.concerts_model.removeRow(selected_indexes[0].row())
                 self.statusbar.showMessage(self.tr('Záznam byl úspěšne odstráněn.'), TIMEOUT_INFO)
+        else:
+            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
 
 # End of Mainformsub.py

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogedit.ui'
 #
-# Created: Fri Nov 28 16:49:14 2014
+# Created: Thu Dec  4 18:33:30 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!

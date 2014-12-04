@@ -7,7 +7,7 @@ import os
 class Database:
     def __init__(self, dbpath):
         database_exists = os.path.exists(dbpath)
-        self.conn = sqlite3.connect(dbpath)
+        self.conn = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
         self.cursor = self.conn.cursor()
         if not database_exists:
             print("Creating database")
@@ -36,7 +36,7 @@ class Database:
 
         self.conn.execute("CREATE TABLE concerts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
                                                   festival_id INTEGER, \
-                                                  date TEXT NOT NULL, \
+                                                  date TIMESTAMP NOT NULL, \
                                                   state TEXT NOT NULL, \
                                                   city TEXT NOT NULL, \
                                                   hall TEXT NOT NULL, \
@@ -89,7 +89,7 @@ class Database:
     ### FETCHING DATA #############################################################################################################################
 
     def get_all_concerts(self):
-        self.cursor.execute("SELECT c.id, c.date, c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
+        self.cursor.execute("SELECT c.id, c.date as 'x [timestamp]', c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
                             "FROM concerts c "
                             "LEFT JOIN festivals f ON f.id = c.festival_id "
                             "ORDER BY c.date DESC")
