@@ -79,6 +79,7 @@ class Database:
     def add_work(self, concert_id, composer, work):
         self.cursor.execute("INSERT INTO works(concert_id, composer, work) VALUES (?, ?, ?)", (concert_id, composer, work))
         self.conn.commit()
+        return self.last_id()
 
     def add_soloist(self, concert_id, work_id, name):
         self.cursor.execute("INSERT INTO soloists(concert_id, work_id, name) VALUES (?, ?, ?)", (concert_id, work_id, name))
@@ -118,19 +119,23 @@ class Database:
         return self.cursor.fetchall()
 
     def get_works(self, concert_id):
-        self.cursor.execute("SELECT composer, work FROM works WHERE concert_id=?", (concert_id,))
+        self.cursor.execute("SELECT id, composer, work FROM works WHERE concert_id=? ORDER BY composer", (concert_id,))
         return self.cursor.fetchall()
 
     def get_soloists_for_concert(self, concert_id):
-        self.cursor.execute("SELECT name FROM soloists WHERE concert_id=?", (concert_id,))
+        self.cursor.execute("SELECT name FROM soloists WHERE concert_id=? ORDER BY name", (concert_id,))
+        return self.cursor.fetchall()
+
+    def get_soloists_for_work(self, work_id):
+        self.cursor.execute("SELECT name FROM soloists WHERE work_id=? ORDER BY name", (work_id,))
         return self.cursor.fetchall()
 
     def get_dirigents(self, concert_id):
-        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id,))
+        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=? ORDER BY name", (concert_id,))
         return self.cursor.fetchall()
 
     def get_choirs(self, concert_id):
-        self.cursor.execute("SELECT name FROM choirs WHERE concert_id=?", (concert_id,))
+        self.cursor.execute("SELECT name FROM choirs WHERE concert_id=? ORDER BY name", (concert_id,))
         return self.cursor.fetchall()
 
     def find_concerts(self, params):

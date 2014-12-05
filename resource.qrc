@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/Actions-list-add-user-icon.png</file>
     <file>icons/Actions-edit-find-icon.png</file>
     <file>icons/Actions-application-exit-icon.png</file>
     <file>icons/Actions-dialog-close-icon.png</file>

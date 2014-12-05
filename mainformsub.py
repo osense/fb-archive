@@ -132,7 +132,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             works = self.dbjobs.get_works(concert_id)
             joined_works = []
             for work in works:
-                joined_works.append(WORK_STR_SEPARATOR.join(work))
+                joined_works.append(WORK_STR_SEPARATOR.join(work[1:]))
             works = ', '.join(joined_works)
             dirigents = ', '.join([i for sub in self.dbjobs.get_dirigents(concert_id) for i in sub])
             choirs = ', '.join([i for sub in self.dbjobs.get_choirs(concert_id) for i in sub])
@@ -164,8 +164,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.cb_festival.setCurrentIndex(0)
         self.lw_edit_dirigents.clear()
         self.lw_edit_choirs.clear()
-        self.lw_edit_soloists.clear()
-        self.lw_edit_works.clear()
+        self.tw_edit_works.clear()
 
     @pyqtSlot()
     def on_actionPridat_triggered(self):
@@ -214,12 +213,18 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             # dirigents
             if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DIRIGENTS)) != 0:
                 self.lw_edit_dirigents.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DIRIGENTS).split(', '))
-            # soloists
-            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_SOLOISTS)) != 0:
-                self.lw_edit_soloists.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_SOLOISTS).split(', '))
-            # works
-            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_WORKS)) != 0:
-                self.lw_edit_works.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_WORKS).split(', '))
+            # soloists and works
+            works = self.dbjobs.get_works(self.now_edited_concert_id)
+            for work in works:
+                work_item = QTreeWidgetItem()
+                work_item.setText(0, '{}{}{}'.format(work[1], WORK_STR_SEPARATOR, work[2]))
+                soloists = self.dbjobs.get_soloists_for_work(work[0])
+                for soloist in soloists:
+                    soloist_item = QTreeWidgetItem()
+                    soloist_item.setText(0, soloist[0])
+                    work_item.addChild(soloist_item)
+                self.tw_edit_works.invisibleRootItem().addChild(work_item)
+            self.tw_edit_works.expandAll()
         else:
             QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
 
@@ -255,13 +260,15 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             # Insert dirigents into DB
             for i in range(self.lw_edit_dirigents.count()):
                 self.dbjobs.add_dirigent(concert_id, self.lw_edit_dirigents.item(i).text())
-            # Insert soloists into DB
-            for i in range(self.lw_edit_soloists.count()):
-                self.dbjobs.add_soloist(concert_id, 0, self.lw_edit_soloists.item(i).text())
-            # Insert works into DB
-            for i in range(self.lw_edit_works.count()):
-                data = self.lw_edit_works.item(i).text().split(WORK_STR_SEPARATOR)
-                self.dbjobs.add_work(concert_id, data[0], data[1])
+            # Insert soloists and works into DB
+            for i in range(self.tw_edit_works.invisibleRootItem().childCount()):
+                item = self.tw_edit_works.invisibleRootItem().child(i)
+                # Add work
+                data = item.text(0).split(WORK_STR_SEPARATOR)
+                work_id = self.dbjobs.add_work(concert_id, data[0], data[1])
+                # Add soloists
+                for j in range(item.childCount()):
+                    self.dbjobs.add_soloist(concert_id, work_id, item.child(j).text(0))
 
             self.statusbar.showMessage(self.tr('Záznam byl úspěšne přidán.'), TIMEOUT_INFO)
             self.on_btn_edit_cancel_clicked()
@@ -277,16 +284,30 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.lw_edit_dirigents.addItem(d.dataDirigent)
 
     @pyqtSlot()
-    def on_btn_soloists_add_clicked(self):
-        d = DialogEditSub(self, soloists=True, caption=self.tr('Zadejte jméno sólistu'))
-        if d.exec_() == QDialog.Accepted:
-            self.lw_edit_soloists.addItem(d.dataSoloist)
+    def on_btn_works_add_soloist_clicked(self):
+        selected_items = self.tw_edit_works.selectedItems()
+        if len(selected_items) > 0:
+            d = DialogEditSub(self, soloists=True, caption=self.tr('Zadejte jméno sólistu'))
+            if d.exec_() == QDialog.Accepted:
+                item = QTreeWidgetItem()
+                item.setText(0, d.dataSoloist)
+                parent = selected_items[0].parent()
+                if parent != None:
+                    parent.addChild(item)
+                else:
+                    selected_items[0].addChild(item)
+                self.tw_edit_works.expandAll()
+        else:
+            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyla označena žádna skladba.'))
 
     @pyqtSlot()
     def on_btn_works_add_clicked(self):
         d = DialogEditSub(self, works=True, caption=self.tr('Zadejte jméno skladatele a název díla'))
         if d.exec_() == QDialog.Accepted:
-            self.lw_edit_works.addItem('{}{}{}'.format(d.dataComposer, WORK_STR_SEPARATOR, d.dataWork))
+            item = QTreeWidgetItem()
+            item.setText(0, '{}{}{}'.format(d.dataComposer, WORK_STR_SEPARATOR, d.dataWork))
+            self.tw_edit_works.invisibleRootItem().addChild(item)
+            self.tw_edit_works.expandAll()
 
     @pyqtSlot()
     def on_btn_choirs_add_clicked(self):
@@ -305,14 +326,14 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.lw_edit_dirigents.takeItem(self.lw_edit_dirigents.currentIndex().row())
 
     @pyqtSlot()
-    def on_btn_soloists_remove_clicked(self):
-        if len(self.lw_edit_soloists.selectedItems()) > 0:
-            self.lw_edit_soloists.takeItem(self.lw_edit_soloists.currentIndex().row())
-
-    @pyqtSlot()
     def on_btn_works_remove_clicked(self):
-        if len(self.lw_edit_works.selectedItems()) > 0:
-            self.lw_edit_works.takeItem(self.lw_edit_works.currentIndex().row())
+        selected_items = self.tw_edit_works.selectedItems()
+        if len(selected_items) > 0:
+            parent = selected_items[0].parent()
+            if parent != None:
+                parent.removeChild(selected_items[0])
+            else:
+                self.tw_edit_works.takeTopLevelItem(self.tw_edit_works.indexFromItem(selected_items[0]).row())
 
     @pyqtSlot()
     def on_actionSprava_festivalov_triggered(self):
@@ -323,6 +344,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def refresh_festivals(self):
         # Add festivals to combobox
         self.cb_festival.clear()
+        self.cb_festival.addItem(self.tr('<Nepoužívat>'))
         festivals = self.dbjobs.get_all_festivals()
         for festival in festivals:
             self.cb_festival.addItem(festival[1], festival[0])
@@ -334,6 +356,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         """
         selected_indexes = self.tableView.selectedIndexes()
         if len(selected_indexes) > 0:
+            self.on_btn_edit_cancel_clicked()
             mb = QMessageBox.question(self, self.tr('Upozornení'), self.tr('Opravdu chcete vybraný koncert smazat?'))
             if mb == QMessageBox.Yes:
                 concert_id = self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CONCERT_ID)
