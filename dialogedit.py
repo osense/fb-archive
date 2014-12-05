@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogedit.ui'
 #
-# Created: Fri Dec  5 11:04:39 2014
+# Created: Fri Dec  5 14:33:57 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,10 +12,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DialogEdit(object):
     def setupUi(self, DialogEdit):
         DialogEdit.setObjectName("DialogEdit")
-        DialogEdit.resize(300, 182)
+        DialogEdit.resize(300, 210)
         DialogEdit.setMinimumSize(QtCore.QSize(300, 0))
-        self.gridLayout_5 = QtWidgets.QGridLayout(DialogEdit)
-        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.gridLayout_6 = QtWidgets.QGridLayout(DialogEdit)
+        self.gridLayout_6.setObjectName("gridLayout_6")
         self.frame_works = QtWidgets.QFrame(DialogEdit)
         self.frame_works.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_works.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -35,7 +35,7 @@ class Ui_DialogEdit(object):
         self.edit_work = QtWidgets.QLineEdit(self.frame_works)
         self.edit_work.setObjectName("edit_work")
         self.gridLayout.addWidget(self.edit_work, 1, 1, 1, 1)
-        self.gridLayout_5.addWidget(self.frame_works, 0, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.frame_works, 0, 0, 1, 1)
         self.frame_dirigent = QtWidgets.QFrame(DialogEdit)
         self.frame_dirigent.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_dirigent.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -49,7 +49,7 @@ class Ui_DialogEdit(object):
         self.edit_dirigent = QtWidgets.QLineEdit(self.frame_dirigent)
         self.edit_dirigent.setObjectName("edit_dirigent")
         self.gridLayout_3.addWidget(self.edit_dirigent, 0, 1, 1, 1)
-        self.gridLayout_5.addWidget(self.frame_dirigent, 1, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.frame_dirigent, 1, 0, 1, 1)
         self.frame_soloists = QtWidgets.QFrame(DialogEdit)
         self.frame_soloists.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_soloists.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -63,7 +63,7 @@ class Ui_DialogEdit(object):
         self.edit_soloist = QtWidgets.QLineEdit(self.frame_soloists)
         self.edit_soloist.setObjectName("edit_soloist")
         self.gridLayout_2.addWidget(self.edit_soloist, 0, 1, 1, 1)
-        self.gridLayout_5.addWidget(self.frame_soloists, 2, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.frame_soloists, 2, 0, 1, 1)
         self.frame_festivals = QtWidgets.QFrame(DialogEdit)
         self.frame_festivals.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_festivals.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -77,7 +77,21 @@ class Ui_DialogEdit(object):
         self.edit_festival = QtWidgets.QLineEdit(self.frame_festivals)
         self.edit_festival.setObjectName("edit_festival")
         self.gridLayout_4.addWidget(self.edit_festival, 0, 1, 1, 1)
-        self.gridLayout_5.addWidget(self.frame_festivals, 3, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.frame_festivals, 3, 0, 1, 1)
+        self.frame_choirs = QtWidgets.QFrame(DialogEdit)
+        self.frame_choirs.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_choirs.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_choirs.setObjectName("frame_choirs")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.frame_choirs)
+        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.label_6 = QtWidgets.QLabel(self.frame_choirs)
+        self.label_6.setObjectName("label_6")
+        self.gridLayout_5.addWidget(self.label_6, 0, 0, 1, 1)
+        self.edit_choir = QtWidgets.QLineEdit(self.frame_choirs)
+        self.edit_choir.setObjectName("edit_choir")
+        self.gridLayout_5.addWidget(self.edit_choir, 0, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.frame_choirs, 4, 0, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -94,7 +108,7 @@ class Ui_DialogEdit(object):
         self.btn_edit_cancel.setIcon(icon1)
         self.btn_edit_cancel.setObjectName("btn_edit_cancel")
         self.horizontalLayout.addWidget(self.btn_edit_cancel)
-        self.gridLayout_5.addLayout(self.horizontalLayout, 4, 0, 1, 1)
+        self.gridLayout_6.addLayout(self.horizontalLayout, 5, 0, 1, 1)
 
         self.retranslateUi(DialogEdit)
         self.btn_edit_confirm.clicked.connect(DialogEdit.accept)
@@ -109,6 +123,7 @@ class Ui_DialogEdit(object):
         self.label_3.setText(_translate("DialogEdit", "Dirigent:"))
         self.label_4.setText(_translate("DialogEdit", "Solista:"))
         self.label_5.setText(_translate("DialogEdit", "Festival:"))
+        self.label_6.setText(_translate("DialogEdit", "Sbor:"))
         self.btn_edit_confirm.setText(_translate("DialogEdit", "Přidat"))
         self.btn_edit_cancel.setText(_translate("DialogEdit", "Zrušit"))
 

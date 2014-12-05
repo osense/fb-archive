@@ -2,6 +2,7 @@
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from constants import *
 
 
 class ConcertsTableModel(QAbstractTableModel):
@@ -18,10 +19,10 @@ class ConcertsTableModel(QAbstractTableModel):
         if not index.isValid():
             return QVariant()
         if role == Qt.DisplayRole:
-            if index.column() in [0, 1]:
+            if index.column() in [COLUMN_DATE_FROM, COLUMN_DATE_TO]:
                 return QVariant(self.data[index.row()][index.column()].strftime('%d.%m.%Y'))
             # Show multiline note as one line with 3 dots
-            elif index.column() == 11:
+            elif index.column() == COLUMN_NOTE:
                 text = self.data[index.row()][index.column()]
                 if (text != None) and (text.count('\n') > 0):
                     text = text[:text.find('\n')] + '...'
@@ -29,11 +30,11 @@ class ConcertsTableModel(QAbstractTableModel):
             else:
                 return QVariant(self.data[index.row()][index.column()])
         if role == Qt.ToolTipRole:
-            if index.column() in [8, 9, 10]:
+            if index.column() in [COLUMN_WORKS, COLUMN_SOLOISTS, COLUMN_DIRIGENTS, COLUMN_CHOIRS]:
                 text = self.data[index.row()][index.column()]
                 if text != None:
                     QToolTip.showText(self.parent.cursor().pos(), text.replace(', ', '\n'))
-            elif index.column() == 11:
+            elif index.column() == COLUMN_NOTE:
                 text = self.data[index.row()][index.column()]
                 if text != None:
                     QToolTip.showText(self.parent.cursor().pos(), text)

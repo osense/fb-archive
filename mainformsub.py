@@ -10,14 +10,10 @@ from dialogeditsub import DialogEditSub
 from dialogfestivalssub import DialogFestivalsSub
 from concertstablemodel import ConcertsTableModel
 import datetime
+from constants import *
 
-# Constants
-TIMEOUT_INFO = 3000
-TIMEOUT_ERROR = 6000
-WORK_STR_SEPARATOR = ' - '
 APPDIR = os.path.abspath(os.path.dirname(sys.argv[0]))
-COLUMN_CONCERT_ID = 12
-COLUMN_FESTIVAL_ID = 13
+
 
 class Mainformsub(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -63,7 +59,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.edit_name.textEdited.connect(self.getCompleterData)
         # Main table with concerts
         headerdata = [self.tr('Datum od'), self.tr('Datum do'), self.tr("Název"), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), \
-                      self.tr('Festival'), self.tr('Skladatel, skladba'), self.tr('Dirigenti'), self.tr('Solisti'), self.tr('Poznámka'), ]
+                      self.tr('Festival'), self.tr('Skladatel, skladba'), self.tr('Solisti'), self.tr('Dirigenti'), self.tr('Sbory'), self.tr('Poznámka'), ]
         self.concerts_model = ConcertsTableModel(self, headerdata)
         # Proxy model is set here for sorting
         self.sort_proxy_model = QSortFilterProxyModel()
@@ -71,15 +67,18 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.sort_proxy_model.setSourceModel(self.concerts_model)
         self.tableView.setModel(self.sort_proxy_model)
         # Set column size for main table
-        self.tableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        self.tableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.tableView.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
-        self.tableView.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
-        self.tableView.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
-        self.tableView.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeToContents)
-        self.tableView.horizontalHeader().setSectionResizeMode(6, QHeaderView.Stretch)
-        self.tableView.horizontalHeader().setSectionResizeMode(7, QHeaderView.Stretch)
-        self.tableView.horizontalHeader().setSectionResizeMode(8, QHeaderView.Stretch)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_DATE_FROM, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_DATE_TO, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_NAME, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_STATE, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_CITY, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_HALL, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_TYPE, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_FESTIVAL, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_WORKS, QHeaderView.Stretch)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_SOLOISTS, QHeaderView.Stretch)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_DIRIGENTS, QHeaderView.Stretch)
+        self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_CHOIRS, QHeaderView.Stretch)
 
     def getCompleterData(self, text):
         """
@@ -136,8 +135,9 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 joined_works.append(WORK_STR_SEPARATOR.join(work))
             works = ', '.join(joined_works)
             dirigents = ', '.join([i for sub in self.dbjobs.get_dirigents(concert_id) for i in sub])
-            soloists = ', '.join([i for sub in self.dbjobs.get_soloists(concert_id) for i in sub])
-            new_row = [date_from, date_to, name, state, city, hall, type, festival, works, dirigents, soloists, note, concert_id, festival_id]
+            choirs = ', '.join([i for sub in self.dbjobs.get_choirs(concert_id) for i in sub])
+            soloists = ', '.join([i for sub in self.dbjobs.get_soloists_for_concert(concert_id) for i in sub])
+            new_row = [date_from, date_to, name, state, city, hall, type, festival, works, soloists, dirigents, choirs, note, concert_id, festival_id]
             self.concerts_model.addRow(new_row)
         self.concerts_model.endResetModel()
 
@@ -163,6 +163,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.edit_type.clear()
         self.cb_festival.setCurrentIndex(0)
         self.lw_edit_dirigents.clear()
+        self.lw_edit_choirs.clear()
         self.lw_edit_soloists.clear()
         self.lw_edit_works.clear()
 
@@ -198,24 +199,27 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.btn_edit_save.show()
             # Load data to widgets
             self.now_edited_concert_id = self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CONCERT_ID)
-            self.edit_name.setText(self.concerts_model.get_item_data(selected_indexes[0], 2))
-            self.edit_date_from.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], 0))
-            self.edit_date_to.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], 1))
-            self.edit_state.setText(self.concerts_model.get_item_data(selected_indexes[0], 3))
-            self.edit_city.setText(self.concerts_model.get_item_data(selected_indexes[0], 4))
-            self.edit_hall.setText(self.concerts_model.get_item_data(selected_indexes[0], 5))
-            self.edit_type.setText(self.concerts_model.get_item_data(selected_indexes[0], 6))
+            self.edit_name.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_NAME))
+            self.edit_date_from.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DATE_FROM))
+            self.edit_date_to.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DATE_TO))
+            self.edit_state.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_STATE))
+            self.edit_city.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CITY))
+            self.edit_hall.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_HALL))
+            self.edit_type.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_TYPE))
             self.cb_festival.setCurrentIndex(self.cb_festival.findData(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_FESTIVAL_ID)))
-            self.edit_note.setText(self.concerts_model.get_item_data(selected_indexes[0], 11))
+            self.edit_note.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_NOTE))
+            # choir
+            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CHOIRS)) != 0:
+                self.lw_edit_choirs.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CHOIRS).split(', '))
             # dirigents
-            if len(self.concerts_model.get_item_data(selected_indexes[0], 9)) != 0:
-                self.lw_edit_dirigents.addItems(self.concerts_model.get_item_data(selected_indexes[0], 9).split(', '))
+            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DIRIGENTS)) != 0:
+                self.lw_edit_dirigents.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DIRIGENTS).split(', '))
             # soloists
-            if len(self.concerts_model.get_item_data(selected_indexes[0], 10)) != 0:
-                self.lw_edit_soloists.addItems(self.concerts_model.get_item_data(selected_indexes[0], 10).split(', '))
+            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_SOLOISTS)) != 0:
+                self.lw_edit_soloists.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_SOLOISTS).split(', '))
             # works
-            if len(self.concerts_model.get_item_data(selected_indexes[0], 8)) != 0:
-                self.lw_edit_works.addItems(self.concerts_model.get_item_data(selected_indexes[0], 8).split(', '))
+            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_WORKS)) != 0:
+                self.lw_edit_works.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_WORKS).split(', '))
         else:
             QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
 
@@ -245,12 +249,15 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         try:
             # Insert concert into DB
             concert_id = self.dbjobs.add_concert(name, festival_id, date_from, date_to, state, city, hall, type, note)
+            # Insert choirs into DB
+            for i in range(self.lw_edit_choirs.count()):
+                self.dbjobs.add_choir(concert_id, self.lw_edit_choirs.item(i).text())
             # Insert dirigents into DB
             for i in range(self.lw_edit_dirigents.count()):
                 self.dbjobs.add_dirigent(concert_id, self.lw_edit_dirigents.item(i).text())
             # Insert soloists into DB
             for i in range(self.lw_edit_soloists.count()):
-                self.dbjobs.add_soloist(concert_id, self.lw_edit_soloists.item(i).text())
+                self.dbjobs.add_soloist(concert_id, 0, self.lw_edit_soloists.item(i).text())
             # Insert works into DB
             for i in range(self.lw_edit_works.count()):
                 data = self.lw_edit_works.item(i).text().split(WORK_STR_SEPARATOR)
@@ -280,6 +287,17 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         d = DialogEditSub(self, works=True, caption=self.tr('Zadejte jméno skladatele a název díla'))
         if d.exec_() == QDialog.Accepted:
             self.lw_edit_works.addItem('{}{}{}'.format(d.dataComposer, WORK_STR_SEPARATOR, d.dataWork))
+
+    @pyqtSlot()
+    def on_btn_choirs_add_clicked(self):
+        d = DialogEditSub(self, choirs=True, caption=self.tr('Zadejte název sboru'))
+        if d.exec_() == QDialog.Accepted:
+            self.lw_edit_choirs.addItem(d.dataChoir)
+
+    @pyqtSlot()
+    def on_btn_choirs_remove_clicked(self):
+        if len(self.lw_edit_choirs.selectedItems()) > 0:
+            self.lw_edit_choirs.takeItem(self.lw_edit_choirs.currentIndex().row())
 
     @pyqtSlot()
     def on_btn_dirigents_remove_clicked(self):
@@ -323,6 +341,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 self.dbjobs.remove_concert(concert_id)
                 # Remove dirigents assigned to this concert
                 self.dbjobs.remove_dirigents_for_concert(concert_id)
+                # Remove choirs assigned to this concert
+                self.dbjobs.remove_choirs_for_concert(concert_id)
                 # Remove works assigned to this concert
                 self.dbjobs.remove_works_for_concert(concert_id)
                 # Remove soloists assigned to this concert

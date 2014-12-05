@@ -24,7 +24,8 @@ class Database:
                                                work TEXT NOT NULL)")
 
         self.conn.execute("CREATE TABLE soloists (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
-                                                  work_id TEXT NOT NULL, \
+                                                  concert_id INTEGER NOT NULL, \
+                                                  work_id INTEGER NOT NULL, \
                                                   name TEXT NOT NULL)")
 
         self.conn.execute("CREATE TABLE festivals (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
@@ -57,8 +58,8 @@ class Database:
         self.cursor.execute("DELETE FROM concerts WHERE id = ?", (id,))
         self.conn.commit()
 
-    def remove_soloists_for_work(self, work_id):
-        self.cursor.execute("DELETE FROM soloists WHERE work_id = ?", (work_id,))
+    def remove_soloists_for_concert(self, concert_id):
+        self.cursor.execute("DELETE FROM soloists WHERE concert_id = ?", (concert_id,))
         self.conn.commit()
 
     def remove_dirigents_for_concert(self, id):
@@ -79,8 +80,8 @@ class Database:
         self.cursor.execute("INSERT INTO works(concert_id, composer, work) VALUES (?, ?, ?)", (concert_id, composer, work))
         self.conn.commit()
 
-    def add_soloist(self, work_id, name):
-        self.cursor.execute("INSERT INTO soloists(work_id, name) VALUES (?, ?)", (work_id, name))
+    def add_soloist(self, concert_id, work_id, name):
+        self.cursor.execute("INSERT INTO soloists(concert_id, work_id, name) VALUES (?, ?, ?)", (concert_id, work_id, name))
         self.conn.commit()
 
     def add_festival(self, name):
@@ -120,8 +121,8 @@ class Database:
         self.cursor.execute("SELECT composer, work FROM works WHERE concert_id=?", (concert_id,))
         return self.cursor.fetchall()
 
-    def get_soloists(self, work_id):
-        self.cursor.execute("SELECT name FROM soloists WHERE work_id=?", (work_id,))
+    def get_soloists_for_concert(self, concert_id):
+        self.cursor.execute("SELECT name FROM soloists WHERE concert_id=?", (concert_id,))
         return self.cursor.fetchall()
 
     def get_dirigents(self, concert_id):
