@@ -16,8 +16,8 @@ TIMEOUT_INFO = 3000
 TIMEOUT_ERROR = 6000
 WORK_STR_SEPARATOR = ' - '
 APPDIR = os.path.abspath(os.path.dirname(sys.argv[0]))
-COLUMN_CONCERT_ID = 11
-COLUMN_FESTIVAL_ID = 12
+COLUMN_CONCERT_ID = 12
+COLUMN_FESTIVAL_ID = 13
 
 class Mainformsub(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -62,7 +62,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.edit_type.textEdited.connect(self.getCompleterData)
         self.edit_name.textEdited.connect(self.getCompleterData)
         # Main table with concerts
-        headerdata = [self.tr('Datum'), self.tr("Název"), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), \
+        headerdata = [self.tr('Datum od'), self.tr('Datum do'), self.tr("Název"), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), \
                       self.tr('Festival'), self.tr('Skladatel, skladba'), self.tr('Dirigenti'), self.tr('Solisti'), self.tr('Poznámka'), ]
         self.concerts_model = ConcertsTableModel(self, headerdata)
         # Proxy model is set here for sorting
@@ -120,15 +120,16 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         data = self.dbjobs.get_all_concerts()
         for row in data:
             concert_id = row[0]
-            date = row[1]
-            name = row[2]
-            state = row[3]
-            city = row[4]
-            hall = row[5]
-            type = row[6]
-            note = row[7]
-            festival = row[8]
-            festival_id = row[9]
+            date_from = row[1]
+            date_to = row[2]
+            name = row[3]
+            state = row[4]
+            city = row[5]
+            hall = row[6]
+            type = row[7]
+            note = row[8]
+            festival = row[9]
+            festival_id = row[10]
             works = self.dbjobs.get_works(concert_id)
             joined_works = []
             for work in works:
@@ -136,7 +137,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             works = ', '.join(joined_works)
             dirigents = ', '.join([i for sub in self.dbjobs.get_dirigents(concert_id) for i in sub])
             soloists = ', '.join([i for sub in self.dbjobs.get_soloists(concert_id) for i in sub])
-            new_row = [date, name, state, city, hall, type, festival, works, dirigents, soloists, note, concert_id, festival_id]
+            new_row = [date_from, date_to, name, state, city, hall, type, festival, works, dirigents, soloists, note, concert_id, festival_id]
             self.concerts_model.addRow(new_row)
         self.concerts_model.endResetModel()
 
@@ -153,7 +154,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         Clears widgets
         """
         self.edit_city.clear()
-        self.edit_date.clear()
+        self.edit_date_from.clear()
+        self.edit_date_to.clear()
         self.edit_hall.clear()
         self.edit_note.clear()
         self.edit_state.clear()
@@ -175,7 +177,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.btn_edit_confirm.show()
         self.btn_edit_save.hide()
         # Set current datetime
-        self.edit_date.setDateTime(datetime.datetime.today())
+        self.edit_date_from.setDateTime(datetime.datetime.today())
+        self.edit_date_to.setDateTime(datetime.datetime.today())
 
     @pyqtSlot("QModelIndex")
     def on_tableView_doubleClicked(self, index):
@@ -195,30 +198,33 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.btn_edit_save.show()
             # Load data to widgets
             self.now_edited_concert_id = self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CONCERT_ID)
-            self.edit_name.setText(self.concerts_model.get_item_data(selected_indexes[0], 1))
-            self.edit_date.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], 0))
-            self.edit_state.setText(self.concerts_model.get_item_data(selected_indexes[0], 2))
-            self.edit_city.setText(self.concerts_model.get_item_data(selected_indexes[0], 3))
-            self.edit_hall.setText(self.concerts_model.get_item_data(selected_indexes[0], 4))
-            self.edit_type.setText(self.concerts_model.get_item_data(selected_indexes[0], 5))
+            self.edit_name.setText(self.concerts_model.get_item_data(selected_indexes[0], 2))
+            self.edit_date_from.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], 0))
+            self.edit_date_to.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], 1))
+            self.edit_state.setText(self.concerts_model.get_item_data(selected_indexes[0], 3))
+            self.edit_city.setText(self.concerts_model.get_item_data(selected_indexes[0], 4))
+            self.edit_hall.setText(self.concerts_model.get_item_data(selected_indexes[0], 5))
+            self.edit_type.setText(self.concerts_model.get_item_data(selected_indexes[0], 6))
             self.cb_festival.setCurrentIndex(self.cb_festival.findData(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_FESTIVAL_ID)))
-            self.edit_note.setText(self.concerts_model.get_item_data(selected_indexes[0], 10))
+            self.edit_note.setText(self.concerts_model.get_item_data(selected_indexes[0], 11))
             # dirigents
-            if len(self.concerts_model.get_item_data(selected_indexes[0], 8)) != 0:
-                self.lw_edit_dirigents.addItems(self.concerts_model.get_item_data(selected_indexes[0], 8).split(', '))
-            # soloists
             if len(self.concerts_model.get_item_data(selected_indexes[0], 9)) != 0:
-                self.lw_edit_soloists.addItems(self.concerts_model.get_item_data(selected_indexes[0], 9).split(', '))
+                self.lw_edit_dirigents.addItems(self.concerts_model.get_item_data(selected_indexes[0], 9).split(', '))
+            # soloists
+            if len(self.concerts_model.get_item_data(selected_indexes[0], 10)) != 0:
+                self.lw_edit_soloists.addItems(self.concerts_model.get_item_data(selected_indexes[0], 10).split(', '))
             # works
-            if len(self.concerts_model.get_item_data(selected_indexes[0], 7)) != 0:
-                self.lw_edit_works.addItems(self.concerts_model.get_item_data(selected_indexes[0], 7).split(', '))
+            if len(self.concerts_model.get_item_data(selected_indexes[0], 8)) != 0:
+                self.lw_edit_works.addItems(self.concerts_model.get_item_data(selected_indexes[0], 8).split(', '))
         else:
             QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
 
     @pyqtSlot()
     def on_btn_edit_confirm_clicked(self):
-        dt = self.edit_date.dateTime()
-        date = datetime.datetime(dt.date().year(), dt.date().month(), dt.date().day(), dt.time().hour(), dt.time().minute())
+        dt_from = self.edit_date_from.dateTime()
+        date_from = datetime.datetime(dt_from.date().year(), dt_from.date().month(), dt_from.date().day(), dt_from.time().hour(), dt_from.time().minute())
+        dt_to = self.edit_date_to.dateTime()
+        date_to = datetime.datetime(dt_to.date().year(), dt_to.date().month(), dt_to.date().day(), dt_to.time().hour(), dt_to.time().minute())
         name = self.edit_name.text().strip()
         state = self.edit_state.text().strip()
         city = self.edit_city.text().strip()
@@ -238,7 +244,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             return
         try:
             # Insert concert into DB
-            concert_id = self.dbjobs.add_concert(name, festival_id, date, state, city, hall, type, note)
+            concert_id = self.dbjobs.add_concert(name, festival_id, date_from, date_to, state, city, hall, type, note)
             # Insert dirigents into DB
             for i in range(self.lw_edit_dirigents.count()):
                 self.dbjobs.add_dirigent(concert_id, self.lw_edit_dirigents.item(i).text())

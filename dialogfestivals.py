@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogfestivals.ui'
 #
-# Created: Fri Dec  5 10:43:25 2014
+# Created: Fri Dec  5 11:04:40 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!

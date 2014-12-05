@@ -18,10 +18,10 @@ class ConcertsTableModel(QAbstractTableModel):
         if not index.isValid():
             return QVariant()
         if role == Qt.DisplayRole:
-            if index.column() == 0:
+            if index.column() in [0, 1]:
                 return QVariant(self.data[index.row()][index.column()].strftime('%d.%m.%Y'))
             # Show multiline note as one line with 3 dots
-            elif index.column() == 9:
+            elif index.column() == 11:
                 text = self.data[index.row()][index.column()]
                 if (text != None) and (text.count('\n') > 0):
                     text = text[:text.find('\n')] + '...'
@@ -29,11 +29,11 @@ class ConcertsTableModel(QAbstractTableModel):
             else:
                 return QVariant(self.data[index.row()][index.column()])
         if role == Qt.ToolTipRole:
-            if index.column() in [6, 7, 8]:
+            if index.column() in [8, 9, 10]:
                 text = self.data[index.row()][index.column()]
                 if text != None:
                     QToolTip.showText(self.parent.cursor().pos(), text.replace(', ', '\n'))
-            elif index.column() == 9:
+            elif index.column() == 11:
                 text = self.data[index.row()][index.column()]
                 if text != None:
                     QToolTip.showText(self.parent.cursor().pos(), text)

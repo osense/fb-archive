@@ -223,87 +223,100 @@
             <property name="title">
              <string/>
             </property>
-            <layout class="QGridLayout" name="gridLayout_5">
+            <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout">
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>Název:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1" colspan="3">
-                <widget class="QLineEdit" name="edit_name"/>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Datum:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QDateTimeEdit" name="edit_date">
-                 <property name="displayFormat">
-                  <string>d. M. yyyy</string>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="2">
-                <widget class="QLabel" name="label_5">
-                 <property name="text">
-                  <string>Sál:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="3">
-                <widget class="QLineEdit" name="edit_hall"/>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>Stát konání:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="edit_state"/>
-               </item>
-               <item row="2" column="2">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Typ koncertu:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="3">
-                <widget class="QLineEdit" name="edit_type"/>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>Město konání:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="edit_city"/>
-               </item>
-               <item row="3" column="2">
-                <widget class="QLabel" name="label_9">
-                 <property name="text">
-                  <string>Festival:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="3">
-                <widget class="QComboBox" name="cb_festival"/>
-               </item>
-              </layout>
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>Název:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="edit_name"/>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Stát konání:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLineEdit" name="edit_state"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Datum od:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDateTimeEdit" name="edit_date_from">
+               <property name="displayFormat">
+                <string>d. M. yyyy</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Město konání:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="edit_city"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>Datum do:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDateTimeEdit" name="edit_date_to">
+               <property name="displayFormat">
+                <string>d. M. yyyy</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Sál:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="edit_hall"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Festival:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QComboBox" name="cb_festival"/>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Typ koncertu:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="edit_type"/>
              </item>
             </layout>
             <zorder></zorder>
@@ -311,6 +324,8 @@
             <zorder></zorder>
             <zorder>edit_name</zorder>
             <zorder>label_11</zorder>
+            <zorder>edit_date_to</zorder>
+            <zorder>label_12</zorder>
            </widget>
           </item>
           <item row="1" column="0">
@@ -706,7 +721,7 @@
  </widget>
  <tabstops>
   <tabstop>edit_name</tabstop>
-  <tabstop>edit_date</tabstop>
+  <tabstop>edit_date_from</tabstop>
   <tabstop>edit_state</tabstop>
   <tabstop>edit_city</tabstop>
   <tabstop>edit_hall</tabstop>
