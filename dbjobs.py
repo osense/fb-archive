@@ -14,7 +14,7 @@ class Database:
             self.create_db()
 
     def last_id(self):
-        self.cursor.execute("SELECT last_insert_rowid()")
+        self.cursor.execute("SELECT last_insert_rowid()")c
         return self.cursor.fetchone()[0]
 
     def create_db(self):
@@ -24,7 +24,7 @@ class Database:
                                                work TEXT NOT NULL)")
 
         self.conn.execute("CREATE TABLE soloists (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
-                                                  concert_id TEXT NOT NULL, \
+                                                  work_id TEXT NOT NULL, \
                                                   name TEXT NOT NULL)")
 
         self.conn.execute("CREATE TABLE festivals (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
@@ -34,7 +34,12 @@ class Database:
                                                    concert_id INTEGER NOT NULL, \
                                                    name TEXT NOT NULL)")
 
+        self.conn.execute("CREATE TABLE choirs (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
+                                                   concert_id INTEGER NOT NULL, \
+                                                   name TEXT NOT NULL)")
+
         self.conn.execute("CREATE TABLE concerts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
+                                                  name TEXT, \
                                                   festival_id INTEGER, \
                                                   date TIMESTAMP NOT NULL, \
                                                   state TEXT NOT NULL, \
@@ -51,12 +56,16 @@ class Database:
         self.cursor.execute("DELETE FROM concerts WHERE id = ?", (id,))
         self.conn.commit()
 
-    def remove_soloists_for_concert(self, id):
-        self.cursor.execute("DELETE FROM soloists WHERE concert_id = ?", (id,))
+    def remove_soloists_for_work(self, work_id):
+        self.cursor.execute("DELETE FROM soloists WHERE work_id = ?", (work_id,))
         self.conn.commit()
 
     def remove_dirigents_for_concert(self, id):
         self.cursor.execute("DELETE FROM dirigents WHERE concert_id = ?", (id,))
+        self.conn.commit()
+
+    def remove_choirs_for_concert(self, id):
+        self.cursor.execute("DELETE FROM choirs WHERE concert_id = ?", (id,))
         self.conn.commit()
 
     def remove_works_for_concert(self, id):
@@ -69,8 +78,8 @@ class Database:
         self.cursor.execute("INSERT INTO works(concert_id, composer, work) VALUES (?, ?, ?)", (concert_id, composer, work))
         self.conn.commit()
 
-    def add_soloist(self, concert_id, name):
-        self.cursor.execute("INSERT INTO soloists(concert_id, name) VALUES (?, ?)", (concert_id, name))
+    def add_soloist(self, work_id, name):
+        self.cursor.execute("INSERT INTO soloists(work_id, name) VALUES (?, ?)", (work_id, name))
         self.conn.commit()
 
     def add_festival(self, name):
@@ -81,15 +90,18 @@ class Database:
         self.cursor.execute("INSERT INTO dirigents(concert_id, name) VALUES (?, ?)", (concert_id, name))
         self.conn.commit()
 
-    def add_concert(self, festival_id, date, state, city, hall, type, note):
-        self.cursor.execute("INSERT INTO concerts(festival_id, date, state, city, hall, type, note) VALUES (?, ?, ?, ?, ?, ?, ?)", (festival_id, date, state, city, hall, type, note))
+    def add_choir(self, concert_id, name):
+        self.cursor.execute("INSERT INTO choirs(concert_id, name) VALUES (?, ?)", (concert_id, name))
+        self.conn.commit()
+
+    def add_concert(self, name, festival_id, date, state, city, hall, type, note):
+        self.cursor.execute("INSERT INTO concerts(name, festival_id, date, state, city, hall, type, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (name, festival_id, date, state, city, hall, type, note))
         self.conn.commit()
         return self.last_id()
-
     ### FETCHING DATA #############################################################################################################################
 
     def get_all_concerts(self):
-        self.cursor.execute("SELECT c.id, c.date as 'x [timestamp]', c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
+        self.cursor.execute("SELECT c.id, c.date as 'x [timestamp]', c.name, c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
                             "FROM concerts c "
                             "LEFT JOIN festivals f ON f.id = c.festival_id "
                             "ORDER BY c.date DESC")
@@ -99,16 +111,20 @@ class Database:
         self.cursor.execute("SELECT composer, work FROM works WHERE concert_id=?", (concert_id,))
         return self.cursor.fetchall()
 
-    def get_soloists(self, concert_id):
-        self.cursor.execute("SELECT name FROM soloists WHERE concert_id=?", (concert_id,))
+    def get_soloists(self, work_id):
+        self.cursor.execute("SELECT name FROM soloists WHERE work_id=?", (work_id,))
         return self.cursor.fetchall()
 
     def get_dirigents(self, concert_id):
         self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=?", (concert_id,))
         return self.cursor.fetchall()
 
+    def get_choirs(self, concert_id):
+        self.cursor.execute("SELECT name FROM choirs WHERE concert_id=?", (concert_id,))
+        return self.cursor.fetchall()
+
     def find_concerts(self, params):
-        query = "SELECT festival_id, date, state, city, hall, type, note FROM concerts WHERE "
+        query = "SELECT name, festival_id, date, state, city, hall, type, note FROM concerts WHERE "
         i = 1
         for k in params:
             if (k in ["date_from", "date_to"]):
@@ -118,7 +134,9 @@ class Database:
                 #query += " AND "
                 #i = i + 1
 
-            if (k == "festival_id") :
+            if (k == "name"):
+                query += "(name='{}')".format(params[k])
+            else if (k == "festival_id"):
                 query += "(festival_id={})".format(params[k])
             elif (k == "state"):
                 query += "(state='{}')".format(params[k])
@@ -158,6 +176,10 @@ class Database:
 
     ### AUTO COMPLETION #############################################################################################################################
 
+    def get_completion_for_name(self, text):
+        self.cursor.execute("SELECT DISTINCT name FROM concerts WHERE name LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
     def get_completion_for_state(self, text):
         self.cursor.execute("SELECT DISTINCT state FROM concerts WHERE state LIKE '{}%' LIMIT 7".format(text))
         return self.cursor.fetchall()
@@ -186,6 +208,10 @@ class Database:
         self.cursor.execute("SELECT DISTINCT name FROM dirigents WHERE name LIKE '{}%' LIMIT 7".format(text))
         return self.cursor.fetchall()
 
+    def get_completion_for_choir(self, text):
+        self.cursor.execute("SELECT DISTINCT name FROM choirs WHERE name LIKE '{}%' LIMIT 7".format(text))
+        return self.cursor.fetchall()
+
     def get_completion_for_soloist(self, text):
         self.cursor.execute("SELECT DISTINCT name FROM soloists WHERE name LIKE '{}%' LIMIT 7".format(text))
         return self.cursor.fetchall()
@@ -204,6 +230,8 @@ class Database:
         self.cursor.execute("SELECT * FROM festivals")
         print(self.cursor.fetchall())
         self.cursor.execute("SELECT * FROM dirigents")
+        print(self.cursor.fetchall())
+        self.cursor.execute("SELECT * FROM choirs")
         print(self.cursor.fetchall())
         self.cursor.execute("SELECT * FROM concerts")
         print(self.cursor.fetchall())
