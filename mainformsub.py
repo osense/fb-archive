@@ -27,6 +27,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.show_all_concerts()
         self.frame_search.adjustSize()
         self.frame.adjustSize()
+        # Variables
+        self.now_edited_concert_id = None
 
     ### MAIN FUNCTIONS ##############################################################################################################################
 
@@ -130,14 +132,15 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             note = row[8]
             festival = row[9]
             festival_id = row[10]
+            # works
             works = self.dbjobs.get_works(concert_id)
             joined_works = []
             for work in works:
                 joined_works.append(WORK_STR_SEPARATOR.join(work[1:]))
             works = ', '.join(joined_works)
-            dirigents = ', '.join([i for sub in self.dbjobs.get_dirigents(concert_id) for i in sub])
-            choirs = ', '.join([i for sub in self.dbjobs.get_choirs(concert_id) for i in sub])
-            soloists = ', '.join([i for sub in self.dbjobs.get_soloists_for_concert(concert_id) for i in sub])
+            dirigents = ', '.join([i[1] for i in self.dbjobs.get_dirigents(concert_id)])
+            choirs = ', '.join([i[1] for i in self.dbjobs.get_choirs(concert_id)])
+            soloists = ', '.join([i[0] for i in self.dbjobs.get_soloists_for_concert(concert_id)])
             new_row = [date_from, date_to, name, state, city, hall, type, festival, works, soloists, dirigents, choirs, note, concert_id, festival_id]
             self.concerts_model.addRow(new_row)
         self.concerts_model.endResetModel()
@@ -149,6 +152,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.frame_edit.hide()
         self.frame_search.show()
         self.clear_widgets()
+        self.now_edited_concert_id = None
 
     def clear_widgets(self):
         """
@@ -209,20 +213,30 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.cb_festival.setCurrentIndex(self.cb_festival.findData(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_FESTIVAL_ID)))
             self.edit_note.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_NOTE))
             # choir
-            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CHOIRS)) != 0:
-                self.lw_edit_choirs.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CHOIRS).split(', '))
+            choirs = self.dbjobs.get_choirs(self.now_edited_concert_id)
+            for choir in choirs:
+                item = QListWidgetItem()
+                item.setText(choir[1])
+                item.setData(Qt.UserRole, choir[0])
+                self.lw_edit_choirs.addItem(item)
             # dirigents
-            if len(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DIRIGENTS)) != 0:
-                self.lw_edit_dirigents.addItems(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DIRIGENTS).split(', '))
+            dirigents = self.dbjobs.get_dirigents(self.now_edited_concert_id)
+            for dirigent in dirigents:
+                item = QListWidgetItem()
+                item.setText(dirigent[1])
+                item.setData(Qt.UserRole, dirigent[0])
+                self.lw_edit_dirigents.addItem(item)
             # soloists and works
             works = self.dbjobs.get_works(self.now_edited_concert_id)
             for work in works:
                 work_item = QTreeWidgetItem()
                 work_item.setText(0, '{}{}{}'.format(work[1], WORK_STR_SEPARATOR, work[2]))
+                work_item.setData(0, Qt.UserRole, work[0])
                 soloists = self.dbjobs.get_soloists_for_work(work[0])
                 for soloist in soloists:
                     soloist_item = QTreeWidgetItem()
-                    soloist_item.setText(0, soloist[0])
+                    soloist_item.setText(0, soloist[1])
+                    soloist_item.setData(0, Qt.UserRole, soloist[0])
                     work_item.addChild(soloist_item)
                 self.tw_edit_works.invisibleRootItem().addChild(work_item)
             self.tw_edit_works.expandAll()
@@ -270,7 +284,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 # Add soloists
                 for j in range(item.childCount()):
                     self.dbjobs.add_soloist(concert_id, work_id, item.child(j).text(0))
-
+            # Show message
             self.statusbar.showMessage(self.tr('Záznam byl úspěšne přidán.'), TIMEOUT_INFO)
             self.on_btn_edit_cancel_clicked()
             self.show_all_concerts()
@@ -279,10 +293,63 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.statusbar.showMessage(self.tr('Záznam se nepodařilo přidat!'), TIMEOUT_ERROR)
 
     @pyqtSlot()
+    def on_btn_edit_save_clicked(self):
+        """
+        Update details for concert
+        """
+        try:
+            dt_from = self.edit_date_from.dateTime()
+            date_from = datetime.datetime(dt_from.date().year(), dt_from.date().month(), dt_from.date().day(), dt_from.time().hour(), dt_from.time().minute())
+            dt_to = self.edit_date_to.dateTime()
+            date_to = datetime.datetime(dt_to.date().year(), dt_to.date().month(), dt_to.date().day(), dt_to.time().hour(), dt_to.time().minute())
+            name = self.edit_name.text().strip()
+            state = self.edit_state.text().strip()
+            city = self.edit_city.text().strip()
+            hall = self.edit_hall.text().strip()
+            type = self.edit_type.text().strip()
+            festival_id = self.cb_festival.itemData(self.cb_festival.currentIndex(), Qt.UserRole)
+            note = self.edit_note.toPlainText().strip() or None
+            # DB part
+            self.dbjobs.update_concert(self.now_edited_concert_id, name, festival_id, date_from, date_to, state, city, hall, type, note)
+            # Dirigents - remove all dirigents for concert
+            self.dbjobs.remove_dirigents_for_concert(self.now_edited_concert_id)
+            # Dirigents - add all dirigents from widget
+            for i in range(self.lw_edit_dirigents.count()):
+                self.dbjobs.add_dirigent(self.now_edited_concert_id, self.lw_edit_dirigents.item(i).text())
+            # Choirs - remove all choirs for concert
+            self.dbjobs.remove_choirs_for_concert(self.now_edited_concert_id)
+            # Choirs - add all choirs from widget
+            for i in range(self.lw_edit_choirs.count()):
+                self.dbjobs.add_choir(self.now_edited_concert_id, self.lw_edit_choirs.item(i).text())
+            # Remove soloists and works for concert
+            self.dbjobs.remove_soloists_for_concert(self.now_edited_concert_id)
+            self.dbjobs.remove_works_for_concert(self.now_edited_concert_id)
+            # Insert soloists and works into DB
+            for i in range(self.tw_edit_works.invisibleRootItem().childCount()):
+                item = self.tw_edit_works.invisibleRootItem().child(i)
+                # Add work
+                data = item.text(0).split(WORK_STR_SEPARATOR)
+                work_id = self.dbjobs.add_work(self.now_edited_concert_id, data[0], data[1])
+                # Add soloists
+                for j in range(item.childCount()):
+                    self.dbjobs.add_soloist(self.now_edited_concert_id, work_id, item.child(j).text(0))
+            # Show info
+            self.statusbar.showMessage(self.tr('Záznam byl úspěšne upraven.'), TIMEOUT_INFO)
+            self.on_btn_edit_cancel_clicked()
+            self.show_all_concerts()
+        except:
+            print(sys.exc_info())
+            self.statusbar.showMessage(self.tr('Záznam se nepodařilo upravit!'), TIMEOUT_ERROR)
+
+    @pyqtSlot()
     def on_btn_dirigents_add_clicked(self):
         d = DialogEditSub(self, dirigents=True, caption=self.tr('Zadejte jméno dirigenta'))
         if d.exec_() == QDialog.Accepted:
-            self.lw_edit_dirigents.addItem(d.dataDirigent)
+            item = QListWidgetItem()
+            item.setText(d.dataDirigent)
+            self.lw_edit_dirigents.addItem(item)
+            self.lw_edit_dirigents.scrollToItem(item, QAbstractItemView.EnsureVisible)
+            self.lw_edit_dirigents.selectionModel().setCurrentIndex(self.lw_edit_dirigents.indexFromItem(item), QItemSelectionModel.ClearAndSelect)
 
     @pyqtSlot()
     def on_btn_works_add_soloist_clicked(self):
@@ -298,6 +365,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 else:
                     selected_items[0].addChild(item)
                 self.tw_edit_works.expandAll()
+                self.tw_edit_works.scrollToItem(item, QAbstractItemView.EnsureVisible)
         else:
             QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyla označena žádna skladba.'))
 
@@ -309,21 +377,29 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             item.setText(0, '{}{}{}'.format(d.dataComposer, WORK_STR_SEPARATOR, d.dataWork))
             self.tw_edit_works.invisibleRootItem().addChild(item)
             self.tw_edit_works.expandAll()
+            self.tw_edit_works.scrollToItem(item, QAbstractItemView.EnsureVisible)
+            self.tw_edit_works.selectionModel().setCurrentIndex(self.tw_edit_works.indexFromItem(item), QItemSelectionModel.ClearAndSelect)
 
     @pyqtSlot()
     def on_btn_choirs_add_clicked(self):
         d = DialogEditSub(self, choirs=True, caption=self.tr('Zadejte název sboru'))
         if d.exec_() == QDialog.Accepted:
-            self.lw_edit_choirs.addItem(d.dataChoir)
+            item = QListWidgetItem()
+            item.setText(d.dataChoir)
+            self.lw_edit_choirs.addItem(item)
+            self.lw_edit_choirs.scrollToItem(item, QAbstractItemView.EnsureVisible)
+            self.lw_edit_choirs.selectionModel().setCurrentIndex(self.lw_edit_choirs.indexFromItem(item), QItemSelectionModel.ClearAndSelect)
 
     @pyqtSlot()
     def on_btn_choirs_remove_clicked(self):
-        if len(self.lw_edit_choirs.selectedItems()) > 0:
+        selected_items = self.lw_edit_choirs.selectedItems()
+        if len(selected_items) > 0:
             self.lw_edit_choirs.takeItem(self.lw_edit_choirs.currentIndex().row())
 
     @pyqtSlot()
     def on_btn_dirigents_remove_clicked(self):
-        if len(self.lw_edit_dirigents.selectedItems()) > 0:
+        selected_items = self.lw_edit_dirigents.selectedItems()
+        if len(selected_items) > 0:
             self.lw_edit_dirigents.takeItem(self.lw_edit_dirigents.currentIndex().row())
 
     @pyqtSlot()

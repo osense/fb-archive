@@ -74,6 +74,10 @@ class Database:
         self.cursor.execute("DELETE FROM works WHERE concert_id = ?", (id,))
         self.conn.commit()
 
+    def remove_festival(self, id):
+        self.cursor.execute("DELETE FROM festivals WHERE id = ?", (id,))
+        self.conn.commit()
+
     ### ADDING DATA #############################################################################################################################
 
     def add_work(self, concert_id, composer, work):
@@ -104,8 +108,17 @@ class Database:
 
     ### UPDATING DATA #############################################################################################################################
 
-    def update_concert(self, id, name, festival_id, date_from, date_to, state, city, hall, type, note):
-        self.cursor.execute("UPDATE concerts SET(name, festival_id, date_from, date_to, state, city, hall, type, note) WHERE id=?", (name, festival_id, date, state, city, hall, type, note))
+    def update_concert(self, concert_id, name, festival_id, date_from, date_to, state, city, hall, type, note):
+        self.cursor.execute("UPDATE concerts SET name = ?, "
+                                                "festival_id = ?, "
+                                                "date_from = ?, "
+                                                "date_to = ?, "
+                                                "state = ?, "
+                                                "city = ?, "
+                                                "hall = ?, "
+                                                "type = ?, "
+                                                "note = ? " 
+                                                "WHERE id=?", (name, festival_id, date_from, date_to, state, city, hall, type, note, concert_id))
         self.conn.commit()
         return self.last_id()
 
@@ -127,15 +140,15 @@ class Database:
         return self.cursor.fetchall()
 
     def get_soloists_for_work(self, work_id):
-        self.cursor.execute("SELECT name FROM soloists WHERE work_id=? ORDER BY name", (work_id,))
+        self.cursor.execute("SELECT id, name FROM soloists WHERE work_id=? ORDER BY name", (work_id,))
         return self.cursor.fetchall()
 
     def get_dirigents(self, concert_id):
-        self.cursor.execute("SELECT name FROM dirigents WHERE concert_id=? ORDER BY name", (concert_id,))
+        self.cursor.execute("SELECT id, name FROM dirigents WHERE concert_id=? ORDER BY name", (concert_id,))
         return self.cursor.fetchall()
 
     def get_choirs(self, concert_id):
-        self.cursor.execute("SELECT name FROM choirs WHERE concert_id=? ORDER BY name", (concert_id,))
+        self.cursor.execute("SELECT id, name FROM choirs WHERE concert_id=? ORDER BY name", (concert_id,))
         return self.cursor.fetchall()
 
     def find_concerts(self, params):
@@ -184,10 +197,6 @@ class Database:
         self.cursor.execute("INSERT INTO festivals(name) VALUES (?)", (name,))
         self.conn.commit()
         return self.last_id()
-
-    def remove_festival(self, id):
-        self.cursor.execute("DELETE FROM festivals WHERE id = ?", (id,))
-        self.conn.commit()
 
     ### AUTO COMPLETION #############################################################################################################################
 
