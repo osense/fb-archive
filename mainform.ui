@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>681</height>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,15 +18,9 @@
     <normaloff>:/icons/icons/fb-icon16.png</normaloff>:/icons/icons/fb-icon16.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_12">
+   <layout class="QGridLayout" name="gridLayout_10">
     <item row="0" column="0">
      <widget class="QFrame" name="frame">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
       <layout class="QGridLayout" name="gridLayout_9">
        <property name="leftMargin">
         <number>0</number>
@@ -41,130 +35,221 @@
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="QFrame" name="frame_search">
+        <widget class="QGroupBox" name="frame_search">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
-           <widget class="QCheckBox" name="checkBox">
-            <property name="text">
-             <string>Datum:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QDateTimeEdit" name="dateTimeEdit_2">
-            <property name="displayFormat">
-             <string>d. M. yyyy</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QCheckBox" name="checkBox_4">
-            <property name="text">
-             <string>Festival:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLineEdit" name="lineEdit_14"/>
-          </item>
-          <item row="0" column="4">
-           <widget class="QCheckBox" name="checkBox_7">
-            <property name="text">
-             <string>Solisti:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <widget class="QLineEdit" name="lineEdit_15"/>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="check_date">
+              <property name="text">
+               <string>Datum:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QDateTimeEdit" name="edit_s_date_from">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="displayFormat">
+                 <string>d. M. yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateTimeEdit" name="edit_s_date_to">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="displayFormat">
+                 <string>d. M. yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="2" colspan="4">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>287</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_clear_criteria">
+                <property name="text">
+                 <string>Zrušit zvolené kriteria</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/icons/icons/Actions-edit-clear-list-icon.png</normaloff>:/icons/icons/Actions-edit-clear-list-icon.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_clear_widgets">
+                <property name="text">
+                 <string>Vyčistit formuláře</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/icons/icons/Actions-edit-clear-icon.png</normaloff>:/icons/icons/Actions-edit-clear-icon.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="check_name">
+              <property name="text">
+               <string>Název:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="edit_s_name"/>
+            </item>
+            <item row="1" column="2">
+             <widget class="QCheckBox" name="check_type">
+              <property name="text">
+               <string>Typ koncertu:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLineEdit" name="edit_s_type"/>
+            </item>
+            <item row="1" column="4">
+             <widget class="QCheckBox" name="check_soloist">
+              <property name="text">
+               <string>Solista:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QLineEdit" name="edit_s_soloist"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="check_state">
+              <property name="text">
+               <string>Stát konání:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="edit_s_state"/>
+            </item>
+            <item row="2" column="2">
+             <widget class="QCheckBox" name="check_festival">
+              <property name="text">
+               <string>Festival:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QComboBox" name="cb_s_festival"/>
+            </item>
+            <item row="2" column="4">
+             <widget class="QCheckBox" name="check_dirigent">
+              <property name="text">
+               <string>Dirigent:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="5">
+             <widget class="QLineEdit" name="edit_s_dirigent"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="check_city">
+              <property name="text">
+               <string>Město konání:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="edit_s_city"/>
+            </item>
+            <item row="3" column="2">
+             <widget class="QCheckBox" name="check_composer">
+              <property name="text">
+               <string>Skladatel:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLineEdit" name="edit_s_composer"/>
+            </item>
+            <item row="3" column="4">
+             <widget class="QCheckBox" name="check_choir">
+              <property name="text">
+               <string>Sbor:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="5">
+             <widget class="QLineEdit" name="edit_s_choir"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="check_hall">
+              <property name="text">
+               <string>Sál:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="edit_s_hall"/>
+            </item>
+            <item row="4" column="2">
+             <widget class="QCheckBox" name="check_work">
+              <property name="text">
+               <string>Skladba:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="QLineEdit" name="edit_s_work"/>
+            </item>
+            <item row="4" column="4">
+             <widget class="QCheckBox" name="check_note">
+              <property name="text">
+               <string>Poznámka:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="5">
+             <widget class="QLineEdit" name="edit_s_note"/>
+            </item>
+           </layout>
           </item>
           <item row="1" column="0">
-           <widget class="QCheckBox" name="checkBox_2">
-            <property name="text">
-             <string>Místo konání:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_9"/>
-          </item>
-          <item row="1" column="2">
-           <widget class="QCheckBox" name="checkBox_5">
-            <property name="text">
-             <string>Skladatel:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLineEdit" name="lineEdit_12"/>
-          </item>
-          <item row="1" column="4">
-           <widget class="QCheckBox" name="checkBox_8">
-            <property name="text">
-             <string>Dirigent:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="5">
-           <widget class="QLineEdit" name="lineEdit_10"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="checkBox_3">
-            <property name="text">
-             <string>Typ koncertu:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_13"/>
-          </item>
-          <item row="2" column="2">
-           <widget class="QCheckBox" name="checkBox_6">
-            <property name="text">
-             <string>Skladba:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLineEdit" name="lineEdit_16"/>
-          </item>
-          <item row="2" column="4">
-           <widget class="QCheckBox" name="checkBox_9">
-            <property name="text">
-             <string>Poznámka:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="5">
-           <widget class="QLineEdit" name="lineEdit_11"/>
-          </item>
-          <item row="3" column="0" colspan="6">
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <spacer name="horizontalSpacer_2">
@@ -223,23 +308,13 @@
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>Název:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="edit_name"/>
-             </item>
-             <item row="1" column="0">
               <widget class="QLabel" name="label">
                <property name="text">
                 <string>Datum od:</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="0" column="1">
               <widget class="QDateTimeEdit" name="edit_date_from">
                <property name="displayFormat">
                 <string>d. M. yyyy</string>
@@ -249,14 +324,14 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
+             <item row="1" column="0">
               <widget class="QLabel" name="label_12">
                <property name="text">
                 <string>Datum do:</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item row="1" column="1">
               <widget class="QDateTimeEdit" name="edit_date_to">
                <property name="displayFormat">
                 <string>d. M. yyyy</string>
@@ -266,55 +341,65 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_9">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_11">
                <property name="text">
-                <string>Festival:</string>
+                <string>Název:</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QComboBox" name="cb_festival"/>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="edit_name"/>
              </item>
-             <item row="4" column="0">
+             <item row="3" column="0">
               <widget class="QLabel" name="label_2">
                <property name="text">
                 <string>Stát konání:</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
+             <item row="3" column="1">
               <widget class="QLineEdit" name="edit_state"/>
              </item>
-             <item row="5" column="0">
+             <item row="4" column="0">
               <widget class="QLabel" name="label_3">
                <property name="text">
                 <string>Město konání:</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
+             <item row="4" column="1">
               <widget class="QLineEdit" name="edit_city"/>
              </item>
-             <item row="6" column="0">
+             <item row="5" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
                 <string>Sál:</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="1">
+             <item row="5" column="1">
               <widget class="QLineEdit" name="edit_hall"/>
              </item>
-             <item row="7" column="0">
+             <item row="6" column="0">
               <widget class="QLabel" name="label_4">
                <property name="text">
                 <string>Typ koncertu:</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="1">
+             <item row="6" column="1">
               <widget class="QLineEdit" name="edit_type"/>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Festival:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QComboBox" name="cb_festival"/>
              </item>
             </layout>
            </widget>
@@ -563,7 +648,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Skladatel, skladba, solisti</string>
+                <string>Skladatelé, skladby, solisti</string>
                </property>
               </widget>
              </item>
@@ -811,16 +896,47 @@
   </action>
  </widget>
  <tabstops>
-  <tabstop>edit_name</tabstop>
+  <tabstop>check_date</tabstop>
+  <tabstop>edit_s_date_from</tabstop>
+  <tabstop>edit_s_date_to</tabstop>
+  <tabstop>check_name</tabstop>
+  <tabstop>edit_s_name</tabstop>
+  <tabstop>check_state</tabstop>
+  <tabstop>edit_s_state</tabstop>
+  <tabstop>check_city</tabstop>
+  <tabstop>edit_s_city</tabstop>
+  <tabstop>check_hall</tabstop>
+  <tabstop>edit_s_hall</tabstop>
+  <tabstop>check_type</tabstop>
+  <tabstop>edit_s_type</tabstop>
+  <tabstop>check_festival</tabstop>
+  <tabstop>cb_s_festival</tabstop>
+  <tabstop>check_composer</tabstop>
+  <tabstop>edit_s_composer</tabstop>
+  <tabstop>check_work</tabstop>
+  <tabstop>edit_s_work</tabstop>
+  <tabstop>check_soloist</tabstop>
+  <tabstop>edit_s_soloist</tabstop>
+  <tabstop>check_dirigent</tabstop>
+  <tabstop>edit_s_dirigent</tabstop>
+  <tabstop>check_choir</tabstop>
+  <tabstop>edit_s_choir</tabstop>
+  <tabstop>check_note</tabstop>
+  <tabstop>edit_s_note</tabstop>
+  <tabstop>btn_search</tabstop>
+  <tabstop>btn_clear_criteria</tabstop>
+  <tabstop>btn_clear_widgets</tabstop>
   <tabstop>edit_date_from</tabstop>
   <tabstop>edit_date_to</tabstop>
-  <tabstop>cb_festival</tabstop>
+  <tabstop>edit_name</tabstop>
   <tabstop>edit_state</tabstop>
   <tabstop>edit_city</tabstop>
   <tabstop>edit_hall</tabstop>
   <tabstop>edit_type</tabstop>
+  <tabstop>cb_festival</tabstop>
   <tabstop>tw_edit_works</tabstop>
   <tabstop>btn_works_add</tabstop>
+  <tabstop>btn_works_add_soloist</tabstop>
   <tabstop>btn_works_remove</tabstop>
   <tabstop>edit_note</tabstop>
   <tabstop>lw_edit_dirigents</tabstop>
@@ -832,26 +948,7 @@
   <tabstop>btn_edit_confirm</tabstop>
   <tabstop>btn_edit_save</tabstop>
   <tabstop>btn_edit_cancel</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_5</tabstop>
-  <tabstop>lineEdit_12</tabstop>
-  <tabstop>lineEdit_9</tabstop>
-  <tabstop>lineEdit_10</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>checkBox_8</tabstop>
-  <tabstop>checkBox_6</tabstop>
-  <tabstop>lineEdit_14</tabstop>
-  <tabstop>checkBox_7</tabstop>
-  <tabstop>lineEdit_15</tabstop>
   <tabstop>tableView</tabstop>
-  <tabstop>checkBox</tabstop>
-  <tabstop>lineEdit_16</tabstop>
-  <tabstop>lineEdit_11</tabstop>
-  <tabstop>lineEdit_13</tabstop>
-  <tabstop>checkBox_9</tabstop>
-  <tabstop>dateTimeEdit_2</tabstop>
-  <tabstop>checkBox_4</tabstop>
-  <tabstop>btn_search</tabstop>
  </tabstops>
  <resources>
   <include location="resource.qrc"/>
@@ -870,6 +967,390 @@
     <hint type="destinationlabel">
      <x>399</x>
      <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_date</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>599</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>58</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_name</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>621</x>
+     <y>89</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>62</x>
+     <y>119</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_state</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>638</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>69</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_city</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>600</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>79</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_hall</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>585</x>
+     <y>88</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>87</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_type</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>607</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_festival</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>648</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_composer</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>608</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_work</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>586</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_soloist</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>606</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>593</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_dirigent</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>571</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>580</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_choir</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>563</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>570</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_criteria</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>check_note</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>554</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>611</x>
+     <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_soloist</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>713</x>
+     <y>88</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>706</x>
+     <y>117</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_dirigent</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>729</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>729</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_choir</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>746</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>746</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_note</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>760</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>761</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_type</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>749</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>502</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_composer</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>717</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_work</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>699</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>191</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_name</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>710</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_state</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>713</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>270</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_city</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>694</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>290</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear_widgets</sender>
+   <signal>clicked()</signal>
+   <receiver>edit_s_hall</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>89</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>190</y>
     </hint>
    </hints>
   </connection>

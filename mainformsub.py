@@ -24,6 +24,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.dbjobs = dbjobs.Database(APPDIR + '/database.db')
         # Prepare GUI, show/hide widgets
         self.prepare_gui()
+        self.resize(800, 650)
         self.show_all_concerts()
         self.frame_search.adjustSize()
         self.frame.adjustSize()
@@ -82,6 +83,10 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_SOLOISTS, QHeaderView.Stretch)
         self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_DIRIGENTS, QHeaderView.Stretch)
         self.tableView.horizontalHeader().setSectionResizeMode(COLUMN_CHOIRS, QHeaderView.Stretch)
+        # Clear search section
+        self.btn_clear_widgets.click()
+        self.btn_clear_criteria.click()
+        self.refresh_festivals()
 
     def getCompleterData(self, text):
         """
@@ -109,9 +114,6 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def on_btn_search_clicked(self):
         print("search pressed")
-        self.dbjobs.add_dirigent(1, "asdfasdfasdfasdfasdfs")
-        self.dbjobs.add_(1, "asdfasdfasdfasdfasdfs")
-        self.dbjobs.add_dirigent(1, "asdfasdfasdfasdfasdfs")
 
     def show_all_concerts(self):
         """
@@ -246,9 +248,9 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def on_btn_edit_confirm_clicked(self):
         dt_from = self.edit_date_from.dateTime()
-        date_from = datetime.datetime(dt_from.date().year(), dt_from.date().month(), dt_from.date().day(), dt_from.time().hour(), dt_from.time().minute())
+        date_from = datetime.datetime(dt_from.date().year(), dt_from.date().month(), dt_from.date().day(), 12, 0)
         dt_to = self.edit_date_to.dateTime()
-        date_to = datetime.datetime(dt_to.date().year(), dt_to.date().month(), dt_to.date().day(), dt_to.time().hour(), dt_to.time().minute())
+        date_to = datetime.datetime(dt_to.date().year(), dt_to.date().month(), dt_to.date().day(), 12, 0)
         name = self.edit_name.text().strip()
         state = self.edit_state.text().strip()
         city = self.edit_city.text().strip()
@@ -299,9 +301,9 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         """
         try:
             dt_from = self.edit_date_from.dateTime()
-            date_from = datetime.datetime(dt_from.date().year(), dt_from.date().month(), dt_from.date().day(), dt_from.time().hour(), dt_from.time().minute())
+            date_from = datetime.datetime(dt_from.date().year(), dt_from.date().month(), dt_from.date().day(), 12, 0)
             dt_to = self.edit_date_to.dateTime()
-            date_to = datetime.datetime(dt_to.date().year(), dt_to.date().month(), dt_to.date().day(), dt_to.time().hour(), dt_to.time().minute())
+            date_to = datetime.datetime(dt_to.date().year(), dt_to.date().month(), dt_to.date().day(), 12, 0)
             name = self.edit_name.text().strip()
             state = self.edit_state.text().strip()
             city = self.edit_city.text().strip()
@@ -421,10 +423,13 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def refresh_festivals(self):
         # Add festivals to combobox
         self.cb_festival.clear()
+        self.cb_s_festival.clear()
         self.cb_festival.addItem(self.tr('<Nepoužívat>'))
+        self.cb_s_festival.addItem(self.tr('<Nepoužívat>'))
         festivals = self.dbjobs.get_all_festivals()
         for festival in festivals:
             self.cb_festival.addItem(festival[1], festival[0])
+            self.cb_s_festival.addItem(festival[1], festival[0])
 
     @pyqtSlot()
     def on_actionOdstranit_triggered(self):
@@ -456,5 +461,68 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def on_actionO_programe_triggered(self):
         d = DialogAboutSub(self)
         d.exec_()
+
+    @pyqtSlot()
+    def on_btn_clear_widgets_clicked(self):
+        """
+        Clears all search widgets
+        """
+        self.edit_s_date_from.setDateTime(datetime.datetime.today())
+        self.edit_s_date_to.setDateTime(datetime.datetime.today())
+        self.cb_s_festival.setCurrentIndex(self.cb_s_festival.findData(None))
+
+    ### SEARCH EDITS BEHAVIOR #######################################################################################################################
+
+    @pyqtSlot("QString")
+    def on_edit_s_name_textEdited(self, text):
+        self.check_name.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_state_textEdited(self, text):
+        self.check_state.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_city_textEdited(self, text):
+        self.check_city.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_hall_textEdited(self, text):
+        self.check_hall.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_type_textEdited(self, text):
+        self.check_type.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_composer_textEdited(self, text):
+        self.check_composer.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_work_textEdited(self, text):
+        self.check_work.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_soloist_textEdited(self, text):
+        self.check_soloist.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_dirigent_textEdited(self, text):
+        self.check_dirigent.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_choir_textEdited(self, text):
+        self.check_choir.setChecked(text != '')
+
+    @pyqtSlot("QString")
+    def on_edit_s_note_textEdited(self, text):
+        self.check_note.setChecked(text != '')
+
+    @pyqtSlot("QDate")
+    def on_edit_s_date_from_dateChanged(self, date):
+        self.check_date.setChecked(True)
+
+    @pyqtSlot("QDate")
+    def on_edit_s_date_to_dateChanged(self, date):
+        self.check_date.setChecked(True)
 
 # End of Mainformsub.py
