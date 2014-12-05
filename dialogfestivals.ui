@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Správa festivalů</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/icons/icons/fb-icon16.png</normaloff>:/icons/icons/fb-icon16.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">

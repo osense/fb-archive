@@ -7,6 +7,7 @@ import dbjobs
 import os
 import sys
 from dialogeditsub import DialogEditSub
+from dialogaboutsub import DialogAboutSub
 from dialogfestivalssub import DialogFestivalsSub
 from concertstablemodel import ConcertsTableModel
 import datetime
@@ -374,5 +375,10 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 self.statusbar.showMessage(self.tr('Záznam byl úspěšne odstráněn.'), TIMEOUT_INFO)
         else:
             QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
+
+    @pyqtSlot()
+    def on_actionO_programe_triggered(self):
+        d = DialogAboutSub(self)
+        d.exec_()
 
 # End of Mainformsub.py

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogedit.ui'
 #
-# Created: Fri Dec  5 17:25:16 2014
+# Created: Fri Dec  5 18:09:15 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,6 +14,9 @@ class Ui_DialogEdit(object):
         DialogEdit.setObjectName("DialogEdit")
         DialogEdit.resize(300, 210)
         DialogEdit.setMinimumSize(QtCore.QSize(300, 0))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/icons/fb-icon16.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        DialogEdit.setWindowIcon(icon)
         self.gridLayout_6 = QtWidgets.QGridLayout(DialogEdit)
         self.gridLayout_6.setObjectName("gridLayout_6")
         self.frame_works = QtWidgets.QFrame(DialogEdit)
@@ -97,15 +100,15 @@ class Ui_DialogEdit(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.btn_edit_confirm = QtWidgets.QPushButton(DialogEdit)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/icons/Actions-dialog-ok-apply-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_edit_confirm.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/Actions-dialog-ok-apply-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_edit_confirm.setIcon(icon1)
         self.btn_edit_confirm.setObjectName("btn_edit_confirm")
         self.horizontalLayout.addWidget(self.btn_edit_confirm)
         self.btn_edit_cancel = QtWidgets.QPushButton(DialogEdit)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/Actions-dialog-close-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_edit_cancel.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/icons/Actions-dialog-close-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_edit_cancel.setIcon(icon2)
         self.btn_edit_cancel.setObjectName("btn_edit_cancel")
         self.horizontalLayout.addWidget(self.btn_edit_cancel)
         self.gridLayout_6.addLayout(self.horizontalLayout, 5, 0, 1, 1)
