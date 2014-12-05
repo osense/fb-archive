@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>656</height>
+    <height>810</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,6 +72,9 @@
           </item>
           <item row="0" column="1">
            <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+            <property name="displayFormat">
+             <string>d. M. yyyy</string>
+            </property>
             <property name="calendarPopup">
              <bool>true</bool>
             </property>
@@ -220,79 +223,84 @@
             <property name="title">
              <string/>
             </property>
-            <layout class="QGridLayout" name="gridLayout_8">
+            <layout class="QGridLayout" name="gridLayout_5">
              <item row="0" column="0">
               <layout class="QGridLayout" name="gridLayout">
                <item row="0" column="0">
+                <widget class="QLabel" name="label_11">
+                 <property name="text">
+                  <string>Název:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="3">
+                <widget class="QLineEdit" name="edit_name"/>
+               </item>
+               <item row="1" column="0">
                 <widget class="QLabel" name="label">
                  <property name="text">
                   <string>Datum:</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
+               <item row="1" column="1">
                 <widget class="QDateTimeEdit" name="edit_date">
+                 <property name="displayFormat">
+                  <string>d. M. yyyy</string>
+                 </property>
                  <property name="calendarPopup">
                   <bool>true</bool>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>Stát konání:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="edit_state"/>
-               </item>
-              </layout>
-             </item>
-             <item row="0" column="1">
-              <layout class="QGridLayout" name="gridLayout_5">
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>Město konání:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QLineEdit" name="edit_city"/>
-               </item>
-               <item row="1" column="0">
+               <item row="1" column="2">
                 <widget class="QLabel" name="label_5">
                  <property name="text">
                   <string>Sál:</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
+               <item row="1" column="3">
                 <widget class="QLineEdit" name="edit_hall"/>
                </item>
-              </layout>
-             </item>
-             <item row="0" column="2">
-              <layout class="QGridLayout" name="gridLayout_7">
-               <item row="0" column="0">
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Stát konání:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="edit_state"/>
+               </item>
+               <item row="2" column="2">
                 <widget class="QLabel" name="label_4">
                  <property name="text">
                   <string>Typ koncertu:</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
+               <item row="2" column="3">
                 <widget class="QLineEdit" name="edit_type"/>
                </item>
-               <item row="1" column="0">
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Město konání:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="edit_city"/>
+               </item>
+               <item row="3" column="2">
                 <widget class="QLabel" name="label_9">
                  <property name="text">
                   <string>Festival:</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
+               <item row="3" column="3">
                 <widget class="QComboBox" name="cb_festival"/>
                </item>
               </layout>
@@ -301,6 +309,8 @@
             <zorder></zorder>
             <zorder></zorder>
             <zorder></zorder>
+            <zorder>edit_name</zorder>
+            <zorder>label_11</zorder>
            </widget>
           </item>
           <item row="1" column="0">
@@ -533,7 +543,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>250</height>
+        <height>200</height>
        </size>
       </property>
       <property name="editTriggers">
@@ -694,6 +704,48 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>edit_name</tabstop>
+  <tabstop>edit_date</tabstop>
+  <tabstop>edit_state</tabstop>
+  <tabstop>edit_city</tabstop>
+  <tabstop>edit_hall</tabstop>
+  <tabstop>edit_type</tabstop>
+  <tabstop>cb_festival</tabstop>
+  <tabstop>lw_edit_works</tabstop>
+  <tabstop>btn_works_add</tabstop>
+  <tabstop>btn_works_remove</tabstop>
+  <tabstop>lw_edit_dirigents</tabstop>
+  <tabstop>btn_dirigents_add</tabstop>
+  <tabstop>btn_dirigents_remove</tabstop>
+  <tabstop>lineEdit_13</tabstop>
+  <tabstop>checkBox_6</tabstop>
+  <tabstop>lineEdit_16</tabstop>
+  <tabstop>checkBox_9</tabstop>
+  <tabstop>lineEdit_11</tabstop>
+  <tabstop>btn_search</tabstop>
+  <tabstop>dateTimeEdit_2</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>lineEdit_14</tabstop>
+  <tabstop>checkBox_7</tabstop>
+  <tabstop>lineEdit_15</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>checkBox_5</tabstop>
+  <tabstop>lineEdit_12</tabstop>
+  <tabstop>lineEdit_9</tabstop>
+  <tabstop>lineEdit_10</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_8</tabstop>
+  <tabstop>btn_soloists_add</tabstop>
+  <tabstop>btn_soloists_remove</tabstop>
+  <tabstop>lw_edit_soloists</tabstop>
+  <tabstop>edit_note</tabstop>
+  <tabstop>btn_edit_confirm</tabstop>
+  <tabstop>btn_edit_save</tabstop>
+  <tabstop>btn_edit_cancel</tabstop>
+  <tabstop>tableView</tabstop>
+  <tabstop>checkBox</tabstop>
+ </tabstops>
  <resources>
   <include location="resource.qrc"/>
  </resources>

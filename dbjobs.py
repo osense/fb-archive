@@ -14,7 +14,7 @@ class Database:
             self.create_db()
 
     def last_id(self):
-        self.cursor.execute("SELECT last_insert_rowid()")c
+        self.cursor.execute("SELECT last_insert_rowid()")
         return self.cursor.fetchone()[0]
 
     def create_db(self):
@@ -136,7 +136,7 @@ class Database:
 
             if (k == "name"):
                 query += "(name='{}')".format(params[k])
-            else if (k == "festival_id"):
+            elif (k == "festival_id"):
                 query += "(festival_id={})".format(params[k])
             elif (k == "state"):
                 query += "(state='{}')".format(params[k])

@@ -19,7 +19,7 @@ class ConcertsTableModel(QAbstractTableModel):
             return QVariant()
         if role == Qt.DisplayRole:
             if index.column() == 0:
-                return QVariant(self.data[index.row()][index.column()].strftime('%d.%m.%Y %H:%M'))
+                return QVariant(self.data[index.row()][index.column()].strftime('%d.%m.%Y'))
             # Show multiline note as one line with 3 dots
             elif index.column() == 9:
                 text = self.data[index.row()][index.column()]
