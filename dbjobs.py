@@ -96,9 +96,17 @@ class Database:
         self.conn.commit()
 
     def add_concert(self, name, festival_id, date_from, date_to, state, city, hall, type, note):
-        self.cursor.execute("INSERT INTO concerts(name, festival_id, date_from, date_to, state, city, hall, type, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, festival_id, date, state, city, hall, type, note))
+        self.cursor.execute("INSERT INTO concerts(name, festival_id, date_from, date_to, state, city, hall, type, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, festival_id, date_from, date_to, state, city, hall, type, note))
         self.conn.commit()
         return self.last_id()
+
+    ### UPDATING DATA #############################################################################################################################
+
+    def update_concert(self, id, name, festival_id, date_from, date_to, state, city, hall, type, note):
+        self.cursor.execute("UPDATE concerts SET(name, festival_id, date_from, date_to, state, city, hall, type, note) WHERE id=?", (name, festival_id, date, state, city, hall, type, note))
+        self.conn.commit()
+        return self.last_id()
+
     ### FETCHING DATA #############################################################################################################################
 
     def get_all_concerts(self):
