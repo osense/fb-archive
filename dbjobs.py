@@ -14,7 +14,7 @@ class Database:
             self.create_db()
 
     def last_id(self):
-        self.cursor.execute("SELECT last_insert_rowid()")c
+        self.cursor.execute("SELECT last_insert_rowid()")
         return self.cursor.fetchone()[0]
 
     def create_db(self):
@@ -41,7 +41,8 @@ class Database:
         self.conn.execute("CREATE TABLE concerts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
                                                   name TEXT, \
                                                   festival_id INTEGER, \
-                                                  date TIMESTAMP NOT NULL, \
+                                                  date_from TIMESTAMP NOT NULL, \
+                                                  date_to TIMESTAMP NOT NULL, \
                                                   state TEXT NOT NULL, \
                                                   city TEXT NOT NULL, \
                                                   hall TEXT NOT NULL, \
@@ -94,17 +95,17 @@ class Database:
         self.cursor.execute("INSERT INTO choirs(concert_id, name) VALUES (?, ?)", (concert_id, name))
         self.conn.commit()
 
-    def add_concert(self, name, festival_id, date, state, city, hall, type, note):
-        self.cursor.execute("INSERT INTO concerts(name, festival_id, date, state, city, hall, type, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (name, festival_id, date, state, city, hall, type, note))
+    def add_concert(self, name, festival_id, date_from, date_to, state, city, hall, type, note):
+        self.cursor.execute("INSERT INTO concerts(name, festival_id, date_from, date_to, state, city, hall, type, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, festival_id, date, state, city, hall, type, note))
         self.conn.commit()
         return self.last_id()
     ### FETCHING DATA #############################################################################################################################
 
     def get_all_concerts(self):
-        self.cursor.execute("SELECT c.id, c.date as 'x [timestamp]', c.name, c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
+        self.cursor.execute("SELECT c.id, c.date_from as 'x [timestamp]', c.date_to as 'x [timestamp]', c.name, c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
                             "FROM concerts c "
                             "LEFT JOIN festivals f ON f.id = c.festival_id "
-                            "ORDER BY c.date DESC")
+                            "ORDER BY c.date_from DESC")
         return self.cursor.fetchall()
 
     def get_works(self, concert_id):
@@ -124,7 +125,7 @@ class Database:
         return self.cursor.fetchall()
 
     def find_concerts(self, params):
-        query = "SELECT name, festival_id, date, state, city, hall, type, note FROM concerts WHERE "
+        query = "SELECT name, festival_id, date_from, date_to, state, city, hall, type, note FROM concerts WHERE "
         i = 1
         for k in params:
             if (k in ["date_from", "date_to"]):
@@ -136,7 +137,7 @@ class Database:
 
             if (k == "name"):
                 query += "(name='{}')".format(params[k])
-            else if (k == "festival_id"):
+            elif (k == "festival_id"):
                 query += "(festival_id={})".format(params[k])
             elif (k == "state"):
                 query += "(state='{}')".format(params[k])
@@ -154,7 +155,7 @@ class Database:
                 i = i + 1
 
         if (("date_from" in params) and ("date_to" in params)):
-            query += "(date BETWEEN {} AND {})".format(params["date_from"], params["date_to"])
+            query += "(date_from >= {} AND date_to <= {})".format(params["date_from"], params["date_to"])
 
         print(query)
 
