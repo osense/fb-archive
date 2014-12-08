@@ -520,9 +520,23 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     @pyqtSlot("QDate")
     def on_edit_s_date_from_dateChanged(self, date):
         self.check_date.setChecked(True)
+        if self.edit_s_date_from.dateTime() > self.edit_s_date_to.dateTime():
+            self.edit_s_date_to.setDateTime(self.edit_s_date_from.dateTime())
 
     @pyqtSlot("QDate")
     def on_edit_s_date_to_dateChanged(self, date):
         self.check_date.setChecked(True)
+        if self.edit_s_date_to.dateTime() < self.edit_s_date_from.dateTime():
+            self.edit_s_date_from.setDateTime(self.edit_s_date_to.dateTime())
+
+    @pyqtSlot("QDate")
+    def on_edit_date_from_dateChanged(self, date):
+        if self.edit_date_from.dateTime() > self.edit_date_to.dateTime():
+            self.edit_date_to.setDateTime(self.edit_date_from.dateTime())
+
+    @pyqtSlot("QDate")
+    def on_edit_date_to_dateChanged(self, date):
+        if self.edit_date_to.dateTime() < self.edit_date_from.dateTime():
+            self.edit_date_from.setDateTime(self.edit_date_to.dateTime())
 
 # End of Mainformsub.py
