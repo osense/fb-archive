@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogedit.ui'
 #
-# Created: Fri Dec  5 23:52:32 2014
+# Created: Tue Dec  9 10:58:17 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -124,7 +124,7 @@ class Ui_DialogEdit(object):
         self.label.setText(_translate("DialogEdit", "Skladatel:"))
         self.label_2.setText(_translate("DialogEdit", "Skladba:"))
         self.label_3.setText(_translate("DialogEdit", "Dirigent:"))
-        self.label_4.setText(_translate("DialogEdit", "Solista:"))
+        self.label_4.setText(_translate("DialogEdit", "Sólista:"))
         self.label_5.setText(_translate("DialogEdit", "Festival:"))
         self.label_6.setText(_translate("DialogEdit", "Sbor:"))
         self.btn_edit_confirm.setText(_translate("DialogEdit", "Přidat"))

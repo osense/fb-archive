@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogabout.ui'
 #
-# Created: Fri Dec  5 23:52:32 2014
+# Created: Tue Dec  9 10:58:17 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -49,7 +49,7 @@ class Ui_DialogAbout(object):
 
     def retranslateUi(self, DialogAbout):
         _translate = QtCore.QCoreApplication.translate
-        DialogAbout.setWindowTitle(_translate("DialogAbout", "O programe FB Archiv"))
+        DialogAbout.setWindowTitle(_translate("DialogAbout", "O programu FB Archiv"))
         self.label.setText(_translate("DialogAbout", "TextLabel"))
 
 import resource_rc

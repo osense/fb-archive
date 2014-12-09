@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Filharmonie Brno - Arcihv koncertů</string>
+   <string>Filharmonie Brno - Archiv koncertů</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resource.qrc">
@@ -106,7 +106,7 @@
               <item>
                <widget class="QPushButton" name="btn_clear_criteria">
                 <property name="text">
-                 <string>Zrušit zvolené kriteria</string>
+                 <string>Zrušit zvolené kritéria</string>
                 </property>
                 <property name="icon">
                  <iconset resource="resource.qrc">
@@ -150,7 +150,7 @@
             <item row="1" column="4">
              <widget class="QCheckBox" name="check_soloist">
               <property name="text">
-               <string>Solista:</string>
+               <string>Sólista:</string>
               </property>
              </widget>
             </item>
@@ -474,7 +474,7 @@
              <item row="0" column="2">
               <widget class="QToolButton" name="btn_dirigents_remove">
                <property name="toolTip">
-                <string>Odstránit záznam</string>
+                <string>Odstranit záznam</string>
                </property>
                <property name="text">
                 <string>...</string>
@@ -539,7 +539,7 @@
              <item row="0" column="2">
               <widget class="QToolButton" name="btn_choirs_remove">
                <property name="toolTip">
-                <string>Odstránit záznam</string>
+                <string>Odstranit záznam</string>
                </property>
                <property name="text">
                 <string>...</string>
@@ -648,14 +648,14 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Skladatelé, skladby, solisti</string>
+                <string>Skladatelé, skladby, sólisti</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QToolButton" name="btn_works_add">
                <property name="toolTip">
-                <string>Přidat skladatela a skladbu...</string>
+                <string>Přidat skladatele a skladbu...</string>
                </property>
                <property name="text">
                 <string>...</string>
@@ -672,7 +672,7 @@
              <item row="0" column="2">
               <widget class="QToolButton" name="btn_works_add_soloist">
                <property name="toolTip">
-                <string>Přidat solistu...</string>
+                <string>Přidat sólistu...</string>
                </property>
                <property name="text">
                 <string>...</string>
@@ -689,7 +689,7 @@
              <item row="0" column="3">
               <widget class="QToolButton" name="btn_works_remove">
                <property name="toolTip">
-                <string>Odstránit záznam</string>
+                <string>Odstranit záznam</string>
                </property>
                <property name="text">
                 <string>...</string>
@@ -882,7 +882,7 @@
   </action>
   <action name="actionO_programe">
    <property name="text">
-    <string>O programe</string>
+    <string>O programu</string>
    </property>
   </action>
   <action name="actionSprava_festivalov">

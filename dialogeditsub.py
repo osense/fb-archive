@@ -100,6 +100,6 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
         if (len(self.dataDirigent) != 0) or (len(self.dataSoloist) != 0) or ((len(self.dataComposer) != 0) and (len(self.dataWork) != 0)) or (len(self.dataFestival) != 0) or (len(self.dataChoir) != 0):
             QDialog.accept(self)
         else:
-            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nesprávne vyplnené údaje.'))
+            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nesprávně vyplněné údaje.'))
 
 # End of dialogeditsub.py

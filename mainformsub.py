@@ -63,7 +63,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.edit_name.textEdited.connect(self.getCompleterData)
         # Main table with concerts
         headerdata = [self.tr('Datum od'), self.tr('Datum do'), self.tr("Název"), self.tr('Stát'), self.tr('Město'), self.tr('Sál'), self.tr('Typ koncertu'), \
-                      self.tr('Festival'), self.tr('Skladatel, skladba'), self.tr('Solisti'), self.tr('Dirigenti'), self.tr('Sbory'), self.tr('Poznámka'), ]
+                      self.tr('Festival'), self.tr('Skladatel, skladba'), self.tr('Sólisti'), self.tr('Dirigenti'), self.tr('Sbory'), self.tr('Poznámka'), ]
         self.concerts_model = ConcertsTableModel(self, headerdata)
         # Proxy model is set here for sorting
         self.sort_proxy_model = QSortFilterProxyModel()
@@ -116,41 +116,52 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         search_parameters = {}
         # Add parameters to dict
         if self.check_date.isChecked():
-            search_parameters['date'] = 
+            dt_from = self.edit_s_date_from.dateTime()
+            search_parameters['date_from'] = datetime.datetime(dt_from.date().year(), dt_from.date().month(), dt_from.date().day(), 0, 0, 0)
+            dt_to = self.edit_s_date_to.dateTime()
+            search_parameters['date_to'] = datetime.datetime(dt_to.date().year(), dt_to.date().month(), dt_to.date().day(), 23, 59, 59)
         if self.check_name.isChecked():
-            search_parameters['name'] = 
+            search_parameters['name'] = self.edit_s_name.text().rstrip()
         if self.check_state.isChecked():
-            search_parameters['state'] = 
+            search_parameters['state'] = self.edit_s_state.text().rstrip()
         if self.check_city.isChecked():
-            search_parameters['city'] = 
+            search_parameters['city'] = self.edit_s_city.text().rstrip()
         if self.check_hall.isChecked():
-            search_parameters['hall'] = 
+            search_parameters['hall'] = self.edit_s_hall.text().rstrip()
         if self.check_type.isChecked():
-            search_parameters['type'] = 
+            search_parameters['type'] = self.edit_s_type.text().rstrip()
         if self.check_festival.isChecked():
-            search_parameters['festival'] = 
+            search_parameters['festival'] = self.cb_s_festival.itemData(self.cb_s_festival.currentIndex(), Qt.UserRole)
         if self.check_composer.isChecked():
-            search_parameters['composer'] = 
+            search_parameters['composer'] = self.edit_s_composer.text().rstrip()
         if self.check_work.isChecked():
-            search_parameters['work'] = 
+            search_parameters['work'] = self.edit_s_work.text().rstrip()
         if self.check_soloist.isChecked():
-            search_parameters['soloist'] = 
+            search_parameters['soloist'] = self.edit_s_soloist.text().rstrip()
         if self.check_dirigent.isChecked():
-            search_parameters['dirigent'] = 
+            search_parameters['dirigent'] = self.edit_s_dirigent.text().rstrip()
         if self.check_choir.isChecked():
-            search_parameters['choir'] = 
+            search_parameters['choir'] = self.edit_s_choir.text().rstrip()
         if self.check_note.isChecked():
-            search_parameters['note'] = 
-
-        print("search pressed")
+            search_parameters['note'] = self.edit_s_note.text().rstrip()
+        # Db function
+        data = self.dbjobs.find_concerts(search_parameters)
+        # Show data in tableview
+        self.show_selected_concerts(data)
 
     def show_all_concerts(self):
         """
         Shows all concerts from the database in tableview
         """
-        self.concerts_model.clear()
-        self.concerts_model.beginResetModel()
         data = self.dbjobs.get_all_concerts()
+        self.show_selected_concerts(data)
+
+    def show_selected_concerts(self, data):
+        """
+        Inserts selected concerts from db to tableview
+        """
+        self.concerts_model.beginResetModel()
+        self.concerts_model.clear()
         for row in data:
             concert_id = row[0]
             date_from = row[1]
@@ -272,7 +283,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 self.tw_edit_works.invisibleRootItem().addChild(work_item)
             self.tw_edit_works.expandAll()
         else:
-            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
+            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádný koncert.'))
 
     @pyqtSlot()
     def on_btn_edit_confirm_clicked(self):
@@ -386,7 +397,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def on_btn_works_add_soloist_clicked(self):
         selected_items = self.tw_edit_works.selectedItems()
         if len(selected_items) > 0:
-            d = DialogEditSub(self, soloists=True, caption=self.tr('Zadejte jméno sólistu'))
+            d = DialogEditSub(self, soloists=True, caption=self.tr('Zadejte jméno sólisty'))
             if d.exec_() == QDialog.Accepted:
                 item = QTreeWidgetItem()
                 item.setText(0, d.dataSoloist)
@@ -398,7 +409,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 self.tw_edit_works.expandAll()
                 self.tw_edit_works.scrollToItem(item, QAbstractItemView.EnsureVisible)
         else:
-            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyla označena žádna skladba.'))
+            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyla označena žádná skladba.'))
 
     @pyqtSlot()
     def on_btn_works_add_clicked(self):
@@ -482,9 +493,9 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 # Remove soloists assigned to this concert
                 self.dbjobs.remove_soloists_for_concert(concert_id)
                 self.concerts_model.removeRow(selected_indexes[0].row())
-                self.statusbar.showMessage(self.tr('Záznam byl úspěšne odstráněn.'), TIMEOUT_INFO)
+                self.statusbar.showMessage(self.tr('Záznam byl úspěšne odstraněn.'), TIMEOUT_INFO)
         else:
-            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádnej koncert.'))
+            QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádný koncert.'))
 
     @pyqtSlot()
     def on_actionO_programe_triggered(self):
