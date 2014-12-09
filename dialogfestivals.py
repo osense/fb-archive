@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogfestivals.ui'
 #
-# Created: Fri Dec  5 23:52:32 2014
+# Created: Tue Dec  9 10:58:17 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -66,7 +66,9 @@ class Ui_DialogFestivals(object):
         _translate = QtCore.QCoreApplication.translate
         DialogFestivals.setWindowTitle(_translate("DialogFestivals", "Správa festivalů"))
         self.label_7.setText(_translate("DialogFestivals", "Festivaly"))
+        self.btn_festivals_add.setToolTip(_translate("DialogFestivals", "Přidat festival..."))
         self.btn_festivals_add.setText(_translate("DialogFestivals", "..."))
+        self.btn_festivals_remove.setToolTip(_translate("DialogFestivals", "Odstranit záznam"))
         self.btn_festivals_remove.setText(_translate("DialogFestivals", "..."))
         self.btn_close.setText(_translate("DialogFestivals", "Zavřít"))
 

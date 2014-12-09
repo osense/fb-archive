@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainform.ui'
 #
-# Created: Fri Dec  5 23:52:32 2014
+# Created: Tue Dec  9 10:58:16 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -535,15 +535,15 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Filharmonie Brno - Arcihv koncertů"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Filharmonie Brno - Archiv koncertů"))
         self.check_date.setText(_translate("MainWindow", "Datum:"))
         self.edit_s_date_from.setDisplayFormat(_translate("MainWindow", "d. M. yyyy"))
         self.edit_s_date_to.setDisplayFormat(_translate("MainWindow", "d. M. yyyy"))
-        self.btn_clear_criteria.setText(_translate("MainWindow", "Zrušit zvolené kriteria"))
+        self.btn_clear_criteria.setText(_translate("MainWindow", "Zrušit zvolené kritéria"))
         self.btn_clear_widgets.setText(_translate("MainWindow", "Vyčistit formuláře"))
         self.check_name.setText(_translate("MainWindow", "Název:"))
         self.check_type.setText(_translate("MainWindow", "Typ koncertu:"))
-        self.check_soloist.setText(_translate("MainWindow", "Solista:"))
+        self.check_soloist.setText(_translate("MainWindow", "Sólista:"))
         self.check_state.setText(_translate("MainWindow", "Stát konání:"))
         self.check_festival.setText(_translate("MainWindow", "Festival:"))
         self.check_dirigent.setText(_translate("MainWindow", "Dirigent:"))
@@ -568,22 +568,22 @@ class Ui_MainWindow(object):
         self.label_7.setText(_translate("MainWindow", "Dirigenti"))
         self.btn_dirigents_add.setToolTip(_translate("MainWindow", "Přidat dirigenta..."))
         self.btn_dirigents_add.setText(_translate("MainWindow", "..."))
-        self.btn_dirigents_remove.setToolTip(_translate("MainWindow", "Odstránit záznam"))
+        self.btn_dirigents_remove.setToolTip(_translate("MainWindow", "Odstranit záznam"))
         self.btn_dirigents_remove.setText(_translate("MainWindow", "..."))
         self.label_13.setText(_translate("MainWindow", "Sbory"))
         self.btn_choirs_add.setToolTip(_translate("MainWindow", "Přidat sbor..."))
         self.btn_choirs_add.setText(_translate("MainWindow", "..."))
-        self.btn_choirs_remove.setToolTip(_translate("MainWindow", "Odstránit záznam"))
+        self.btn_choirs_remove.setToolTip(_translate("MainWindow", "Odstranit záznam"))
         self.btn_choirs_remove.setText(_translate("MainWindow", "..."))
         self.btn_edit_confirm.setText(_translate("MainWindow", "Přidat"))
         self.btn_edit_save.setText(_translate("MainWindow", "Upravit"))
         self.btn_edit_cancel.setText(_translate("MainWindow", "Zrušit"))
-        self.label_6.setText(_translate("MainWindow", "Skladatelé, skladby, solisti"))
-        self.btn_works_add.setToolTip(_translate("MainWindow", "Přidat skladatela a skladbu..."))
+        self.label_6.setText(_translate("MainWindow", "Skladatelé, skladby, sólisti"))
+        self.btn_works_add.setToolTip(_translate("MainWindow", "Přidat skladatele a skladbu..."))
         self.btn_works_add.setText(_translate("MainWindow", "..."))
-        self.btn_works_add_soloist.setToolTip(_translate("MainWindow", "Přidat solistu..."))
+        self.btn_works_add_soloist.setToolTip(_translate("MainWindow", "Přidat sólistu..."))
         self.btn_works_add_soloist.setText(_translate("MainWindow", "..."))
-        self.btn_works_remove.setToolTip(_translate("MainWindow", "Odstránit záznam"))
+        self.btn_works_remove.setToolTip(_translate("MainWindow", "Odstranit záznam"))
         self.btn_works_remove.setText(_translate("MainWindow", "..."))
         self.menuArchiv.setTitle(_translate("MainWindow", "Archiv"))
         self.menuZaznam.setTitle(_translate("MainWindow", "Záznam"))
@@ -597,7 +597,7 @@ class Ui_MainWindow(object):
         self.actionPridat.setText(_translate("MainWindow", "Přidat"))
         self.actionUpravit.setText(_translate("MainWindow", "Upravit"))
         self.actionOdstranit.setText(_translate("MainWindow", "Odstranit"))
-        self.actionO_programe.setText(_translate("MainWindow", "O programe"))
+        self.actionO_programe.setText(_translate("MainWindow", "O programu"))
         self.actionSprava_festivalov.setText(_translate("MainWindow", "Správa festivalů"))
 
 import resource_rc
