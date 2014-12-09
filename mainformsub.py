@@ -39,7 +39,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.frame_search.adjustSize()
         # Create auto completer
         self.completer = QCompleter()
-        self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+        self.completer.setCompletionMode(QCompleter.PopupCompletion)
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.completer_model = QStringListModel()
         self.completer.setModel(self.completer_model)
@@ -101,6 +101,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             if len(stringlist) == 7:
                 stringlist[6] = '...'
             self.completer_model.setStringList(stringlist)
+            self.completer_model.sort(0)
 
     def closeEvent(self, ce):
         """
@@ -385,27 +386,42 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_btn_dirigents_add_clicked(self):
-        d = DialogEditSub(self, dirigents=True, caption=self.tr('Zadejte jméno dirigenta'))
+        # Stringlist for completion
+        stringlist = []
+        for i in range(self.lw_edit_dirigents.count()):
+            stringlist.append(self.lw_edit_dirigents.item(i).text())
+        # Dialog
+        d = DialogEditSub(self, stringlist, dirigents=True, caption=self.tr('Zadejte jméno dirigenta'))
         if d.exec_() == QDialog.Accepted:
             item = QListWidgetItem()
             item.setText(d.dataDirigent)
             self.lw_edit_dirigents.addItem(item)
             self.lw_edit_dirigents.scrollToItem(item, QAbstractItemView.EnsureVisible)
             self.lw_edit_dirigents.selectionModel().setCurrentIndex(self.lw_edit_dirigents.indexFromItem(item), QItemSelectionModel.ClearAndSelect)
+            self.lw_edit_dirigents.sortItems()
 
     @pyqtSlot()
     def on_btn_works_add_soloist_clicked(self):
         selected_items = self.tw_edit_works.selectedItems()
         if len(selected_items) > 0:
-            d = DialogEditSub(self, soloists=True, caption=self.tr('Zadejte jméno sólisty'))
+            # Stringlist for completion
+            stringlist = []
+            for i in range(self.tw_edit_works.invisibleRootItem().childCount()):
+                item = self.tw_edit_works.invisibleRootItem().child(i)
+                for j in range(item.childCount()):
+                    stringlist.append(item.child(j).text(0))
+            # Dialog
+            d = DialogEditSub(self, stringlist, soloists=True, caption=self.tr('Zadejte jméno sólisty'))
             if d.exec_() == QDialog.Accepted:
                 item = QTreeWidgetItem()
                 item.setText(0, d.dataSoloist)
                 parent = selected_items[0].parent()
                 if parent != None:
                     parent.addChild(item)
+                    parent.sortChildren(0, Qt.AscendingOrder)
                 else:
                     selected_items[0].addChild(item)
+                    selected_items[0].sortChildren(0, Qt.AscendingOrder)
                 self.tw_edit_works.expandAll()
                 self.tw_edit_works.scrollToItem(item, QAbstractItemView.EnsureVisible)
         else:
@@ -413,7 +429,13 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_btn_works_add_clicked(self):
-        d = DialogEditSub(self, works=True, caption=self.tr('Zadejte jméno skladatele a název díla'))
+        # Stringlist for completion
+        stringlist = []
+        for i in range(self.tw_edit_works.invisibleRootItem().childCount()):
+            item = self.tw_edit_works.invisibleRootItem().child(i)
+            stringlist.append(item.text(0))
+        # Dialog
+        d = DialogEditSub(self, stringlist, works=True, caption=self.tr('Zadejte jméno skladatele a název díla'))
         if d.exec_() == QDialog.Accepted:
             item = QTreeWidgetItem()
             item.setText(0, '{}{}{}'.format(d.dataComposer, WORK_STR_SEPARATOR, d.dataWork))
@@ -421,16 +443,23 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.tw_edit_works.expandAll()
             self.tw_edit_works.scrollToItem(item, QAbstractItemView.EnsureVisible)
             self.tw_edit_works.selectionModel().setCurrentIndex(self.tw_edit_works.indexFromItem(item), QItemSelectionModel.ClearAndSelect)
+            self.tw_edit_works.sortItems(0, Qt.AscendingOrder)
 
     @pyqtSlot()
     def on_btn_choirs_add_clicked(self):
-        d = DialogEditSub(self, choirs=True, caption=self.tr('Zadejte název sboru'))
+        # Stringlist for completion
+        stringlist = []
+        for i in range(self.lw_edit_choirs.count()):
+            stringlist.append(self.lw_edit_choirs.item(i).text())
+        # Dialog
+        d = DialogEditSub(self, stringlist, choirs=True, caption=self.tr('Zadejte název sboru'))
         if d.exec_() == QDialog.Accepted:
             item = QListWidgetItem()
             item.setText(d.dataChoir)
             self.lw_edit_choirs.addItem(item)
             self.lw_edit_choirs.scrollToItem(item, QAbstractItemView.EnsureVisible)
             self.lw_edit_choirs.selectionModel().setCurrentIndex(self.lw_edit_choirs.indexFromItem(item), QItemSelectionModel.ClearAndSelect)
+            self.lw_edit_choirs.sortItems()
 
     @pyqtSlot()
     def on_btn_choirs_remove_clicked(self):

@@ -4,15 +4,17 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from dialogedit import Ui_DialogEdit
+from constants import *
 
 
 class DialogEditSub(QDialog, Ui_DialogEdit):
     """
     Dialog to add new group
     """
-    def __init__(self, parent, dirigents=False, works=False, soloists=False, festivals=False, choirs=False, caption=''):
+    def __init__(self, parent, view_stringlist, dirigents=False, works=False, soloists=False, festivals=False, choirs=False, caption=''):
         super(QDialog, self).__init__()
         self.parent = parent
+        self.view_stringlist = view_stringlist
         self.setupUi(self)
         self.setWindowTitle(caption)
         # Variables
@@ -43,7 +45,7 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
         self.adjustSize()
         # Create auto completer
         self.completer = QCompleter()
-        self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+        self.completer.setCompletionMode(QCompleter.PopupCompletion)
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.completer_model = QStringListModel()
         self.completer.setModel(self.completer_model)
@@ -74,14 +76,28 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
         Shows expressions for completion due to edit type
         """
         lineedit = self.sender()
-        data = self.completion_dict[lineedit]['db_func'](text)
         stringlist = []
+        # Add strings from database
+        data = self.completion_dict[lineedit]['db_func'](text)
         if data != None:
             for item in data:
                 stringlist += item
             if len(stringlist) == 7:
                 stringlist[6] = '...'
-            self.completer_model.setStringList(stringlist)
+        # Add string already added to parent view object
+        if self.typeWorks:
+            newlist = []
+            column = 0 if lineedit == self.edit_composer else 1
+            for record in self.view_stringlist:
+                newlist.append(record.split(WORK_STR_SEPARATOR)[column])
+            stringlist += newlist
+        else:
+            stringlist += self.view_stringlist
+        # Remove duplicates
+        stringlist = list(set(stringlist))
+        # Set string list for completter
+        self.completer_model.setStringList(stringlist)
+        self.completer_model.sort(0)
 
     def accept(self):
         # Handle input data

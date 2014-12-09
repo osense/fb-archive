@@ -1,2 +1,1 @@
 - ignorovat diakritiku pri completion
-- pri pridavani este pred stlacenim "Potvrdit" aby fungovalo completion na uz pridanych napr dirigentov
