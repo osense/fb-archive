@@ -117,7 +117,7 @@ class Database:
                                                 "city = ?, "
                                                 "hall = ?, "
                                                 "type = ?, "
-                                                "note = ? " 
+                                                "note = ? "
                                                 "WHERE id=?", (name, festival_id, date_from, date_to, state, city, hall, type, note, concert_id))
         self.conn.commit()
         return self.last_id()
@@ -152,37 +152,61 @@ class Database:
         return self.cursor.fetchall()
 
     def find_concerts(self, params):
-        query = "SELECT name, festival_id, date_from, date_to, state, city, hall, type, note FROM concerts WHERE "
+        joins = ""
+        if ("festival" in params):
+            joins += "LEFT JOIN festivals f"
+        query = "SELECT id, date_from as 'x [timestamp]', date_to as 'x [timestamp]', name, state, city, hall, type, note, festival_id FROM concerts WHERE "
         i = 1
         for k in params:
-            if (k in ["date_from", "date_to"]):
-                continue
-            #query += "({}={})".format(k, params[k])
-            #if (i < len(params)):
-                #query += " AND "
-                #i = i + 1
+            if (k in ["name", "state", "city", "hall", "type", "note"]):
+                #query += "({}={})".format(k, params[k])
+                #if (i < len(params)):
+                    #query += " AND "
+                    #i = i + 1
 
-            if (k == "name"):
-                query += "(name='{}')".format(params[k])
-            elif (k == "festival_id"):
-                query += "(festival_id={})".format(params[k])
-            elif (k == "state"):
-                query += "(state='{}')".format(params[k])
-            elif (k == "city"):
-                query += "(city='{}')".format(params[k])
-            elif (k == "hall"):
-                query += "(hall='{}')".format(params[k])
-            elif (k == "type"):
-                query += "(type='{}')".format(params[k])
-            elif (k == "note"):
-                query += "(note='{}')".format(params[k])
+                if (k == "name"):
+                    query += "(name='{}')".format(params[k])
+                elif (k == "state"):
+                    query += "(state='{}')".format(params[k])
+                elif (k == "city"):
+                    query += "(city='{}')".format(params[k])
+                elif (k == "hall"):
+                    query += "(hall='{}')".format(params[k])
+                elif (k == "type"):
+                    query += "(type='{}')".format(params[k])
+                elif (k == "note"):
+                    query += "(note='{}')".format(params[k])
 
-            if (i < len(params)):
-                query += " AND "
-                i = i + 1
+                if (i < len(params)):
+                    query += " AND "
+                    i = i + 1
 
         if (("date_from" in params) and ("date_to" in params)):
             query += "(date_from >= {} AND date_to <= {})".format(params["date_from"], params["date_to"])
+
+        if ("festival" in params):
+            self.cursor.execute("SELECT id FROM festivals WHERE name LIKE ?", (params["festival"] + '%',))
+            ids = self.cursor.fetchall()
+            if (ids):
+                ids = [x[0] for x in ids]
+                query += "(festival_id IN ({})) AND ".format(str(ids)[1:-1])
+
+        if ("composer" in params):
+            self.cursor.execute("SELECT concert_id FROM works WHERE composer LIKE ?", (params["composer"] + '%',))
+            ids = self.cursor.fetchall()
+            if (ids):
+                ids = [x[0] for x in ids]
+                query += "(concert_id IN ({})) AND ".format(str(ids)[1:-1])
+
+        if ("work" in params):
+            self.cursor.execute("SELECT concert_id FROM works WHERE work LIKE ?", (params["work"] + '%',))
+            ids = self.cursor.fetchall()
+            if (ids):
+                ids = [x[0] for x in ids]
+                query += "(concert_id IN ({})) AND ".format(str(ids)[1:-1])
+
+        if (query.endswith(" AND ")):
+            query = query[:-5]
 
         print(query)
 
