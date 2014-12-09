@@ -113,6 +113,35 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_btn_search_clicked(self):
+        search_parameters = {}
+        # Add parameters to dict
+        if self.check_date.isChecked():
+            search_parameters['date'] = 
+        if self.check_name.isChecked():
+            search_parameters['name'] = 
+        if self.check_state.isChecked():
+            search_parameters['state'] = 
+        if self.check_city.isChecked():
+            search_parameters['city'] = 
+        if self.check_hall.isChecked():
+            search_parameters['hall'] = 
+        if self.check_type.isChecked():
+            search_parameters['type'] = 
+        if self.check_festival.isChecked():
+            search_parameters['festival'] = 
+        if self.check_composer.isChecked():
+            search_parameters['composer'] = 
+        if self.check_work.isChecked():
+            search_parameters['work'] = 
+        if self.check_soloist.isChecked():
+            search_parameters['soloist'] = 
+        if self.check_dirigent.isChecked():
+            search_parameters['dirigent'] = 
+        if self.check_choir.isChecked():
+            search_parameters['choir'] = 
+        if self.check_note.isChecked():
+            search_parameters['note'] = 
+
         print("search pressed")
 
     def show_all_concerts(self):
