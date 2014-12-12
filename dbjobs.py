@@ -210,6 +210,58 @@ class Database:
 
         print(query)
 
+    def universal_search(self, params):
+        query = ("SELECT DISTINCT c.id, "
+                        "c.date_from as 'x [timestamp]', "
+                        "c.date_to as 'x [timestamp]', "
+                        "c.name, "
+                        "c.state, "
+                        "c.city, "
+                        "c.hall, "
+                        "c.type, "
+                        "c.note, "
+                        "f.name as festival, "
+                        "c.festival_id "
+                 "FROM concerts c "
+                 "LEFT JOIN festivals f ON f.id = c.festival_id "
+                 "LEFT JOIN dirigents d ON d.concert_id = c.id "
+                 "LEFT JOIN choirs ch ON ch.concert_id = c.id "
+                 "LEFT JOIN works w ON w.concert_id = c.id "
+                 "LEFT JOIN soloists s ON s.work_id = w.id "
+                 "WHERE ")
+        # Parsing params
+        if 'date_from' in params.keys():
+            query += "c.date_from >= datetime('{}') AND c.date_to <= datetime('{}') AND ".format(params['date_from'], params['date_to'])
+        if 'name' in params.keys():
+            query += "c.name LIKE '{}%' AND ".format(params['name'])
+        if 'state' in params.keys():
+            query += "c.state LIKE '{}%' AND ".format(params['state'])
+        if 'city' in params.keys():
+            query += "c.city LIKE '{}%' AND ".format(params['city'])
+        if 'hall' in params.keys():
+            query += "c.hall LIKE '{}%' AND ".format(params['hall'])
+        if 'type' in params.keys():
+            query += "c.type LIKE '{}%' AND ".format(params['type'])
+        if 'festival' in params.keys():
+            query += "c.festival_id = {} AND ".format(params['festival'])
+        if 'composer' in params.keys():
+            query += "w.composer LIKE '{}%' AND ".format(params['composer'])
+        if 'work' in params.keys():
+            query += "w.work LIKE '{}%' AND ".format(params['work'])
+        if 'soloist' in params.keys():
+            query += "s.name LIKE '{}%' AND ".format(params['soloist'])
+        if 'dirigent' in params.keys():
+            query += "d.name LIKE '{}%' AND ".format(params['dirigent'])
+        if 'choir' in params.keys():
+            query += "ch.name LIKE '{}%' AND ".format(params['choir'])
+        if 'note' in params.keys():
+            query += "c.note LIKE '%{}%' AND ".format(params['note'])
+
+        query += "1 "
+        query += "ORDER BY c.date_from DESC"
+        print(query)
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 
     ### FESTIVALS ###################################################################################################################################
 

@@ -146,7 +146,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         if self.check_note.isChecked():
             search_parameters['note'] = self.edit_s_note.text().rstrip()
         # Db function
-        data = self.dbjobs.find_concerts(search_parameters)
+        data = self.dbjobs.universal_search(search_parameters)
+        print("DATA:",data)
         # Show data in tableview
         self.show_selected_concerts(data)
 
