@@ -45,7 +45,7 @@ shortcut_table = [
 msi_data = {"Shortcut": shortcut_table}
 bdist_msi_options = {'data': msi_data}
 
-options = {"bdist_msi": bdist_msi_options,
+options = {"bdist_msi": bdist_msi_options, "build_exe": {"include_msvcr": True, 'include_files': ['libEGL.dll']}
     }
 
 setup(name='FB Archive',

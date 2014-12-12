@@ -11,7 +11,7 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
     """
     Dialog to add new group
     """
-    def __init__(self, parent, view_stringlist, dirigents=False, works=False, soloists=False, festivals=False, choirs=False, caption=''):
+    def __init__(self, parent, view_stringlist=None, dirigents=False, works=False, soloists=False, festivals=False, choirs=False, caption=''):
         super(QDialog, self).__init__()
         self.parent = parent
         self.view_stringlist = view_stringlist
@@ -85,14 +85,15 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
             if len(stringlist) == 7:
                 stringlist[6] = '...'
         # Add string already added to parent view object
-        if self.typeWorks:
-            newlist = []
-            column = 0 if lineedit == self.edit_composer else 1
-            for record in self.view_stringlist:
-                newlist.append(record.split(WORK_STR_SEPARATOR)[column])
-            stringlist += newlist
-        else:
-            stringlist += self.view_stringlist
+        if self.view_stringlist != None:
+            if self.typeWorks:
+                newlist = []
+                column = 0 if lineedit == self.edit_composer else 1
+                for record in self.view_stringlist:
+                    newlist.append(record.split(WORK_STR_SEPARATOR)[column])
+                stringlist += newlist
+            else:
+                stringlist += self.view_stringlist
         # Remove duplicates
         stringlist = list(set(stringlist))
         # Set string list for completter
