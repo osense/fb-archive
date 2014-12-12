@@ -151,64 +151,69 @@ class Database:
         self.cursor.execute("SELECT id, name FROM choirs WHERE concert_id=? ORDER BY name", (concert_id,))
         return self.cursor.fetchall()
 
+    ## TODO: Intersection of concert_ids
     def find_concerts(self, params):
         joins = ""
         if ("festival" in params):
             joins += "LEFT JOIN festivals f"
-        query = "SELECT id, date_from as 'x [timestamp]', date_to as 'x [timestamp]', name, state, city, hall, type, note, festival_id FROM concerts WHERE "
-        i = 1
+        query = ("SELECT c.id, c.date_from as 'x [timestamp]', c.date_to as 'x [timestamp]', c.name, c.state, c.city, c.hall, c.type, c.note, f.name as festival, c.festival_id "
+                "FROM concerts c "
+                "LEFT JOIN festivals f ON f.id = c.festival_id "
+                "WHERE ")
+
+        concert_ids = set()
         for k in params:
-            if (k in ["name", "state", "city", "hall", "type", "note"]):
-                #query += "({}={})".format(k, params[k])
-                #if (i < len(params)):
-                    #query += " AND "
-                    #i = i + 1
+            if (k in ["name", "state", "city", "hall", "type"]):
+                query += "(c.{} LIKE '{}%') AND ".format(k, params[k])
+            elif (k is "note"):
+                query += "(c.note LIKE '%{}%') AND ".format(params[k])
 
-                if (k == "name"):
-                    query += "(name='{}')".format(params[k])
-                elif (k == "state"):
-                    query += "(state='{}')".format(params[k])
-                elif (k == "city"):
-                    query += "(city='{}')".format(params[k])
-                elif (k == "hall"):
-                    query += "(hall='{}')".format(params[k])
-                elif (k == "type"):
-                    query += "(type='{}')".format(params[k])
-                elif (k == "note"):
-                    query += "(note='{}')".format(params[k])
-
-                if (i < len(params)):
-                    query += " AND "
-                    i = i + 1
+            elif (k is "composer"):
+                self.cursor.execute("SELECT concert_id FROM works WHERE composer LIKE ?", (params[k] + '%',))
+                ids = self.cursor.fetchall()
+                if (ids):
+                    [concert_ids.add(x[0]) for x in ids]
+            elif (k is "work"):
+                self.cursor.execute("SELECT concert_id FROM works WHERE work LIKE ?", (params[k] + '%',))
+                ids = self.cursor.fetchall()
+                if (ids):
+                    [concert_ids.add(x[0]) for x in ids]
+            elif (k is "soloist"):
+                self.cursor.execute("SELECT concert_id FROM soloist WHERE name LIKE ?", (params[k] + '%',))
+                ids = self.cursor.fetchall()
+                if (ids):
+                    [concert_ids.add(x[0]) for x in ids]
+            elif (k is "dirigent"):
+                self.cursor.execute("SELECT concert_id FROM dirigents WHERE name LIKE ?", (params[k] + '%',))
+                ids = self.cursor.fetchall()
+                if (ids):
+                    [concert_ids.add(x[0]) for x in ids]
+            elif (k is "choir"):
+                self.cursor.execute("SELECT concert_id FROM choirs WHERE name LIKE ?", (params[k] + '%',))
+                ids = self.cursor.fetchall()
+                if (ids):
+                    [concert_ids.add(x[0]) for x in ids]
 
         if (("date_from" in params) and ("date_to" in params)):
-            query += "(date_from >= {} AND date_to <= {})".format(params["date_from"], params["date_to"])
+            query += "(date_from >= datetime('{}') AND date_to <= datetime('{}')) AND ".format(params["date_from"], params["date_to"])
 
         if ("festival" in params):
             self.cursor.execute("SELECT id FROM festivals WHERE name LIKE ?", (params["festival"] + '%',))
             ids = self.cursor.fetchall()
             if (ids):
                 ids = [x[0] for x in ids]
-                query += "(festival_id IN ({})) AND ".format(str(ids)[1:-1])
+                query += "(c.festival_id IN ({})) AND ".format(str(ids)[1:-1])
 
-        if ("composer" in params):
-            self.cursor.execute("SELECT concert_id FROM works WHERE composer LIKE ?", (params["composer"] + '%',))
-            ids = self.cursor.fetchall()
-            if (ids):
-                ids = [x[0] for x in ids]
-                query += "(concert_id IN ({})) AND ".format(str(ids)[1:-1])
-
-        if ("work" in params):
-            self.cursor.execute("SELECT concert_id FROM works WHERE work LIKE ?", (params["work"] + '%',))
-            ids = self.cursor.fetchall()
-            if (ids):
-                ids = [x[0] for x in ids]
-                query += "(concert_id IN ({})) AND ".format(str(ids)[1:-1])
+        if not (concert_ids == set()):
+            print(concert_ids)
+            query += "(c.id IN ({})) AND ".format(str(concert_ids)[1:-1])
 
         if (query.endswith(" AND ")):
             query = query[:-5]
 
         print(query)
+        self.cursor.execute(query + " ORDER BY c.date_from DESC")
+        return self.cursor.fetchall()
 
     def universal_search(self, params):
         query = ("SELECT DISTINCT c.id, "
