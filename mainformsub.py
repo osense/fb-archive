@@ -147,7 +147,6 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             search_parameters['note'] = self.edit_s_note.text().rstrip()
         # Db function
         data = self.dbjobs.universal_search(search_parameters)
-        print("DATA:",data)
         # Show data in tableview
         self.show_selected_concerts(data)
 
@@ -494,8 +493,8 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         # Add festivals to combobox
         self.cb_festival.clear()
         self.cb_s_festival.clear()
-        self.cb_festival.addItem(self.tr('<Nepoužívat>'))
-        self.cb_s_festival.addItem(self.tr('<Nepoužívat>'))
+        self.cb_festival.addItem(self.tr('<Žádný>'))
+        self.cb_s_festival.addItem(self.tr('<Žádný>'))
         festivals = self.dbjobs.get_all_festivals()
         for festival in festivals:
             self.cb_festival.addItem(festival[1], festival[0])
@@ -608,5 +607,9 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def on_edit_date_to_dateChanged(self, date):
         if self.edit_date_to.dateTime() < self.edit_date_from.dateTime():
             self.edit_date_from.setDateTime(self.edit_date_to.dateTime())
+
+    @pyqtSlot("int")
+    def on_cb_s_festival_currentIndexChanged(self, index):
+        self.check_festival.setChecked(index != 0)
 
 # End of Mainformsub.py

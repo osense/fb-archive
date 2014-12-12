@@ -264,7 +264,7 @@ class Database:
 
         query += "1 "
         query += "ORDER BY c.date_from DESC"
-        print(query)
+
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
