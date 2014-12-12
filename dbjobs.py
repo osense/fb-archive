@@ -195,7 +195,7 @@ class Database:
                     [concert_ids.add(x[0]) for x in ids]
 
         if (("date_from" in params) and ("date_to" in params)):
-            query += "(date_from >= {} AND date_to <= {}) AND ".format(params["date_from"], params["date_to"])
+            query += "(date_from >= datetime('{}') AND date_to <= datetime('{}')) AND ".format(params["date_from"], params["date_to"])
 
         if ("festival" in params):
             self.cursor.execute("SELECT id FROM festivals WHERE name LIKE ?", (params["festival"] + '%',))
