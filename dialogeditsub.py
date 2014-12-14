@@ -1,6 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+## This file is part of fb-archive.
+
+## fb-archive is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+
+## fb-archive is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+
+## You should have received a copy of the GNU General Public License
+## along with fb-archive.  If not, see <http://www.gnu.org/licenses/>.
+
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from dialogedit import Ui_DialogEdit
@@ -50,9 +65,9 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
         self.completer_model = QStringListModel()
         self.completer.setModel(self.completer_model)
         # Completion database functions connected with particular widgets
-        self.completion_dict = {self.edit_composer: {'db_func': self.parent.dbjobs.get_completion_for_composer}, 
-                                self.edit_work: {'db_func': self.parent.dbjobs.get_completion_for_work}, 
-                                self.edit_dirigent: {'db_func': self.parent.dbjobs.get_completion_for_dirigent}, 
+        self.completion_dict = {self.edit_composer: {'db_func': self.parent.dbjobs.get_completion_for_composer},
+                                self.edit_work: {'db_func': self.parent.dbjobs.get_completion_for_work},
+                                self.edit_dirigent: {'db_func': self.parent.dbjobs.get_completion_for_dirigent},
                                 self.edit_soloist: {'db_func': self.parent.dbjobs.get_completion_for_soloist},
                                 self.edit_festival: {'db_func': self.parent.dbjobs.get_completion_for_festival},
                                 self.edit_choir: {'db_func': self.parent.dbjobs.get_completion_for_choir}, }

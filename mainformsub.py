@@ -1,5 +1,20 @@
 # -*- coding: utf-8 -*-
 
+## This file is part of fb-archive.
+
+## fb-archive is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+
+## fb-archive is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+
+## You should have received a copy of the GNU General Public License
+## along with fb-archive.  If not, see <http://www.gnu.org/licenses/>.
+
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from mainform import *
@@ -44,9 +59,9 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         self.completer_model = QStringListModel()
         self.completer.setModel(self.completer_model)
         # Completion database functions connected with particular widgets
-        self.completion_dict = {self.edit_state: {'db_func': self.dbjobs.get_completion_for_state}, 
-                                self.edit_city: {'db_func': self.dbjobs.get_completion_for_city}, 
-                                self.edit_hall: {'db_func': self.dbjobs.get_completion_for_hall}, 
+        self.completion_dict = {self.edit_state: {'db_func': self.dbjobs.get_completion_for_state},
+                                self.edit_city: {'db_func': self.dbjobs.get_completion_for_city},
+                                self.edit_hall: {'db_func': self.dbjobs.get_completion_for_hall},
                                 self.edit_type: {'db_func': self.dbjobs.get_completion_for_type},
                                 self.edit_name: {'db_func': self.dbjobs.get_completion_for_name}, }
         # Set auto completer for widgets
