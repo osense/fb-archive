@@ -236,6 +236,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
     def on_actionUpravit_triggered(self):
         selected_indexes = self.tableView.selectedIndexes()
         if len(selected_indexes) > 0:
+            index = self.sort_proxy_model.mapToSource(selected_indexes[0])
             self.clear_widgets()
             self.frame_search.hide()
             self.frame_edit.show()
@@ -245,16 +246,16 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
             self.btn_edit_confirm.hide()
             self.btn_edit_save.show()
             # Load data to widgets
-            self.now_edited_concert_id = self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CONCERT_ID)
-            self.edit_name.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_NAME))
-            self.edit_date_from.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DATE_FROM))
-            self.edit_date_to.setDateTime(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_DATE_TO))
-            self.edit_state.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_STATE))
-            self.edit_city.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CITY))
-            self.edit_hall.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_HALL))
-            self.edit_type.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_TYPE))
-            self.cb_festival.setCurrentIndex(self.cb_festival.findData(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_FESTIVAL_ID)))
-            self.edit_note.setText(self.concerts_model.get_item_data(selected_indexes[0], COLUMN_NOTE))
+            self.now_edited_concert_id = self.concerts_model.get_item_data(index, COLUMN_CONCERT_ID)
+            self.edit_name.setText(self.concerts_model.get_item_data(index, COLUMN_NAME))
+            self.edit_date_from.setDateTime(self.concerts_model.get_item_data(index, COLUMN_DATE_FROM))
+            self.edit_date_to.setDateTime(self.concerts_model.get_item_data(index, COLUMN_DATE_TO))
+            self.edit_state.setText(self.concerts_model.get_item_data(index, COLUMN_STATE))
+            self.edit_city.setText(self.concerts_model.get_item_data(index, COLUMN_CITY))
+            self.edit_hall.setText(self.concerts_model.get_item_data(index, COLUMN_HALL))
+            self.edit_type.setText(self.concerts_model.get_item_data(index, COLUMN_TYPE))
+            self.cb_festival.setCurrentIndex(self.cb_festival.findData(self.concerts_model.get_item_data(index, COLUMN_FESTIVAL_ID)))
+            self.edit_note.setText(self.concerts_model.get_item_data(index, COLUMN_NOTE))
             # choir
             choirs = self.dbjobs.get_choirs(self.now_edited_concert_id)
             for choir in choirs:
@@ -507,10 +508,11 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         """
         selected_indexes = self.tableView.selectedIndexes()
         if len(selected_indexes) > 0:
+            index = self.sort_proxy_model.mapToSource(selected_indexes[0])
             self.on_btn_edit_cancel_clicked()
             mb = QMessageBox.question(self, self.tr('Upozornení'), self.tr('Opravdu chcete vybraný koncert smazat?'))
             if mb == QMessageBox.Yes:
-                concert_id = self.concerts_model.get_item_data(selected_indexes[0], COLUMN_CONCERT_ID)
+                concert_id = self.concerts_model.get_item_data(index, COLUMN_CONCERT_ID)
                 # Remove concert from database
                 self.dbjobs.remove_concert(concert_id)
                 # Remove dirigents assigned to this concert
@@ -521,7 +523,7 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
                 self.dbjobs.remove_works_for_concert(concert_id)
                 # Remove soloists assigned to this concert
                 self.dbjobs.remove_soloists_for_concert(concert_id)
-                self.concerts_model.removeRow(selected_indexes[0].row())
+                self.concerts_model.removeRow(index.row())
                 self.statusbar.showMessage(self.tr('Záznam byl úspěšne odstraněn.'), TIMEOUT_INFO)
         else:
             QMessageBox.warning(self, self.tr('Varování'), self.tr('Nebyl vybrán žádný koncert.'))
