@@ -1,1 +1,5 @@
+TODO:
 - ignorovat diakritiku pri completion
+- vyhladavanie s % na zaciatku
+- zaloha databazy
+- pouzivanie databazy z flashky
