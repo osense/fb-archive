@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogabout.ui'
 #
-# Created: Tue Dec  9 10:58:17 2014
+# Created: Fri Dec 19 17:24:56 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DialogAbout(object):
     def setupUi(self, DialogAbout):
         DialogAbout.setObjectName("DialogAbout")
+        DialogAbout.setWindowModality(QtCore.Qt.ApplicationModal)
         DialogAbout.resize(406, 271)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(DialogAbout.sizePolicy().hasHeightForWidth())
+        DialogAbout.setSizePolicy(sizePolicy)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/fb-icon16.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         DialogAbout.setWindowIcon(icon)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainform.ui'
 #
-# Created: Tue Dec  9 10:58:16 2014
+# Created: Fri Dec 19 17:24:56 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -436,7 +436,14 @@ class Ui_MainWindow(object):
         icon12.addPixmap(QtGui.QPixmap(":/icons/icons/Places-folder-sound-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSprava_festivalov.setIcon(icon12)
         self.actionSprava_festivalov.setObjectName("actionSprava_festivalov")
+        self.actionZ_lohovat_datab_zi_koncert = QtWidgets.QAction(MainWindow)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap(":/icons/icons/Devices-drive-harddisk-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionZ_lohovat_datab_zi_koncert.setIcon(icon13)
+        self.actionZ_lohovat_datab_zi_koncert.setObjectName("actionZ_lohovat_datab_zi_koncert")
         self.menuArchiv.addAction(self.actionSprava_festivalov)
+        self.menuArchiv.addSeparator()
+        self.menuArchiv.addAction(self.actionZ_lohovat_datab_zi_koncert)
         self.menuArchiv.addSeparator()
         self.menuArchiv.addAction(self.actionUkoncit)
         self.menuZaznam.addAction(self.actionPridat)
@@ -447,6 +454,8 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuZaznam.menuAction())
         self.menubar.addAction(self.menuPomocnik.menuAction())
         self.toolBar.addAction(self.actionSprava_festivalov)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionZ_lohovat_datab_zi_koncert)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionUkoncit)
         self.toolBar_2.addAction(self.actionPridat)
@@ -599,5 +608,6 @@ class Ui_MainWindow(object):
         self.actionOdstranit.setText(_translate("MainWindow", "Odstranit"))
         self.actionO_programe.setText(_translate("MainWindow", "O programu"))
         self.actionSprava_festivalov.setText(_translate("MainWindow", "Správa festivalů"))
+        self.actionZ_lohovat_datab_zi_koncert.setText(_translate("MainWindow", "Zálohovat databázi koncertů"))
 
 import resource_rc

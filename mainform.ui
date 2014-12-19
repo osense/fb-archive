@@ -780,6 +780,8 @@
     </property>
     <addaction name="actionSprava_festivalov"/>
     <addaction name="separator"/>
+    <addaction name="actionZ_lohovat_datab_zi_koncert"/>
+    <addaction name="separator"/>
     <addaction name="actionUkoncit"/>
    </widget>
    <widget class="QMenu" name="menuZaznam">
@@ -812,6 +814,8 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionSprava_festivalov"/>
+   <addaction name="separator"/>
+   <addaction name="actionZ_lohovat_datab_zi_koncert"/>
    <addaction name="separator"/>
    <addaction name="actionUkoncit"/>
   </widget>
@@ -892,6 +896,15 @@
    </property>
    <property name="text">
     <string>Správa festivalů</string>
+   </property>
+  </action>
+  <action name="actionZ_lohovat_datab_zi_koncert">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/Devices-drive-harddisk-icon.png</normaloff>:/icons/icons/Devices-drive-harddisk-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zálohovat databázi koncertů</string>
    </property>
   </action>
  </widget>

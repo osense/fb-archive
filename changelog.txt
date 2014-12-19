@@ -4,5 +4,8 @@ TODO:
 - zaloha databazy
 - pouzivanie databazy z flashky
 
+* * * XX.01.2014 * * *
++ added possibility to backup database to specified file
+
 * * * 12.12.2014 * * *
-+ ostra verzia 1.0
++ release 1.0

@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/Devices-drive-harddisk-icon.png</file>
+    <file>icons/Device-usb-drive-icon.png</file>
     <file>icons/Actions-edit-clear-list-icon.png</file>
     <file>icons/Actions-edit-clear-icon.png</file>
     <file>icons/Actions-list-add-user-icon.png</file>

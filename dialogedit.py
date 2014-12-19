@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialogedit.ui'
 #
-# Created: Tue Dec  9 10:58:17 2014
+# Created: Fri Dec 19 17:24:56 2014
 #      by: PyQt5 UI code generator 5.3.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,8 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DialogEdit(object):
     def setupUi(self, DialogEdit):
         DialogEdit.setObjectName("DialogEdit")
-        DialogEdit.resize(300, 210)
-        DialogEdit.setMinimumSize(QtCore.QSize(300, 0))
+        DialogEdit.resize(400, 210)
+        DialogEdit.setMinimumSize(QtCore.QSize(400, 0))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/fb-icon16.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         DialogEdit.setWindowIcon(icon)

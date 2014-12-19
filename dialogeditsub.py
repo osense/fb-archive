@@ -57,7 +57,9 @@ class DialogEditSub(QDialog, Ui_DialogEdit):
         self.edit_composer.clear()
         self.edit_work.clear()
         self.edit_choir.clear()
+        # Fix size
         self.adjustSize()
+        self.setFixedSize(self.size())
         # Create auto completer
         self.completer = QCompleter()
         self.completer.setCompletionMode(QCompleter.PopupCompletion)

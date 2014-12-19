@@ -29,14 +29,14 @@ import datetime
 from constants import *
 
 APPDIR = os.path.abspath(os.path.dirname(sys.argv[0]))
-
+DBFILE = APPDIR + '/database.db'
 
 class Mainformsub(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(Mainformsub, self).__init__()
         self.setupUi(self)
         # Database part
-        self.dbjobs = dbjobs.Database(APPDIR + '/database.db')
+        self.dbjobs = dbjobs.Database(DBFILE)
         # Prepare GUI, show/hide widgets
         self.prepare_gui()
         self.resize(800, 650)
@@ -504,6 +504,36 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         d = DialogFestivalsSub(self)
         d.exec_()
         self.refresh_festivals()
+
+    @pyqtSlot()
+    def on_actionZ_lohovat_datab_zi_koncert_triggered(self):
+        """
+        Copy database file to selected location
+        """
+        import time
+        filename = QFileDialog.getSaveFileName(self, self.tr("Zvolte soubor pro uložení"), "./database.db", self.tr("Databázové soubory *.db;;Všechny soubory *.*"))
+        if filename != None:
+            d = QProgressDialog(self.tr("Probíhá zálohování databáze koncertů, čekejte prosím"), self.tr("Zrušit"), 0, 100, self)
+            d.setWindowTitle(self.tr("Průběh zálohování"))
+            d.setFixedSize(d.size())
+            d.setAutoClose(True)
+            x = 0
+            ok = False
+            while True:
+                if d.wasCanceled():
+                    break
+                x+=1
+                d.setValue(x)
+                qApp.processEvents()
+                if x == 100:
+                    break
+                time.sleep(0.1)
+            if (not d.wasCanceled()) and ok:
+                QMessageBox.information(self, self.tr('Informace'), self.tr('Databáze koncertů byla úspěšne zálohována.'))
+            elif d.wasCanceled():
+                QMessageBox.information(self, self.tr('Informace'), self.tr('Zálohování bylo přerušeno.'))
+            else:
+                QMessageBox.critical(self, self.tr('Chyba'), self.tr('Zálohování bylo neúspěšné.'))
 
     def refresh_festivals(self):
         # Add festivals to combobox
