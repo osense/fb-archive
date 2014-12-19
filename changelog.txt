@@ -3,3 +3,6 @@ TODO:
 - vyhladavanie s % na zaciatku
 - zaloha databazy
 - pouzivanie databazy z flashky
+
+* * * 12.12.2014 * * *
++ ostra verzia 1.0
