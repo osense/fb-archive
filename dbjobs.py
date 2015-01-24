@@ -104,10 +104,6 @@ class Database:
         self.cursor.execute("INSERT INTO soloists(concert_id, work_id, name) VALUES (?, ?, ?)", (concert_id, work_id, name))
         self.conn.commit()
 
-    def add_festival(self, name):
-        self.cursor.execute("INSERT INTO festivals(name) VALUES (?)", (name,))
-        self.conn.commit()
-
     def add_dirigent(self, concert_id, name):
         self.cursor.execute("INSERT INTO dirigents(concert_id, name) VALUES (?, ?)", (concert_id, name))
         self.conn.commit()
