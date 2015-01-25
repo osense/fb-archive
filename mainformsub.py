@@ -24,6 +24,7 @@ import sys
 from dialogeditsub import DialogEditSub
 from dialogaboutsub import DialogAboutSub
 from dialogfestivalssub import DialogFestivalsSub
+from dialogcopy import *
 from concertstablemodel import ConcertsTableModel
 import datetime
 from constants import *
@@ -513,19 +514,10 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         """
         filename = QFileDialog.getSaveFileName(self, self.tr("Zvolte soubor pro uložení"), "./database.db", self.tr("Databázové soubory *.db;;Všechny soubory *.*"))
         if filename[0] != '':
-            qApp.setOverrideCursor(Qt.WaitCursor)
-            try:
-                dest = filename[0] + '.db' if filename[0].find('.db') == -1 else filename[0]
-                shutil.copyfile(DBFILE, dest)
-                ok = True
-            except:
-                ok = False
-            qApp.restoreOverrideCursor()
-            if ok:
-                QMessageBox.information(self, self.tr('Informace'), self.tr('Databáze koncertů byla úspěšne zálohována.'))
-            else:
-                QMessageBox.critical(self, self.tr('Chyba'), self.tr('Zálohování bylo neúspěšné.'))
-
+            dest = filename[0] + '.db' if filename[0].find('.db') == -1 else filename[0]
+            dialog = FileCopy(self, DBFILE, dest);
+            dialog.start();
+            dialog.exec_();
 
     def refresh_festivals(self):
         # Add festivals to combobox
