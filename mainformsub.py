@@ -515,9 +515,30 @@ class Mainformsub(QMainWindow, Ui_MainWindow):
         filename = QFileDialog.getSaveFileName(self, self.tr("Zvolte soubor pro uložení"), "./database.db", self.tr("Databázové soubory *.db;;Všechny soubory *.*"))
         if filename[0] != '':
             dest = filename[0] + '.db' if filename[0].find('.db') == -1 else filename[0]
-            dialog = FileCopy(self, DBFILE, dest);
-            dialog.start();
-            dialog.exec_();
+            copyThread = QThread()
+            copyDialog = QProgressDialog('Probiha exportovani databaze', 'Zrusit', 0, os.stat(DBFILE).st_size, self)
+            copyDialog.setWindowTitle('Pokrok')
+            copyDialog.setWindowModality(Qt.WindowModal);
+            copyDialog.open()
+            copyObj = FileCopy(DBFILE, dest)
+            copyObj.moveToThread(copyThread)
+            copyObj.progress.connect(copyDialog.setValue)
+            copyObj.finished.connect(copyThread.quit)
+            copyObj.success.connect(self.on_copy_success)
+            copyObj.fail.connect(self.on_copy_failed)
+            copyDialog.canceled.connect(copyThread.terminate) # this does nothing
+            copyThread.started.connect(copyObj.run)
+            copyThread.start()
+            self.copyDialog = copyDialog
+            self.copyThread = copyThread
+            self.copyObj = copyObj
+
+    def on_copy_success(self):
+        QMessageBox.information(None, self.tr('Informace'), self.tr('Databáze koncertů byla úspěšne zálohována.'))
+
+    def on_copy_failed(self):
+        QMessageBox.critical(None, self.tr('Chyba'), self.tr('Zálohování bylo neúspěšné'))
+        self.copyDialog.setValue(self.copyDialog.maximum())
 
     def refresh_festivals(self):
         # Add festivals to combobox

@@ -18,41 +18,32 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import os
-from mainformsub import *
 
-class FileCopy(QThread):
-    def __init__(self, parent, src_path, dest_path):
-        QThread.__init__(self)
-        self.parent = parent
-        self.src = open(src_path, "rb")
-        self.dest = open(dest_path, "wb")
-        self.src_size = os.stat(src_path).st_size
-        self.dialog = QProgressDialog('Kopirovani', 'Zrusit', 0, self.src_size)
-        self.dialog.reset()
-        self.dialog.setWindowModality(Qt.WindowModal);
-        self.dialog.setMinimumDuration(0)
-        self.dialog.open()
-        
+class FileCopy(QObject):
+
+    progress = pyqtSignal(int)
+    finished = pyqtSignal()
+    success = pyqtSignal()
+    fail = pyqtSignal()
+
+    def __init__(self, src, dest):
+        QObject.__init__(self)
+        self.src_path = src
+        self.dest_path = dest
+
     def run(self):
+        src = open(self.src_path, "rb")
+        dest = open(self.dest_path, "wb")
+
         try:
             while True:
-                #if self.dialog.wasCancelled():
-                #    raise Exception()
-                
-                block = self.src.read(1); # 16384
-                QThread.usleep(100)
+                block = src.read(1); # 16384
+                QThread.usleep(300)
                 if not block:
-                    QMessageBox.information(None, self.parent.tr('Informace'), self.parent.tr('Databáze koncertů byla úspěšne zálohována.'))
+                    self.success.emit()
                     break
-            
-                self.dest.write(block);
-                self.dialog.setValue(self.dest.tell())
+                dest.write(block);
+                self.progress.emit(dest.tell())
         except:
-            QMessageBox.critical(None, self.parent.tr('Chyba'), self.parent.tr('Zálohování bylo neúspěšné'))
-        self.cleanup()
-                
-    def cleanup(self):
-        self.dialog.setValue(self.dialog.maximum())
-        self.src.close()
-        self.dest.close()
-        self.quit()
+            self.fail.emit()
+        self.finished.emit()
